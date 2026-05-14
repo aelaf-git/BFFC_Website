@@ -1,16 +1,16 @@
-# Bigspring is a web development company Nextjs template with Tailwind CSS.
+# Nextplate – a free starter template built with Next and TailwindCSS, providing everything you need to jumpstart your Next project and save valuable time.
 #### Preview
 
- - [Demo](https://themewagon.github.io/bigspring/)
+ - [Demo](https://themewagon.github.io/nextplate-nextjs/)
 
 #### Download
- - [Download from ThemeWagon](https://themewagon.com/themes/bigspring/)
+ - [Download from ThemeWagon](https://themewagon.com/themes/nextplate-nextjs/)
 
 ## Getting Started
 
 1. Clone Repository
 ```
-git clone https://github.com/themewagon/bigspring.git
+git clone https://github.com/themewagon/nextplate-nextjs.git
 ```
 2. Install Dependencies
 ```
@@ -30,11 +30,11 @@ bun dev
 
 ## Author 
 ```
-Design and code is completely written by Themefisher and development team. 
+Design and code is completely written by Zeon Studio and development team. 
 ```
 
 ## License
 
- - Design and Code is Copyright &copy; <a href="https://themefisher.com/" target="_blank">Themefisher</a>
+ - Design and Code is Copyright &copy; <a href="https://zeon.studio/" target="_blank">Zeon Studio</a>
  - Licensed cover under [MIT]
  - Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>

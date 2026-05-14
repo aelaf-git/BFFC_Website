@@ -1,4 +1,9 @@
+# *
 User-agent: *
 Allow: /
 
-Disallow: /api/*
+# Host
+Host: https://example.com
+
+# Sitemaps
+Sitemap: https://example.com/sitemap.xml

@@ -1,10 +1,5 @@
 {
   "name": "Sitepins CMS",
-  "description": "Git-based CMS detection file",
-  "cms": "Sitepins",
-  "generator": "nextjs",
-  "html": "<meta name=\"generator\" content=\"Sitepins",
-  "headers": {
-    "x-powered-by": "Sitepins"
-  }
+  "version": "1.2.3",
+  "description": "Git-based CMS detection file"
 }
