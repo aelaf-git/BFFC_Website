@@ -1,11 +1,1 @@
-{
-    "typescript.tsdk": "apps/web/node_modules/typescript/lib",
-    "files.watcherExclude": {
-      "**/node_modules/**": true,
-      "**/.next/**": true
-    },
-    "search.exclude": {
-      "**/node_modules": true,
-      "**/.next": true
-    }
-  }
+{}
