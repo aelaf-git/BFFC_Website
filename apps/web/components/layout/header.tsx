@@ -9,7 +9,7 @@ import {
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full shrink-0">
+    <header className="sticky top-0 z-50 w-full shrink-0 overflow-visible">
       <CardNav
         logoText="BFFC"
         contact={siteContact}

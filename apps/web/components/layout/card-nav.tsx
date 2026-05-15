@@ -110,7 +110,7 @@ function MainNavItem({ link }: { link: MainNavLink }) {
           aria-hidden
         />
       </button>
-      <div className="invisible absolute top-full right-0 z-[100] mt-2 min-w-[240px] rounded-lg border border-border bg-background py-2 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
+      <div className="invisible absolute top-full right-0 z-[200] mt-2 min-w-[240px] rounded-lg border border-border bg-background py-2 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
         {link.children.map((child) => (
           <Link
             key={child.href}
@@ -243,15 +243,17 @@ export function CardNav({
     if (el) cardsRef.current[i] = el;
   };
 
+  const glassBar =
+    "border-border/60 bg-background/85 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-background/75";
+
   return (
-    <div className={`w-full border-b border-border bg-background shadow-sm ${className}`}>
+    <div className={`w-full overflow-visible border-b ${glassBar} ${className}`}>
       {/* Utility row — contact left, tools right (desktop) */}
       <div
-        className="hidden items-center justify-between gap-4 border-b border-border/70 px-4 py-2 sm:px-6 lg:flex"
-        style={{ backgroundColor: baseColor }}
+        className={`relative z-30 hidden items-start justify-between gap-6 overflow-visible border-b border-border/50 px-4 py-2.5 sm:px-6 lg:flex ${glassBar}`}
       >
-        <NavContactInfo contact={contact} />
-        <div className="flex shrink-0 items-center gap-4">
+        <NavContactInfo contact={contact} className="min-w-0 flex-1" />
+        <div className="relative z-30 flex shrink-0 items-center gap-4 overflow-visible pt-0.5">
           <NavLanguageSwitcher />
           <NavAccountMenu label="My Account (Donor Portal)" links={accountLinks} />
           <NavSearch />
@@ -260,8 +262,8 @@ export function CardNav({
 
       <nav
         ref={navRef}
-        className={`relative block w-full overflow-hidden will-change-[height] ${isExpanded ? "open" : ""}`}
-        style={{ backgroundColor: baseColor, height: collapsedHeight }}
+        className={`relative z-10 block w-full overflow-hidden will-change-[height] ${glassBar} ${isExpanded ? "open" : ""}`}
+        style={{ height: collapsedHeight }}
       >
         {/* Main row */}
         <div
@@ -330,26 +332,14 @@ export function CardNav({
 
         {/* Mega menu panel */}
         <div
-          className={`card-nav-content absolute right-0 bottom-0 left-0 z-[1] border-t border-border bg-background p-4 sm:px-6 ${
+          className={`card-nav-content absolute right-0 bottom-0 left-0 z-[1] border-t border-border/60 bg-background/95 p-4 backdrop-blur-lg sm:px-6 ${
             isExpanded ? "visible pointer-events-auto" : "invisible pointer-events-none"
           }`}
           style={{ top: MAIN_ROW_HEIGHT }}
           aria-hidden={!isExpanded}
         >
           <div className="mb-4 flex flex-col gap-3 border-b border-border pb-4 lg:hidden">
-            <NavContactInfo contact={contact} />
-            <div className="flex flex-wrap gap-4">
-              {primaryCtas.map((cta) => (
-                <InternalLink
-                  key={cta.href}
-                  href={cta.href}
-                  ariaLabel={cta.ariaLabel}
-                  className="text-base font-bold text-primary"
-                >
-                  {cta.label}
-                </InternalLink>
-              ))}
-            </div>
+            <NavContactInfo contact={contact} compact />
             <NavLanguageSwitcher />
             <NavSearch className="w-full max-w-sm" />
             <NavAccountMenu label="My Account (Donor Portal)" links={accountLinks} />

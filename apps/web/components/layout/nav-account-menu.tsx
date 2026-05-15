@@ -28,7 +28,7 @@ export function NavAccountMenu({
   }, []);
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative z-[200]">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -46,7 +46,7 @@ export function NavAccountMenu({
 
       {open && (
         <div
-          className="absolute top-full right-0 z-[100] mt-2 min-w-[200px] rounded-lg border border-border bg-background py-2 shadow-lg"
+          className="absolute top-full right-0 z-[200] mt-2 min-w-[220px] rounded-lg border border-border bg-background py-2 shadow-xl"
           role="menu"
         >
           {links.map((link) => (

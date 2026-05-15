@@ -3,9 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --primary: #d97706;
-  --primary-hover: #b45309;
-  --primary-light: #fff7ed;
+  --primary: #ff6600;
+  --primary-hover: #e55a00;
+  --primary-light: #fff0e6;
   --muted: #525252;
   --border: #e5e5e5;
 }
@@ -22,6 +22,18 @@
 }
 
 @layer base {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
   html {
     scroll-behavior: smooth;
   }

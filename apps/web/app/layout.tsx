@@ -1,16 +1,22 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
+import { OrganizationJsonLd } from "@/components/seo/json-ld";
 import { Header } from "@/components/layout/header";
+import { rootMetadata } from "@/lib/seo/metadata";
 import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "BFFC",
-  description: "Building futures through community, sport, and opportunity.",
+export const metadata: Metadata = rootMetadata;
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#ff6600",
 };
 
 export default function RootLayout({
@@ -21,8 +27,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} h-full`}>
       <body className="flex min-h-full flex-col font-sans antialiased">
+        <OrganizationJsonLd />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+        >
+          Skip to main content
+        </a>
         <Header />
-        {children}
+        <main id="main-content" className="flex flex-1 flex-col">
+          {children}
+        </main>
       </body>
     </html>
   );

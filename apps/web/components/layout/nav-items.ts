@@ -1,11 +1,13 @@
 import type { CardNavItem, MainNavLink, NavLink } from "@/components/layout/card-nav";
 import type { SiteContact } from "@/components/layout/nav-contact-info";
+import { siteConfig } from "@/lib/site";
 
 export const siteContact: SiteContact = {
-  phone: "+1 (555) 123-4567",
-  phoneHref: "+15551234567",
-  email: "info@bffc.org",
-  address: "123 Community Way, City, Country",
+  address: siteConfig.contact.address,
+  charityRegistration: siteConfig.contact.charityRegistration,
+  email: siteConfig.contact.email,
+  phone: siteConfig.contact.phone,
+  phoneHref: siteConfig.contact.phoneHref,
 };
 
 /** Primary CTA beside the logo */
@@ -61,7 +63,7 @@ export const dropdownNavItems: CardNavItem[] = [
   },
   {
     label: "What We Do",
-    bgColor: "#fff7ed",
+    bgColor: "#fff0e6",
     textColor: "#000000",
     links: [
       { label: "Programs", href: "/what-we-do#programs", ariaLabel: "Our programs" },
@@ -74,7 +76,11 @@ export const dropdownNavItems: CardNavItem[] = [
     bgColor: "#ffffff",
     textColor: "#000000",
     links: [
-      { label: "Donate", href: "/donate", ariaLabel: "Make a donation" },
+      {
+        label: "Create a Donor Account",
+        href: "/account/register",
+        ariaLabel: "Create a donor account",
+      },
       { label: "Volunteer", href: "/get-involved#volunteer", ariaLabel: "Volunteer" },
       { label: "Partner with us", href: "/get-involved#partner", ariaLabel: "Partner with us" },
     ],
