@@ -1,15 +1,28 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { GoArrowUpRight } from "react-icons/go";
+import { HiChevronDown } from "react-icons/hi2";
+import type { SiteContact } from "@/components/layout/nav-contact-info";
+import { NavContactInfo } from "@/components/layout/nav-contact-info";
+import { NavAccountMenu } from "@/components/layout/nav-account-menu";
+import { NavLanguageSwitcher } from "@/components/layout/nav-language-switcher";
+import { NavSearch } from "@/components/layout/nav-search";
 
-export type CardNavLink = {
+export type NavLink = {
   label: string;
   href: string;
   ariaLabel: string;
 };
+
+export type MainNavLink = NavLink & {
+  children?: NavLink[];
+};
+
+export type CardNavLink = NavLink;
 
 export type CardNavItem = {
   label: string;
@@ -22,40 +35,94 @@ export type CardNavProps = {
   logo?: string;
   logoAlt?: string;
   logoText?: string;
+  contact: SiteContact;
+  primaryCtas: NavLink[];
+  mainNavLinks: MainNavLink[];
+  accountLinks: NavLink[];
   items: CardNavItem[];
   className?: string;
   ease?: string;
   baseColor?: string;
-  menuColor?: string;
-  buttonBgColor?: string;
-  buttonTextColor?: string;
-  ctaLabel?: string;
-  ctaHref?: string;
 };
+
+const MAIN_ROW_HEIGHT = 72;
+
+function InternalLink({
+  href,
+  className,
+  ariaLabel,
+  children,
+}: {
+  href: string;
+  className: string;
+  ariaLabel: string;
+  children: ReactNode;
+}) {
+  if (href.startsWith("/")) {
+    return (
+      <Link href={href} className={className} aria-label={ariaLabel}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <a href={href} className={className} aria-label={ariaLabel}>
+      {children}
+    </a>
+  );
+}
 
 function NavCardLink({ link }: { link: CardNavLink }) {
   const className =
-    "nav-card-link inline-flex items-center gap-[6px] no-underline cursor-pointer transition-opacity duration-300 hover:opacity-75 text-[15px] md:text-[16px]";
+    "inline-flex items-center gap-[6px] text-[15px] text-inherit no-underline transition-opacity hover:opacity-75 md:text-[16px]";
 
-  const content = (
-    <>
-      <GoArrowUpRight className="nav-card-link-icon shrink-0" aria-hidden="true" />
+  return (
+    <InternalLink href={link.href} className={className} ariaLabel={link.ariaLabel}>
+      <GoArrowUpRight className="shrink-0" aria-hidden />
       {link.label}
-    </>
+    </InternalLink>
   );
+}
 
-  if (link.href.startsWith("/")) {
+function MainNavItem({ link }: { link: MainNavLink }) {
+  if (!link.children?.length) {
     return (
-      <Link href={link.href} className={className} aria-label={link.ariaLabel}>
-        {content}
-      </Link>
+      <InternalLink
+        href={link.href}
+        ariaLabel={link.ariaLabel}
+        className="whitespace-nowrap text-sm font-medium text-foreground transition-colors hover:text-primary"
+      >
+        {link.label}
+      </InternalLink>
     );
   }
 
   return (
-    <a href={link.href} className={className} aria-label={link.ariaLabel}>
-      {content}
-    </a>
+    <div className="group relative">
+      <button
+        type="button"
+        className="inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium text-foreground transition-colors hover:text-primary"
+        aria-haspopup="true"
+      >
+        {link.label}
+        <HiChevronDown
+          className="h-3.5 w-3.5 transition-transform group-hover:rotate-180"
+          aria-hidden
+        />
+      </button>
+      <div className="invisible absolute top-full right-0 z-[100] mt-2 min-w-[240px] rounded-lg border border-border bg-background py-2 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
+        {link.children.map((child) => (
+          <Link
+            key={child.href}
+            href={child.href}
+            className="block px-4 py-2.5 text-sm text-foreground transition-colors hover:bg-primary-light hover:text-primary"
+            aria-label={child.ariaLabel}
+          >
+            {child.label}
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -63,15 +130,14 @@ export function CardNav({
   logo,
   logoAlt = "Logo",
   logoText,
+  contact,
+  primaryCtas,
+  mainNavLinks,
+  accountLinks,
   items,
   className = "",
   ease = "power3.out",
   baseColor = "#fff",
-  menuColor,
-  buttonBgColor,
-  buttonTextColor,
-  ctaLabel = "Get Started",
-  ctaHref = "#contact",
 }: CardNavProps) {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -79,55 +145,47 @@ export function CardNav({
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
+  const collapsedHeight = MAIN_ROW_HEIGHT;
+
   const calculateHeight = () => {
     const navEl = navRef.current;
-    if (!navEl) return 260;
+    if (!navEl) return 320;
 
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    if (isMobile) {
-      const contentEl = navEl.querySelector(".card-nav-content") as HTMLElement;
-      if (contentEl) {
-        const wasVisible = contentEl.style.visibility;
-        const wasPointerEvents = contentEl.style.pointerEvents;
-        const wasPosition = contentEl.style.position;
-        const wasHeight = contentEl.style.height;
+    const contentEl = navEl.querySelector(".card-nav-content") as HTMLElement;
+    if (!contentEl) return 320;
 
-        contentEl.style.visibility = "visible";
-        contentEl.style.pointerEvents = "auto";
-        contentEl.style.position = "static";
-        contentEl.style.height = "auto";
-        contentEl.offsetHeight;
+    const wasVisible = contentEl.style.visibility;
+    const wasPointerEvents = contentEl.style.pointerEvents;
+    const wasPosition = contentEl.style.position;
+    const wasHeight = contentEl.style.height;
 
-        const topBar = 60;
-        const padding = 16;
-        const contentHeight = contentEl.scrollHeight;
+    contentEl.style.visibility = "visible";
+    contentEl.style.pointerEvents = "auto";
+    contentEl.style.position = "static";
+    contentEl.style.height = "auto";
+    contentEl.offsetHeight;
 
-        contentEl.style.visibility = wasVisible;
-        contentEl.style.pointerEvents = wasPointerEvents;
-        contentEl.style.position = wasPosition;
-        contentEl.style.height = wasHeight;
+    const padding = 16;
+    const contentHeight = contentEl.scrollHeight;
 
-        return topBar + contentHeight + padding;
-      }
-    }
-    return 260;
+    contentEl.style.visibility = wasVisible;
+    contentEl.style.pointerEvents = wasPointerEvents;
+    contentEl.style.position = wasPosition;
+    contentEl.style.height = wasHeight;
+
+    return collapsedHeight + contentHeight + padding;
   };
 
   const createTimeline = () => {
     const navEl = navRef.current;
     if (!navEl) return null;
 
-    gsap.set(navEl, { height: 60, overflow: "hidden" });
-    gsap.set(cardsRef.current, { y: 50, opacity: 0 });
+    gsap.set(navEl, { height: collapsedHeight, overflow: "hidden" });
+    gsap.set(cardsRef.current, { y: 40, opacity: 0 });
 
     const tl = gsap.timeline({ paused: true });
 
-    tl.to(navEl, {
-      height: calculateHeight,
-      duration: 0.4,
-      ease,
-    });
-
+    tl.to(navEl, { height: calculateHeight, duration: 0.4, ease });
     tl.to(
       cardsRef.current,
       { y: 0, opacity: 1, duration: 0.4, ease, stagger: 0.08 },
@@ -140,7 +198,6 @@ export function CardNav({
   useLayoutEffect(() => {
     const tl = createTimeline();
     tlRef.current = tl;
-
     return () => {
       tl?.kill();
       tlRef.current = null;
@@ -150,11 +207,8 @@ export function CardNav({
   useLayoutEffect(() => {
     const handleResize = () => {
       if (!tlRef.current) return;
-
       if (isExpanded) {
-        const newHeight = calculateHeight();
-        gsap.set(navRef.current, { height: newHeight });
-
+        gsap.set(navRef.current, { height: calculateHeight() });
         tlRef.current.kill();
         const newTl = createTimeline();
         if (newTl) {
@@ -164,12 +218,9 @@ export function CardNav({
       } else {
         tlRef.current.kill();
         const newTl = createTimeline();
-        if (newTl) {
-          tlRef.current = newTl;
-        }
+        if (newTl) tlRef.current = newTl;
       }
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isExpanded]);
@@ -193,86 +244,152 @@ export function CardNav({
   };
 
   return (
-    <div
-      className={`card-nav-container absolute left-1/2 z-[99] w-[90%] max-w-[800px] -translate-x-1/2 top-[1.2em] md:top-[2em] ${className}`}
-    >
-      <nav
-        ref={navRef}
-        className={`card-nav ${isExpanded ? "open" : ""} relative block h-[60px] overflow-hidden rounded-xl p-0 shadow-md will-change-[height]`}
+    <div className={`w-full border-b border-border bg-background shadow-sm ${className}`}>
+      {/* Utility row — contact left, tools right (desktop) */}
+      <div
+        className="hidden items-center justify-between gap-4 border-b border-border/70 px-4 py-2 sm:px-6 lg:flex"
         style={{ backgroundColor: baseColor }}
       >
-        <div className="card-nav-top absolute inset-x-0 top-0 z-[2] flex h-[60px] items-center justify-between p-2 pl-[1.1rem]">
-          <button
-            type="button"
-            className={`hamburger-menu group order-2 flex h-full cursor-pointer flex-col items-center justify-center gap-[6px] md:order-none ${isHamburgerOpen ? "open" : ""}`}
-            onClick={toggleMenu}
-            aria-label={isExpanded ? "Close menu" : "Open menu"}
-            aria-expanded={isExpanded}
-            style={{ color: menuColor || "#000" }}
-          >
-            <span
-              className={`hamburger-line h-[2px] w-[30px] bg-current transition-[transform,opacity,margin] duration-300 ease-linear [transform-origin:50%_50%] group-hover:opacity-75 ${
-                isHamburgerOpen ? "translate-y-[4px] rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`hamburger-line h-[2px] w-[30px] bg-current transition-[transform,opacity,margin] duration-300 ease-linear [transform-origin:50%_50%] group-hover:opacity-75 ${
-                isHamburgerOpen ? "-translate-y-[4px] -rotate-45" : ""
-              }`}
-            />
-          </button>
+        <NavContactInfo contact={contact} />
+        <div className="flex shrink-0 items-center gap-4">
+          <NavLanguageSwitcher />
+          <NavAccountMenu label="My Account (Donor Portal)" links={accountLinks} />
+          <NavSearch />
+        </div>
+      </div>
 
-          <div className="logo-container order-1 flex items-center md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:order-none">
+      <nav
+        ref={navRef}
+        className={`relative block w-full overflow-hidden will-change-[height] ${isExpanded ? "open" : ""}`}
+        style={{ backgroundColor: baseColor, height: collapsedHeight }}
+      >
+        {/* Main row */}
+        <div
+          className="relative z-[2] flex items-center gap-3 px-4 sm:gap-4 sm:px-6"
+          style={{ height: MAIN_ROW_HEIGHT }}
+        >
+          {/* Brand */}
+          <div className="flex shrink-0 items-center">
             {logo ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={logo} alt={logoAlt} className="logo h-[28px]" />
+              <img src={logo} alt={logoAlt} className="h-9" />
             ) : (
               <Link
                 href="/"
-                className="text-lg font-bold tracking-tight text-foreground"
+                className="text-xl font-bold tracking-tight text-foreground"
               >
                 {logoText ?? "BFFC"}
               </Link>
             )}
           </div>
 
-          <Link
-            href={ctaHref}
-            className="card-nav-cta-button hidden h-full cursor-pointer items-center rounded-[calc(0.75rem-0.2rem)] border-0 px-4 font-medium transition-colors duration-300 md:inline-flex"
-            style={{
-              backgroundColor: buttonBgColor,
-              color: buttonTextColor,
-            }}
-          >
-            {ctaLabel}
-          </Link>
+          {/* Primary CTAs — golden orange, beside logo */}
+          <div className="flex shrink-0 items-center gap-3 border-l border-border pl-3 sm:pl-4 md:gap-4 lg:gap-5 lg:pl-5">
+            {primaryCtas.map((cta) => (
+              <InternalLink
+                key={cta.href}
+                href={cta.href}
+                ariaLabel={cta.ariaLabel}
+                className="inline-flex h-9 items-center rounded-lg bg-primary px-3 text-xs font-semibold whitespace-nowrap text-white transition-colors hover:bg-primary-hover sm:h-10 sm:px-4 sm:text-sm"
+              >
+                {cta.label}
+              </InternalLink>
+            ))}
+          </div>
+
+          <div className="flex min-w-0 flex-1 items-center justify-end gap-6 md:gap-8">
+            <nav
+              className="hidden items-center gap-5 md:flex lg:gap-7"
+              aria-label="Main navigation"
+            >
+              {mainNavLinks.map((link) => (
+                <MainNavItem key={link.href + link.label} link={link} />
+              ))}
+            </nav>
+          </div>
+
+          {/* Right: language + menu dropdown */}
+          <div className="flex shrink-0 items-center gap-2 lg:gap-3">
+            <NavLanguageSwitcher className="lg:hidden" />
+            <button
+              type="button"
+              className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-lg border border-border transition-colors hover:bg-primary-light ${isHamburgerOpen ? "open" : ""}`}
+              onClick={toggleMenu}
+              aria-label={isExpanded ? "Close menu" : "Open menu"}
+              aria-expanded={isExpanded}
+            >
+              <span
+                className={`h-0.5 w-5 bg-foreground transition-transform duration-300 ${isHamburgerOpen ? "translate-y-[3px] rotate-45" : ""}`}
+              />
+              <span
+                className={`h-0.5 w-5 bg-foreground transition-transform duration-300 ${isHamburgerOpen ? "-translate-y-[3px] -rotate-45" : ""}`}
+              />
+            </button>
+          </div>
         </div>
 
+        {/* Mega menu panel */}
         <div
-          className={`card-nav-content absolute top-[60px] right-0 bottom-0 left-0 z-[1] flex flex-col items-stretch justify-start gap-2 p-2 ${
-            isExpanded
-              ? "visible pointer-events-auto"
-              : "invisible pointer-events-none"
-          } md:flex-row md:items-end md:gap-[12px]`}
+          className={`card-nav-content absolute right-0 bottom-0 left-0 z-[1] border-t border-border bg-background p-4 sm:px-6 ${
+            isExpanded ? "visible pointer-events-auto" : "invisible pointer-events-none"
+          }`}
+          style={{ top: MAIN_ROW_HEIGHT }}
           aria-hidden={!isExpanded}
         >
-          {items.slice(0, 3).map((item, idx) => (
-            <div
-              key={`${item.label}-${idx}`}
-              ref={setCardRef(idx)}
-              className="nav-card relative flex h-auto min-h-[60px] min-w-0 flex-[1_1_auto] flex-col gap-2 rounded-[calc(0.75rem-0.2rem)] p-[12px_16px] select-none md:h-full md:min-h-0 md:flex-[1_1_0%]"
-              style={{ backgroundColor: item.bgColor, color: item.textColor }}
-            >
-              <div className="nav-card-label text-[18px] font-normal tracking-[-0.5px] md:text-[22px]">
-                {item.label}
-              </div>
-              <div className="nav-card-links mt-auto flex flex-col gap-[2px]">
-                {item.links.map((lnk, i) => (
-                  <NavCardLink key={`${lnk.label}-${i}`} link={lnk} />
-                ))}
-              </div>
+          <div className="mb-4 flex flex-col gap-3 border-b border-border pb-4 lg:hidden">
+            <NavContactInfo contact={contact} />
+            <div className="flex flex-wrap gap-4">
+              {primaryCtas.map((cta) => (
+                <InternalLink
+                  key={cta.href}
+                  href={cta.href}
+                  ariaLabel={cta.ariaLabel}
+                  className="text-base font-bold text-primary"
+                >
+                  {cta.label}
+                </InternalLink>
+              ))}
             </div>
-          ))}
+            <NavLanguageSwitcher />
+            <NavSearch className="w-full max-w-sm" />
+            <NavAccountMenu label="My Account (Donor Portal)" links={accountLinks} />
+          </div>
+
+          <div className="flex flex-col gap-3 md:flex-row md:gap-4">
+            {items.map((item, idx) => (
+              <div
+                key={`${item.label}-${idx}`}
+                ref={setCardRef(idx)}
+                className="flex min-w-0 flex-1 flex-col gap-3 rounded-lg border border-border p-4"
+                style={{ backgroundColor: item.bgColor, color: item.textColor }}
+              >
+                <div className="border-l-4 border-primary pl-3 text-lg font-semibold">
+                  {item.label}
+                </div>
+                <div className="flex flex-col gap-1">
+                  {item.links.map((lnk, i) => (
+                    <NavCardLink key={`${lnk.label}-${i}`} link={lnk} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <nav
+            className="mt-4 grid gap-2 border-t border-border pt-4 sm:grid-cols-2 xl:hidden"
+            aria-label="Mobile main navigation"
+          >
+            {mainNavLinks.map((link) => (
+              <InternalLink
+                key={link.href}
+                href={link.href}
+                ariaLabel={link.ariaLabel}
+                className="text-sm font-medium text-foreground hover:text-primary"
+              >
+                {link.label}
+              </InternalLink>
+            ))}
+          </nav>
         </div>
       </nav>
     </div>

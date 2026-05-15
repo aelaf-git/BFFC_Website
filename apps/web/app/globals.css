@@ -3,10 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --primary: #ea580c;
-  --primary-hover: #c2410c;
-  --secondary: #2563eb;
-  --secondary-hover: #1d4ed8;
+  --primary: #d97706;
+  --primary-hover: #b45309;
+  --primary-light: #fff7ed;
   --muted: #525252;
   --border: #e5e5e5;
 }
@@ -16,8 +15,7 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
-  --color-secondary: var(--secondary);
-  --color-secondary-hover: var(--secondary-hover);
+  --color-primary-light: var(--primary-light);
   --color-muted: var(--muted);
   --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
@@ -36,7 +34,7 @@
   }
 
   ::selection {
-    background-color: color-mix(in srgb, var(--secondary) 25%, transparent);
+    background-color: color-mix(in srgb, var(--primary) 25%, transparent);
     color: var(--foreground);
   }
 }

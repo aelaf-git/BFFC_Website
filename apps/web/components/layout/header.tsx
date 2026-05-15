@@ -1,18 +1,23 @@
 import { CardNav } from "@/components/layout/card-nav";
-import { bffcNavItems } from "@/components/layout/nav-items";
+import {
+  accountLinks,
+  dropdownNavItems,
+  mainNavLinks,
+  primaryCtas,
+  siteContact,
+} from "@/components/layout/nav-items";
 
 export function Header() {
   return (
-    <header className="relative z-50 h-24 w-full shrink-0 md:h-28">
+    <header className="sticky top-0 z-50 w-full shrink-0">
       <CardNav
         logoText="BFFC"
-        items={bffcNavItems}
+        contact={siteContact}
+        primaryCtas={primaryCtas}
+        mainNavLinks={mainNavLinks}
+        accountLinks={accountLinks}
+        items={dropdownNavItems}
         baseColor="#ffffff"
-        menuColor="#000000"
-        buttonBgColor="#ea580c"
-        buttonTextColor="#ffffff"
-        ctaLabel="Get Started"
-        ctaHref="/#contact"
       />
     </header>
   );
