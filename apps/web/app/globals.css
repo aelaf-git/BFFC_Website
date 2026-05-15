@@ -3,9 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --primary: #ff6600;
-  --primary-hover: #e55a00;
-  --primary-light: #fff0e6;
+  --primary: #f39120;
+  --primary-hover: #d97d15;
+  --primary-light: #fef3e8;
   --muted: #525252;
   --border: #e5e5e5;
 }

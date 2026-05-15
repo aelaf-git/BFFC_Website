@@ -6,12 +6,16 @@ import {
   primaryCtas,
   siteContact,
 } from "@/components/layout/nav-items";
+import { brand } from "@/lib/brand";
 
 export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full shrink-0 overflow-visible">
       <CardNav
-        logoText="BFFC"
+        logo={brand.logo.src}
+        logoAlt={brand.logo.alt}
+        logoWidth={brand.logo.width}
+        logoHeight={brand.logo.height}
         contact={siteContact}
         primaryCtas={primaryCtas}
         mainNavLinks={mainNavLinks}

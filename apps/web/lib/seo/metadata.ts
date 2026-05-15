@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brand } from "@/lib/brand";
 import { siteConfig } from "@/lib/site";
 
 type PageMetadataOptions = {
@@ -78,6 +79,11 @@ export const rootMetadata: Metadata = {
     telephone: false,
   },
   category: "nonprofit",
+  icons: {
+    icon: [{ url: brand.icon.src, sizes: "32x32", type: "image/png" }],
+    apple: "/apple-icon.png",
+    shortcut: brand.icon.src,
+  },
   alternates: {
     canonical: siteConfig.url,
   },

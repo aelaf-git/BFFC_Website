@@ -63,7 +63,7 @@ export const dropdownNavItems: CardNavItem[] = [
   },
   {
     label: "What We Do",
-    bgColor: "#fff0e6",
+    bgColor: "#fef3e8",
     textColor: "#000000",
     links: [
       { label: "Programs", href: "/what-we-do#programs", ariaLabel: "Our programs" },

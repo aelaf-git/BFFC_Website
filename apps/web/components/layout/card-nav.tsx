@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
@@ -32,9 +33,10 @@ export type CardNavItem = {
 };
 
 export type CardNavProps = {
-  logo?: string;
-  logoAlt?: string;
-  logoText?: string;
+  logo: string;
+  logoAlt: string;
+  logoWidth: number;
+  logoHeight: number;
   contact: SiteContact;
   primaryCtas: NavLink[];
   mainNavLinks: MainNavLink[];
@@ -45,7 +47,7 @@ export type CardNavProps = {
   baseColor?: string;
 };
 
-const MAIN_ROW_HEIGHT = 72;
+const MAIN_ROW_HEIGHT = 80;
 
 function InternalLink({
   href,
@@ -128,8 +130,9 @@ function MainNavItem({ link }: { link: MainNavLink }) {
 
 export function CardNav({
   logo,
-  logoAlt = "Logo",
-  logoText,
+  logoAlt,
+  logoWidth,
+  logoHeight,
   contact,
   primaryCtas,
   mainNavLinks,
@@ -272,17 +275,16 @@ export function CardNav({
         >
           {/* Brand */}
           <div className="flex shrink-0 items-center">
-            {logo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={logo} alt={logoAlt} className="h-9" />
-            ) : (
-              <Link
-                href="/"
-                className="text-xl font-bold tracking-tight text-foreground"
-              >
-                {logoText ?? "BFFC"}
-              </Link>
-            )}
+            <Link href="/" className="flex items-center" aria-label={logoAlt}>
+              <Image
+                src={logo}
+                alt={logoAlt}
+                width={logoWidth}
+                height={logoHeight}
+                className="h-12 w-auto max-w-[14rem] object-contain object-left sm:h-14 sm:max-w-[16rem]"
+                priority
+              />
+            </Link>
           </div>
 
           {/* Primary CTAs — golden orange, beside logo */}

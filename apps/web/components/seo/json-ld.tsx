@@ -1,3 +1,4 @@
+import { brand } from "@/lib/brand";
 import { siteConfig } from "@/lib/site";
 
 export function OrganizationJsonLd() {
@@ -12,6 +13,7 @@ export function OrganizationJsonLd() {
     "@type": "NGO",
     name: siteConfig.legalName,
     url: siteConfig.url,
+    logo: `${siteConfig.url}${brand.logo.src}`,
     description: siteConfig.description,
     email: siteConfig.contact.email,
     taxID: siteConfig.contact.charityRegistration,

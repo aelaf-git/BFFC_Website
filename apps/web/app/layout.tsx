@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { OrganizationJsonLd } from "@/components/seo/json-ld";
 import { Header } from "@/components/layout/header";
+import { brand } from "@/lib/brand";
 import { rootMetadata } from "@/lib/seo/metadata";
 import "./globals.css";
 
@@ -16,7 +17,7 @@ export const metadata: Metadata = rootMetadata;
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#ff6600",
+  themeColor: brand.colors.primary,
 };
 
 export default function RootLayout({

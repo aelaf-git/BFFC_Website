@@ -4,6 +4,11 @@ import { useState } from "react";
 
 export type Language = "en" | "fr";
 
+const languages = [
+  { code: "en" as const, label: "EN", flag: "🇬🇧", ariaLabel: "English" },
+  { code: "fr" as const, label: "FR", flag: "🇫🇷", ariaLabel: "Français" },
+];
+
 type NavLanguageSwitcherProps = {
   className?: string;
 };
@@ -20,32 +25,25 @@ export function NavLanguageSwitcher({ className = "" }: NavLanguageSwitcherProps
       role="group"
       aria-label="Language"
     >
-      <button
-        type="button"
-        onClick={() => setLanguage("en")}
-        className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
-          language === "en"
-            ? "bg-primary text-white"
-            : "text-foreground hover:text-primary"
-        }`}
-        aria-pressed={language === "en"}
-        aria-label="English"
-      >
-        EN
-      </button>
-      <button
-        type="button"
-        onClick={() => setLanguage("fr")}
-        className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
-          language === "fr"
-            ? "bg-primary text-white"
-            : "text-foreground hover:text-primary"
-        }`}
-        aria-pressed={language === "fr"}
-        aria-label="Français"
-      >
-        FR
-      </button>
+      {languages.map((lang) => (
+        <button
+          key={lang.code}
+          type="button"
+          onClick={() => setLanguage(lang.code)}
+          className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold transition-colors sm:px-3 ${
+            language === lang.code
+              ? "bg-primary text-white"
+              : "text-foreground hover:text-primary"
+          }`}
+          aria-pressed={language === lang.code}
+          aria-label={lang.ariaLabel}
+        >
+          <span className="text-sm leading-none" aria-hidden>
+            {lang.flag}
+          </span>
+          <span>{lang.label}</span>
+        </button>
+      ))}
     </div>
   );
 }

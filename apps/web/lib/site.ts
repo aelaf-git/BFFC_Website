@@ -5,7 +5,7 @@
 export const siteConfig = {
   name: "Bright Future For Children Organization",
   legalName: "BFFC",
-  title: "BFFC | Building Futures Through Community",
+  title: "Bright Future For Children Organization",
   description:
     "BFFC brings communities together through programs, sport, and opportunity. Donate, get involved, and see the impact of your support.",
   url:
@@ -16,8 +16,8 @@ export const siteConfig = {
   contact: {
     address: "303-1835 10Ave SE, Calgary Alberta, T2G 5N7",
     charityRegistration: "726794944RR0001",
-    email: "info@bffc.org",
-    phone: "(867) 678-5383",
+    email: "Info@brightfuture4children.com",
+    phone: "+1 (867) 678-5383",
     phoneHref: "+18676785383",
   },
   social: {
