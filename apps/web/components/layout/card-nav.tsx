@@ -253,7 +253,7 @@ export function CardNav({
     <div className={`w-full overflow-visible border-b ${glassBar} ${className}`}>
       {/* Utility row — contact left, tools right (desktop) */}
       <div
-        className={`relative z-30 hidden items-start justify-between gap-6 overflow-visible border-b border-border/50 px-4 py-1.5 sm:px-6 lg:flex ${glassBar}`}
+        className={`relative z-30 hidden items-center justify-between gap-6 overflow-visible border-b border-border/50 px-4 py-1.5 sm:px-6 lg:flex ${glassBar}`}
       >
         <NavContactInfo contact={contact} className="min-w-0 flex-1" />
         <div className="relative z-30 flex shrink-0 items-center gap-4 overflow-visible pt-0.5">
@@ -274,16 +274,19 @@ export function CardNav({
           style={{ height: MAIN_ROW_HEIGHT }}
         >
           {/* Brand */}
-          <div className="flex shrink-0 items-center">
-            <Link href="/" className="flex items-center" aria-label={logoAlt}>
+          <div className="flex shrink-0 items-center gap-3">
+            <Link href="/" className="flex items-center gap-3" aria-label={logoAlt}>
               <Image
                 src={logo}
                 alt={logoAlt}
                 width={logoWidth}
                 height={logoHeight}
-                className="h-10 w-auto max-w-[12rem] object-contain object-left sm:h-11 sm:max-w-[14rem]"
+                className="h-8 w-auto max-w-[10rem] object-contain object-left sm:h-11 sm:max-w-[14rem]"
                 priority
               />
+              <span className="hidden font-serif text-lg font-semibold tracking-tight text-foreground sm:block md:text-xl lg:text-2xl">
+                Bright Future for Children
+              </span>
             </Link>
           </div>
 
@@ -294,7 +297,7 @@ export function CardNav({
                 key={cta.href}
                 href={cta.href}
                 ariaLabel={cta.ariaLabel}
-                className="inline-flex h-8 items-center rounded-lg bg-primary px-3 text-xs font-semibold whitespace-nowrap text-white transition-colors hover:bg-primary-hover sm:h-9 sm:px-4 sm:text-sm"
+                className="inline-flex h-8 items-center rounded-lg bg-primary px-2 text-[10px] font-semibold whitespace-nowrap text-white transition-colors hover:bg-primary-hover sm:h-9 sm:px-4 sm:text-sm"
               >
                 {cta.label}
               </InternalLink>
