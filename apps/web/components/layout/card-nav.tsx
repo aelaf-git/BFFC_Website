@@ -345,6 +345,21 @@ export function CardNav({
             <NavLanguageSwitcher />
             <NavSearch className="w-full max-w-sm" />
             <NavAccountMenu label="My Account (Donor Portal)" links={accountLinks} />
+            <nav
+              className="grid gap-2 border-t border-border pt-3 md:hidden"
+              aria-label="Page sections"
+            >
+              {mainNavLinks.map((link) => (
+                <InternalLink
+                  key={link.href}
+                  href={link.href}
+                  ariaLabel={link.ariaLabel}
+                  className="text-sm font-medium text-foreground hover:text-primary"
+                >
+                  {link.label}
+                </InternalLink>
+              ))}
+            </nav>
           </div>
 
           <div className="flex flex-col gap-3 md:flex-row md:gap-4">
@@ -367,21 +382,6 @@ export function CardNav({
             ))}
           </div>
 
-          <nav
-            className="mt-4 grid gap-2 border-t border-border pt-4 sm:grid-cols-2 xl:hidden"
-            aria-label="Mobile main navigation"
-          >
-            {mainNavLinks.map((link) => (
-              <InternalLink
-                key={link.href}
-                href={link.href}
-                ariaLabel={link.ariaLabel}
-                className="text-sm font-medium text-foreground hover:text-primary"
-              >
-                {link.label}
-              </InternalLink>
-            ))}
-          </nav>
         </div>
       </nav>
     </div>

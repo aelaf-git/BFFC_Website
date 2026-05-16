@@ -7,10 +7,15 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/",
 });
 
+/** Scroll targets for top-bar section links (content TBD) */
+const anchorClass = "scroll-mt-36 lg:scroll-mt-44";
+
 export default function Home() {
   return (
-    <section className="flex-1 bg-background pt-4" aria-label="Home">
-      {/* Page content will be built here */}
-    </section>
+    <div className="flex-1 bg-background" aria-label="Home">
+      <div id="about" className={anchorClass} tabIndex={-1} />
+      <div id="what-we-do" className={anchorClass} tabIndex={-1} />
+      <div id="get-involved" className={anchorClass} tabIndex={-1} />
+    </div>
   );
 }
