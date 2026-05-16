@@ -8,6 +8,8 @@
   --primary-light: #fef3e8;
   --muted: #525252;
   --border: #e5e5e5;
+  --hero-shade: #1a3a6b;
+  --hero-shade-deep: #0d2240;
 }
 
 @theme inline {
@@ -18,7 +20,10 @@
   --color-primary-light: var(--primary-light);
   --color-muted: var(--muted);
   --color-border: var(--border);
+  --color-hero-shade: var(--hero-shade);
+  --color-hero-shade-deep: var(--hero-shade-deep);
   --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-playfair);
 }
 
 @layer base {
