@@ -69,20 +69,6 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                   </span>
                 </Link>
               </div>
-
-              {/* Quote Section (Optional) */}
-              {slide.quote && (
-                <div className="mt-16 max-w-xl border-l-4 border-primary pl-8">
-                  <p className="font-serif text-2xl italic leading-relaxed text-white/80">
-                    {slide.quote}
-                  </p>
-                  {slide.quoteAttribution && (
-                    <footer className="mt-4 text-sm font-bold tracking-[0.2em] text-white/50 uppercase">
-                      — {slide.quoteAttribution}
-                    </footer>
-                  )}
-                </div>
-              )}
             </div>
           </div>
         </section>
