@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { GoArrowUpRight } from "react-icons/go";
 import { HiChevronDown } from "react-icons/hi2";
@@ -148,6 +148,17 @@ export function CardNav({
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
+  useEffect(() => {
+    if (isExpanded) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isExpanded]);
+
   const collapsedHeight = MAIN_ROW_HEIGHT;
 
   const calculateHeight = () => {
@@ -170,13 +181,16 @@ export function CardNav({
 
     const padding = 16;
     const contentHeight = contentEl.scrollHeight;
+    const currentWindowHeight = window.innerHeight || 800;
+    const maxHeight = currentWindowHeight - collapsedHeight - 40;
 
     contentEl.style.visibility = wasVisible;
     contentEl.style.pointerEvents = wasPointerEvents;
     contentEl.style.position = wasPosition;
     contentEl.style.height = wasHeight;
 
-    return collapsedHeight + contentHeight + padding;
+    const targetContentHeight = Math.max(0, Math.min(contentHeight, maxHeight));
+    return collapsedHeight + targetContentHeight + padding;
   };
 
   const createTimeline = () => {
@@ -337,15 +351,17 @@ export function CardNav({
 
         {/* Mega menu panel */}
         <div
-          className={`card-nav-content absolute right-0 bottom-0 left-0 z-[1] border-t border-border/60 bg-background/95 p-4 backdrop-blur-lg sm:px-6 ${
+          className={`card-nav-content absolute right-0 bottom-0 left-0 z-[1] border-t border-border/60 bg-background/95 p-4 backdrop-blur-lg sm:px-6 overflow-y-auto ${
             isExpanded ? "visible pointer-events-auto" : "invisible pointer-events-none"
           }`}
-          style={{ top: MAIN_ROW_HEIGHT }}
+          style={{ 
+            top: MAIN_ROW_HEIGHT,
+            maxHeight: `calc(100vh - ${MAIN_ROW_HEIGHT}px - 40px)`
+          }}
           aria-hidden={!isExpanded}
         >
           <div className="mb-4 flex flex-col gap-3 border-b border-border pb-4 lg:hidden">
             <NavContactInfo contact={contact} compact />
-            <NavLanguageSwitcher />
             <NavSearch className="w-full max-w-sm" />
             <NavAccountMenu label="My Account (Donor Portal)" links={accountLinks} />
             <nav
