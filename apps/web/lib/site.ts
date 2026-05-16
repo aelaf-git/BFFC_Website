@@ -14,7 +14,7 @@ export const siteConfig = {
   locale: "en_US",
   language: "en",
   contact: {
-    address: "303-1835 10Ave SE, Calgary Alberta, T2G 5N7",
+    address: "",
     charityRegistration: "726794944RR0001",
     email: "Info@brightfuture4children.com",
     phone: "+1 (867) 678-5383",

@@ -47,7 +47,7 @@ export type CardNavProps = {
   baseColor?: string;
 };
 
-const MAIN_ROW_HEIGHT = 80;
+const MAIN_ROW_HEIGHT = 64;
 
 function InternalLink({
   href,
@@ -253,7 +253,7 @@ export function CardNav({
     <div className={`w-full overflow-visible border-b ${glassBar} ${className}`}>
       {/* Utility row — contact left, tools right (desktop) */}
       <div
-        className={`relative z-30 hidden items-start justify-between gap-6 overflow-visible border-b border-border/50 px-4 py-2.5 sm:px-6 lg:flex ${glassBar}`}
+        className={`relative z-30 hidden items-start justify-between gap-6 overflow-visible border-b border-border/50 px-4 py-1.5 sm:px-6 lg:flex ${glassBar}`}
       >
         <NavContactInfo contact={contact} className="min-w-0 flex-1" />
         <div className="relative z-30 flex shrink-0 items-center gap-4 overflow-visible pt-0.5">
@@ -281,7 +281,7 @@ export function CardNav({
                 alt={logoAlt}
                 width={logoWidth}
                 height={logoHeight}
-                className="h-12 w-auto max-w-[14rem] object-contain object-left sm:h-14 sm:max-w-[16rem]"
+                className="h-10 w-auto max-w-[12rem] object-contain object-left sm:h-11 sm:max-w-[14rem]"
                 priority
               />
             </Link>
@@ -294,7 +294,7 @@ export function CardNav({
                 key={cta.href}
                 href={cta.href}
                 ariaLabel={cta.ariaLabel}
-                className="inline-flex h-9 items-center rounded-lg bg-primary px-3 text-xs font-semibold whitespace-nowrap text-white transition-colors hover:bg-primary-hover sm:h-10 sm:px-4 sm:text-sm"
+                className="inline-flex h-8 items-center rounded-lg bg-primary px-3 text-xs font-semibold whitespace-nowrap text-white transition-colors hover:bg-primary-hover sm:h-9 sm:px-4 sm:text-sm"
               >
                 {cta.label}
               </InternalLink>
