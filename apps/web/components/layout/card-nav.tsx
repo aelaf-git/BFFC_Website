@@ -175,7 +175,7 @@ export function CardNav({
     contentEl.style.pointerEvents = "auto";
     contentEl.style.position = "static";
     contentEl.style.height = "auto";
-    contentEl.offsetHeight;
+    void contentEl.offsetHeight;
 
     const padding = 16;
     const contentHeight = contentEl.scrollHeight;
