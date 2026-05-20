@@ -24,13 +24,17 @@ export function NavContactInfo({
       className={`text-xs leading-relaxed text-muted ${className}`}
     >
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-        <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
+        <a
+          href="#"
+          className="inline-flex items-center gap-1.5 font-medium text-foreground hover:text-primary transition-colors"
+          aria-label={`Charity Registration Number ${contact.charityRegistration}`}
+        >
           <HiIdentification className="h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
           <span className="whitespace-nowrap">
             CHARITY REGISTRATION:{" "}
-            <span className="font-normal text-muted">{contact.charityRegistration}</span>
+            <span className="font-normal text-muted group-hover:text-primary-hover">{contact.charityRegistration}</span>
           </span>
-        </span>
+        </a>
 
         {contact.address && (
           <span className="inline-flex items-center gap-1.5">

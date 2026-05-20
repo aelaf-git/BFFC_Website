@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { HeroSlide } from "@/lib/hero-slides";
@@ -12,6 +13,55 @@ type HeroCarouselProps = {
 export function HeroCarousel({ slides }: HeroCarouselProps) {
   // We only show the first 3 heros as requested, or all if slides.length is 3.
   const displaySlides = slides.slice(0, 3);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let isAutoScrolling = false;
+    let scrollTimeout: NodeJS.Timeout;
+
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      const H = window.innerHeight;
+
+      if (isAutoScrolling) {
+        lastY = currentY;
+        return;
+      }
+
+      const direction = currentY > lastY ? "down" : "up";
+      lastY = currentY;
+
+      // Only snap if we are scrolling down and within the hero carousel range
+      if (direction === "down" && currentY < 2 * H - 30) {
+        const currentSlide = Math.floor((currentY + 15) / H);
+        const nextSlide = currentSlide + 1;
+        const targetScroll = nextSlide * H;
+
+        const offset = currentY % H;
+        // Snap if we scroll down past a minor threshold (e.g. 20px)
+        if (offset > 20 && offset < H - 20) {
+          isAutoScrolling = true;
+          window.scrollTo({
+            top: targetScroll,
+            behavior: "smooth",
+          });
+
+          // Debounce and lock scroll snaps until the animation finishes
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            isAutoScrolling = false;
+            lastY = window.scrollY;
+          }, 700);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
 
   return (
     <div className="relative w-full">

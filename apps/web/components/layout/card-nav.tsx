@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { GoArrowUpRight } from "react-icons/go";
 import { HiChevronDown } from "react-icons/hi2";
@@ -44,7 +44,6 @@ export type CardNavProps = {
   items: CardNavItem[];
   className?: string;
   ease?: string;
-  baseColor?: string;
 };
 
 const MAIN_ROW_HEIGHT = 64;
@@ -140,7 +139,6 @@ export function CardNav({
   items,
   className = "",
   ease = "power3.out",
-  baseColor = "#fff",
 }: CardNavProps) {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -161,7 +159,7 @@ export function CardNav({
 
   const collapsedHeight = MAIN_ROW_HEIGHT;
 
-  const calculateHeight = () => {
+  const calculateHeight = useCallback(() => {
     const navEl = navRef.current;
     if (!navEl) return 320;
 
@@ -191,9 +189,9 @@ export function CardNav({
 
     const targetContentHeight = Math.max(0, Math.min(contentHeight, maxHeight));
     return collapsedHeight + targetContentHeight + padding;
-  };
+  }, [collapsedHeight]);
 
-  const createTimeline = () => {
+  const createTimeline = useCallback(() => {
     const navEl = navRef.current;
     if (!navEl) return null;
 
@@ -210,7 +208,7 @@ export function CardNav({
     );
 
     return tl;
-  };
+  }, [calculateHeight, collapsedHeight, ease]);
 
   useLayoutEffect(() => {
     const tl = createTimeline();
@@ -219,7 +217,7 @@ export function CardNav({
       tl?.kill();
       tlRef.current = null;
     };
-  }, [ease, items]);
+  }, [createTimeline, items]);
 
   useLayoutEffect(() => {
     const handleResize = () => {
@@ -240,7 +238,7 @@ export function CardNav({
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [isExpanded]);
+  }, [isExpanded, calculateHeight, createTimeline]);
 
   const toggleMenu = () => {
     const tl = tlRef.current;

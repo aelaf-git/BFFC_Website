@@ -21,7 +21,6 @@ export function Header() {
         mainNavLinks={mainNavLinks}
         accountLinks={accountLinks}
         items={dropdownNavItems}
-        baseColor="#ffffff"
       />
     </header>
   );

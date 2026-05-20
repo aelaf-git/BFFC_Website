@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Playfair_Display } from "next/font/google";
 import { OrganizationJsonLd } from "@/components/seo/json-ld";
 import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 import { brand } from "@/lib/brand";
 import { rootMetadata } from "@/lib/seo/metadata";
 import "./globals.css";
@@ -45,7 +46,9 @@ export default function RootLayout({
         <main id="main-content" className="flex flex-1 flex-col">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
 }
+
