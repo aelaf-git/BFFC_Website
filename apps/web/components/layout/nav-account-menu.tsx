@@ -46,7 +46,7 @@ export function NavAccountMenu({
 
       {open && (
         <div
-          className="absolute top-full right-0 z-[200] mt-2 min-w-[220px] rounded-lg border border-border bg-background py-2 shadow-xl"
+          className="absolute top-full right-0 z-[200] mt-2 min-w-[220px] rounded-lg border border-border bg-background py-2"
           role="menu"
         >
           {links.map((link) => (

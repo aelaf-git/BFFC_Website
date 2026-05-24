@@ -111,7 +111,7 @@ function MainNavItem({ link }: { link: MainNavLink }) {
           aria-hidden
         />
       </button>
-      <div className="invisible absolute top-full right-0 z-[200] mt-2 min-w-[240px] rounded-lg border border-border bg-background py-2 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+      <div className="invisible absolute top-full right-0 z-[200] mt-2 min-w-[240px] rounded-lg border border-border bg-background py-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
         {link.children.map((child) => (
           <Link
             key={child.href}
@@ -259,7 +259,7 @@ export function CardNav({
   };
 
   const glassBar =
-    "border-border/60 bg-background/85 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-background/75";
+    "border-border/60 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75";
 
   return (
     <div className={`w-full overflow-visible border-b ${glassBar} ${className}`}>

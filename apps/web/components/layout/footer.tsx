@@ -42,6 +42,101 @@ export function Footer() {
 
   return (
     <footer className="w-full bg-white text-zinc-600 border-t border-border font-sans">
+
+      {/* ── Newsletter Band ── */}
+      <div className="relative w-full overflow-hidden bg-[#1c2b1e]">
+        {/* Subtle texture overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg,transparent,transparent 2px,#fff 2px,#fff 3px), repeating-linear-gradient(90deg,transparent,transparent 2px,#fff 2px,#fff 3px)",
+          }}
+          aria-hidden
+        />
+
+        {/* Decorative accent shapes */}
+        <div
+          className="absolute -top-20 -right-20 w-72 h-72 rounded-full opacity-[0.06]"
+          style={{ background: "radial-gradient(circle, #f39120 0%, transparent 70%)" }}
+          aria-hidden
+        />
+        <div
+          className="absolute -bottom-16 -left-16 w-56 h-56 rounded-full opacity-[0.05]"
+          style={{ background: "radial-gradient(circle, #f39120 0%, transparent 70%)" }}
+          aria-hidden
+        />
+
+        <div className="relative mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
+
+            {/* Left — copy */}
+            <div className="max-w-lg">
+              <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-primary/80 mb-3">
+                Stay Connected
+              </p>
+              <h2 className="font-serif text-3xl sm:text-4xl font-medium leading-[1.15] tracking-tight text-white">
+                Join Our Community.
+                <span className="block text-primary/90">Brighten a Child&apos;s Future.</span>
+              </h2>
+              <p className="mt-4 text-[0.9rem] leading-relaxed text-white/50 font-light max-w-sm">
+                Subscribe to receive stories of impact, program updates, and ways
+                you can make a difference — delivered straight to your inbox.
+              </p>
+            </div>
+
+            {/* Right — form */}
+            <form
+              className="flex flex-col sm:flex-row gap-0 w-full max-w-md lg:max-w-sm xl:max-w-md"
+              onSubmit={(e) => e.preventDefault()}
+              aria-label="Newsletter signup form"
+            >
+              <label htmlFor="newsletter-email" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="newsletter-email"
+                type="email"
+                required
+                placeholder="Your email address"
+                autoComplete="email"
+                className="
+                  flex-1 min-w-0 h-12 px-5
+                  bg-white/8 border border-white/15
+                  text-white placeholder-white/30
+                  text-sm font-light tracking-wide
+                  outline-none
+                  focus:border-primary/60 focus:bg-white/10
+                  transition-all duration-200
+                  sm:rounded-l-sm sm:rounded-r-none rounded-sm
+                "
+              />
+              <button
+                type="submit"
+                className="
+                  h-12 px-7 shrink-0
+                  bg-primary hover:bg-primary-hover
+                  text-white text-[0.72rem] font-bold uppercase tracking-[0.18em]
+                  transition-colors duration-200
+                  sm:rounded-l-none sm:rounded-r-sm rounded-sm
+                  mt-0
+                "
+              >
+                Subscribe
+              </button>
+            </form>
+
+          </div>
+
+          {/* Hairline separator */}
+          <div className="mt-12 h-px bg-white/8" />
+
+          {/* Fine-print */}
+          <p className="mt-5 text-[0.65rem] text-white/25 font-light tracking-wide">
+            We respect your privacy. Unsubscribe at any time. No spam, ever.
+          </p>
+        </div>
+      </div>
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           {/* Logo & Contact details - 4 columns wide */}

@@ -1,173 +1,204 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 
-type TabContent = {
+type SubContent = {
   id: string;
-  label: string;
+  index: string;
   tag: string;
-  title: string;
+  titleLine1: string;
+  titleLine2: string;
   body: string;
-  cta: {
-    label: string;
-    href: string;
-  };
-  bgImage: string;
-  fgImage: string;
+  cta: { label: string; href: string };
+  image: string;
+  imageAlt: string;
 };
 
+const subsections: SubContent[] = [
+  {
+    id: "about-us",
+    index: "01",
+    tag: "About Us",
+    titleLine1: "Building Bright Futures",
+    titleLine2: "for Every Child",
+    body: "Bright Future for Children brings communities together through structured programs, youth sport initiatives, and life-changing opportunity. We believe every child deserves the foundation to thrive.",
+    cta: { label: "Get Involved", href: "/ways-to-give" },
+    image: "/about-us.png",
+    imageAlt: "Children playing soccer together in a sunny community field",
+  },
+  {
+    id: "mission-vision",
+    index: "02",
+    tag: "Our Mission & Vision",
+    titleLine1: "A World Where Every",
+    titleLine2: "Child Can Flourish",
+    body: "Our mission is to foster inclusive environments where youth can grow, learn, and lead. We build local capacity, promote health equity, and champion equal opportunity for all children.",
+    cta: { label: "See Our Work", href: "/impact" },
+    image: "/mission-background.png",
+    imageAlt: "Children learning together in a bright, welcoming classroom",
+  },
+  {
+    id: "leadership",
+    index: "03",
+    tag: "Leadership",
+    titleLine1: "Guided by Committed",
+    titleLine2: "Community Leaders",
+    body: "Our board of advocates, educators, and sport professionals leads with transparency and purpose — working hand-in-hand with families and local partners to create sustainable, lasting change.",
+    cta: { label: "Meet the Team", href: "/learn-more" },
+    image: "/leadership-background.png",
+    imageAlt: "Diverse community volunteers and leaders planning together",
+  },
+  {
+    id: "where-we-work",
+    index: "04",
+    tag: "Where We Work",
+    titleLine1: "Support Delivered",
+    titleLine2: "Where It Matters Most",
+    body: "We operate across diverse communities in Canada, establishing program hubs in schools, community centers, and athletic parks — ensuring every child, regardless of background, has access.",
+    cta: { label: "View Our Reach", href: "/impact" },
+    image: "/about-us.png",
+    imageAlt: "A thriving community space where children gather and grow",
+  },
+];
+
 export function AboutSection() {
-  const [activeTab, setActiveTab] = useState<string>("about-us");
-
-  const tabs: TabContent[] = [
-    {
-      id: "about-us",
-      label: "About Us",
-      tag: "Who We Are",
-      title: "Empowering children, building strong communities.",
-      body: "Bright Future for Children (BFFC) brings communities together through structured programs, youth sport initiatives, and life-changing opportunity. We believe every child deserves the foundation to thrive.",
-      cta: { label: "Get Involved", href: "/ways-to-give" },
-      bgImage: "/about-us.png",
-      fgImage: "/about-foreground.png",
-    },
-    {
-      id: "mission-vision",
-      label: "Our Mission & Vision",
-      tag: "Our Purpose",
-      title: "A world where every child can reach their potential.",
-      body: "Our mission is to foster inclusive environments where youth can grow, learn, and lead. Through community programs and sports, we build local capacity, promote health equity, and champion equal opportunity.",
-      cta: { label: "See Our Work", href: "/impact" },
-      bgImage: "/mission-background.png",
-      fgImage: "/about-foreground.png",
-    },
-    {
-      id: "leadership",
-      label: "Leadership",
-      tag: "Our Governance",
-      title: "Guided by dedicated community advocates.",
-      body: "Our leadership board is comprised of community advocates, educators, and sport professionals committed to transparent governance and sustainable local impact. We work hand-in-hand with local partners.",
-      cta: { label: "Meet the Team", href: "/learn-more" },
-      bgImage: "/leadership-background.png",
-      fgImage: "/about-foreground.png",
-    },
-    {
-      id: "where-we-work",
-      label: "Where We Work",
-      tag: "Our Reach",
-      title: "Providing support where it is needed most.",
-      body: "We operate across diverse communities in Canada, establishing hubs in local community centers, schools, and athletic parks to ensure our programs are accessible to every child, regardless of background.",
-      cta: { label: "View Program Sites", href: "/impact" },
-      bgImage: "/about-us.png",
-      fgImage: "/about-foreground.png",
-    },
-  ];
-
-  const currentTab = tabs.find((t) => t.id === activeTab) || tabs[0];
-
   return (
-    <section className="w-full bg-white py-24 md:py-32 border-b border-zinc-100">
-      <div className="container mx-auto px-6 sm:px-10 lg:px-16">
-        
-        {/* Section Header */}
-        <div className="mb-10">
-          <h2 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-zinc-900">
-            About Us
-          </h2>
-          <div className="mt-3 h-[2px] w-8 bg-primary" />
-        </div>
-
-        {/* Horizontal Navigation Tabs */}
-        <div className="flex overflow-x-auto scrollbar-none gap-x-8 border-b border-zinc-200 pb-px mb-12 text-sm font-medium">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`whitespace-nowrap pb-4 transition-all duration-200 relative ${
-                activeTab === tab.id
-                  ? "text-primary border-b-2 border-primary -mb-[2px] font-semibold"
-                  : "text-zinc-400 hover:text-zinc-900"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Content Layout Grid */}
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center lg:gap-20">
-          
-          {/* Left Column: Text Content */}
-          <div className="lg:col-span-6 flex flex-col justify-center">
-            {/* Tag/Category */}
-            <span className="text-sm font-semibold tracking-wider text-primary uppercase mb-4 block">
-              {currentTab.tag}
-            </span>
-
-            {/* Heading */}
-            <h2 className="font-serif text-4xl font-medium tracking-tight text-zinc-900 sm:text-5xl leading-[1.15]">
-              {currentTab.title}
-            </h2>
-
-            {/* Description */}
-            <p className="mt-6 text-base md:text-lg leading-relaxed text-zinc-600 max-w-xl">
-              {currentTab.body}
+    <section
+      className="w-full bg-white"
+      aria-label="About Bright Future for Children"
+    >
+      {/* ── Section Header ── */}
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-0">
+        <div className="flex items-end justify-between border-b border-zinc-200 pb-6">
+          <div>
+            <p className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-primary mb-3">
+              Who We Are
             </p>
-
-            {/* CTA Circle Arrow Link */}
-            <div>
-              <Link
-                href={currentTab.cta.href}
-                className="group inline-flex items-center gap-4 text-zinc-900 hover:text-primary transition-colors mt-8"
-                aria-label={currentTab.cta.label}
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-300 transition-colors group-hover:border-primary group-hover:bg-primary/5">
-                  <ArrowRight className="h-4 w-4 text-zinc-700 transition-transform group-hover:translate-x-1 group-hover:text-primary" />
-                </div>
-                <span className="text-sm font-semibold tracking-wider uppercase text-zinc-800 group-hover:text-primary transition-colors">
-                  {currentTab.cta.label}
-                </span>
-              </Link>
-            </div>
+            <h2 className="font-serif text-4xl sm:text-5xl font-medium tracking-tight text-zinc-900">
+              About Us
+            </h2>
           </div>
+          {/* Decorative counter */}
+          <span className="hidden sm:block font-serif text-[5rem] leading-none font-medium text-zinc-100 select-none">
+            BFFC
+          </span>
+        </div>
+      </div>
 
-          {/* Right Column: Layered Overlapping Images */}
-          <div className="lg:col-span-6 relative pl-8 pb-8 sm:pl-12 sm:pb-12 pt-6">
-            
-            {/* Main Landscape Image Container */}
-            <div className="relative aspect-[4/3] w-full rounded-[2rem] overflow-hidden bg-zinc-50 border border-zinc-100">
-              <Image
-                src={currentTab.bgImage}
-                alt={currentTab.title}
-                fill
-                priority
-                className="object-cover transition-opacity duration-500"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
+      {/* ── Subsections ── */}
+      {subsections.map((s, index) => {
+        const imageRight = index % 2 === 0;
+        /* Alternate the text panel background for depth */
+        const textBg = index % 2 === 0 ? "bg-white" : "bg-[#fdf9f5]";
 
-            {/* Overlapping Small Square Image Container */}
-            <div className="absolute bottom-0 left-0 w-[42%] aspect-square rounded-[1.5rem] border-8 border-white bg-zinc-100 overflow-hidden z-10">
-              <div className="relative w-full h-full p-2 bg-gradient-to-tr from-primary/10 via-accent/10 to-transparent">
-                <div className="relative w-full h-full rounded-[1rem] overflow-hidden bg-white">
-                  <Image
-                    src={currentTab.fgImage}
-                    alt="Smiling child"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 40vw, 20vw"
-                  />
-                </div>
+        return (
+          <article key={s.id} id={s.id} className="relative w-full">
+
+            {/* Divider row with section label */}
+            <div className="container mx-auto px-6 sm:px-10 lg:px-20">
+              <div className="flex items-center gap-4 py-0">
+                <span className="text-[0.6rem] font-bold uppercase tracking-[0.25em] text-zinc-400">
+                  {s.index}
+                </span>
+                <div className="flex-1 h-px bg-zinc-100" />
+                <span className="text-[0.6rem] font-bold uppercase tracking-[0.25em] text-zinc-300">
+                  {s.tag}
+                </span>
               </div>
             </div>
 
-          </div>
+            {/* Content row */}
+            <div
+              className={`flex flex-col ${imageRight ? "lg:flex-row" : "lg:flex-row-reverse"}`}
+            >
+              {/* ── Photography panel ── */}
+              <div className="relative w-full lg:w-[52%] aspect-[4/3] lg:aspect-auto lg:min-h-[560px] shrink-0 overflow-hidden">
+                <Image
+                  src={s.image}
+                  alt={s.imageAlt}
+                  fill
+                  className="object-cover transition-transform duration-700 hover:scale-[1.02]"
+                  sizes="(max-width: 1024px) 100vw, 52vw"
+                />
+                {/* Subtle gradient overlay on image bottom */}
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+              </div>
 
-        </div>
+              {/* ── Text panel ── */}
+              <div
+                className={`
+                  relative flex flex-col justify-center w-full lg:w-[48%]
+                  px-8 py-16 sm:px-14 sm:py-20 lg:py-28
+                  ${imageRight ? "lg:pl-16 lg:pr-14" : "lg:pr-16 lg:pl-14"}
+                  ${textBg}
+                `}
+              >
+                {/* Accent vertical bar */}
+                <div
+                  className={`
+                    hidden lg:block absolute top-1/2 -translate-y-1/2 w-[3px] h-20 bg-primary rounded-full
+                    ${imageRight ? "left-0" : "right-0"}
+                  `}
+                />
 
+                {/* Index + Tag row */}
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="font-serif text-4xl font-medium text-zinc-100 leading-none select-none">
+                    {s.index}
+                  </span>
+                  <div className="h-px w-8 bg-primary/50" />
+                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-primary">
+                    {s.tag}
+                  </p>
+                </div>
+
+                {/* Two-line Serif Title */}
+                <h3 className="font-serif font-medium tracking-tight leading-[1.12]">
+                  <span className="block text-[1.9rem] sm:text-[2.3rem] lg:text-[2.6rem] text-zinc-900">
+                    {s.titleLine1}
+                  </span>
+                  <span className="block text-[1.9rem] sm:text-[2.3rem] lg:text-[2.6rem] text-primary">
+                    {s.titleLine2}
+                  </span>
+                </h3>
+
+                {/* Decorative rule under title */}
+                <div className="mt-5 flex items-center gap-2">
+                  <div className="w-8 h-[2px] bg-primary" />
+                  <div className="w-2 h-[2px] bg-primary/30" />
+                </div>
+
+                {/* Body */}
+                <p className="mt-6 max-w-[38ch] text-[0.95rem] leading-[1.85] text-zinc-500 font-light">
+                  {s.body}
+                </p>
+
+                {/* CTA */}
+                <Link
+                  href={s.cta.href}
+                  className="group mt-10 inline-flex items-center gap-4 self-start text-zinc-900 transition-all"
+                  aria-label={s.cta.label}
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-white transition-all group-hover:border-primary group-hover:bg-primary">
+                    <ArrowRight className="h-4 w-4 text-zinc-500 transition-all group-hover:text-white group-hover:translate-x-0.5" />
+                  </div>
+                  <span className="text-sm font-medium text-zinc-700 group-hover:text-primary transition-colors tracking-wide">
+                    {s.cta.label}
+                  </span>
+                </Link>
+
+              </div>
+            </div>
+
+          </article>
+        );
+      })}
+
+      {/* ── Bottom border ── */}
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20">
+        <div className="border-t border-zinc-100" />
       </div>
+
     </section>
   );
 }

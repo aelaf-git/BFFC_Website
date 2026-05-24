@@ -24,6 +24,13 @@
   --color-hero-shade-deep: var(--hero-shade-deep);
   --font-sans: var(--font-geist-sans);
   --font-serif: var(--font-playfair);
+  --shadow: none;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
+  --shadow-2xl: none;
+  --shadow-inner: none;
 }
 
 @layer base {
