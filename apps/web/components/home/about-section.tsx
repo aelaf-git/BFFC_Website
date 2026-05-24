@@ -71,9 +71,6 @@ export function AboutSection() {
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-0">
         <div className="flex items-end justify-between border-b border-zinc-200 pb-6">
           <div>
-            <p className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-primary mb-3">
-              Who We Are
-            </p>
             <h2 className="font-serif text-4xl sm:text-5xl font-medium tracking-tight text-zinc-900">
               About Us
             </h2>
