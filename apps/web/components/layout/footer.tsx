@@ -195,28 +195,25 @@ export function Footer() {
         </div>
 
         {/* ── Newsletter Band ── */}
-        <div className="mt-14 border-t border-zinc-100 pt-12">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+        <div className="mt-16 pt-16 border-t border-zinc-100">
+          <div className="flex flex-col items-center text-center">
 
-            {/* Left — copy */}
-            <div className="max-w-md">
-              <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-primary mb-2">
-                Stay Connected
-              </p>
-              <h2 className="font-serif text-2xl sm:text-3xl font-medium leading-[1.2] tracking-tight text-zinc-900">
-                Join Our Community.
-                <span className="block text-primary">Brighten a Child&apos;s Future.</span>
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-zinc-500 font-light max-w-xs">
-                Stories of impact, program updates, and ways to help — delivered to your inbox.
-              </p>
-            </div>
+            {/* Heading */}
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-zinc-900 leading-[1.15] max-w-xl">
+              Stay in the Loop.{" "}
+              <span className="text-primary">Make a Difference.</span>
+            </h2>
 
-            {/* Right — form */}
-            <div className="w-full max-w-md">
+            <p className="mt-5 text-sm sm:text-base leading-relaxed text-zinc-400 font-light max-w-md">
+              Stories of impact, program updates, and ways you can help —
+              delivered straight to your inbox.
+            </p>
+
+            {/* Form — constrained width, centered */}
+            <div className="mt-8 w-full max-w-lg">
               <NewsletterForm variant="light" />
-              <p className="mt-3 text-[0.65rem] text-zinc-400 font-light tracking-wide">
-                We respect your privacy. Unsubscribe at any time. No spam, ever.
+              <p className="mt-4 text-[0.7rem] text-zinc-400 font-light tracking-wide">
+                We respect your privacy. Unsubscribe at any time.
               </p>
             </div>
 
