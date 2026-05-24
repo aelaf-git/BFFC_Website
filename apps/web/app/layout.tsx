@@ -3,7 +3,6 @@ import { Geist, Playfair_Display } from "next/font/google";
 import { OrganizationJsonLd } from "@/components/seo/json-ld";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { NewsletterSection } from "@/components/layout/newsletter-section";
 import { brand } from "@/lib/brand";
 import { rootMetadata } from "@/lib/seo/metadata";
 import "./globals.css";
@@ -48,7 +47,6 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <NewsletterSection />
       </body>
     </html>
   );

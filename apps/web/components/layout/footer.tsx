@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site";
 import { brand } from "@/lib/brand";
+import { NewsletterForm } from "@/components/layout/newsletter-form";
 import {
   FaFacebookF,
   FaInstagram,
@@ -193,8 +194,37 @@ export function Footer() {
           </div>
         </div>
 
+        {/* ── Newsletter Band ── */}
+        <div className="mt-14 border-t border-zinc-100 pt-12">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+
+            {/* Left — copy */}
+            <div className="max-w-md">
+              <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-primary mb-2">
+                Stay Connected
+              </p>
+              <h2 className="font-serif text-2xl sm:text-3xl font-medium leading-[1.2] tracking-tight text-zinc-900">
+                Join Our Community.
+                <span className="block text-primary">Brighten a Child&apos;s Future.</span>
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-500 font-light max-w-xs">
+                Stories of impact, program updates, and ways to help — delivered to your inbox.
+              </p>
+            </div>
+
+            {/* Right — form */}
+            <div className="w-full max-w-md">
+              <NewsletterForm variant="light" />
+              <p className="mt-3 text-[0.65rem] text-zinc-400 font-light tracking-wide">
+                We respect your privacy. Unsubscribe at any time. No spam, ever.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="mt-16 border-t border-border pt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-xs text-zinc-400">
+        <div className="mt-10 border-t border-border pt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-xs text-zinc-400">
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
