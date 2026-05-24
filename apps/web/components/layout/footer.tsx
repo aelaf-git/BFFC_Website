@@ -210,7 +210,7 @@ export function Footer() {
               Stay in the Loop. <span className="text-primary">Make a Difference.</span>
             </h2>
 
-            <p className="mt-5 text-sm sm:text-base leading-relaxed text-zinc-400 font-light max-w-md">
+            <p className="mt-5 text-sm sm:text-base leading-relaxed text-zinc-400 font-light whitespace-normal md:whitespace-nowrap">
               Stories of impact, program updates, and ways you can help —
               delivered straight to your inbox.
             </p>
