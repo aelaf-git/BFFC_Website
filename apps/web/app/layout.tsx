@@ -33,8 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${playfair.variable} h-full`}>
-      <body className="flex min-h-full flex-col font-sans antialiased">
+    <html lang="en" className={`${geistSans.variable} ${playfair.variable} h-full`} suppressHydrationWarning>
+      <body className="flex min-h-full flex-col font-sans antialiased" suppressHydrationWarning>
         <OrganizationJsonLd />
         <a
           href="#main-content"

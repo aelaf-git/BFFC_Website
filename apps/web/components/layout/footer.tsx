@@ -42,7 +42,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="w-full bg-white text-zinc-600 border-t border-border font-sans">
+    <footer className="w-full bg-white text-zinc-600 font-sans">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           {/* Logo & Contact details - 4 columns wide */}
@@ -181,7 +181,7 @@ export function Footer() {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-50 border border-zinc-200 hover:bg-primary hover:border-primary hover:text-white transition-all duration-300 text-zinc-600"
+                        className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-50 hover:bg-primary hover:text-white transition-all duration-300 text-zinc-600"
                         aria-label={social.label}
                       >
                         <Icon className="h-4 w-4" />
@@ -195,7 +195,7 @@ export function Footer() {
         </div>
 
         {/* ── Newsletter Band ── */}
-        <div className="mt-16 pt-16 border-t border-zinc-100">
+        <div className="mt-28">
           <div className="flex flex-col items-center text-center">
 
             {/* Heading */}
@@ -221,7 +221,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-10 border-t border-border pt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-xs text-zinc-400">
+        <div className="mt-24 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-xs text-zinc-400">
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>

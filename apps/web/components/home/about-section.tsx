@@ -77,7 +77,7 @@ export function AboutSection() {
 
                 {/* Photography panel: framed in a sleek elegant box container */}
                 <div className="w-full lg:w-[50%] shrink-0">
-                  <div className="relative p-3 sm:p-4 rounded-3xl bg-zinc-50/50 border border-zinc-100 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] transition-all duration-500">
+                  <div className="relative p-3 sm:p-4 rounded-3xl bg-zinc-50/50 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] transition-all duration-500">
                     <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] overflow-hidden rounded-2xl bg-zinc-100">
                       <Image
                         src={s.image}

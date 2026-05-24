@@ -259,13 +259,13 @@ export function CardNav({
   };
 
   const glassBar =
-    "border-border/60 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75";
+    "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75";
 
   return (
-    <div className={`w-full overflow-visible border-b ${glassBar} ${className}`}>
+    <div className={`w-full overflow-visible ${glassBar} ${className}`}>
       {/* Utility row — contact left, tools right (desktop) */}
       <div
-        className={`relative z-30 hidden items-center justify-between gap-6 overflow-visible border-b border-border/50 px-4 py-1.5 sm:px-6 lg:flex ${glassBar}`}
+        className={`relative z-30 hidden items-center justify-between gap-6 overflow-visible px-4 py-1.5 sm:px-6 lg:flex ${glassBar}`}
       >
         <NavContactInfo contact={contact} className="min-w-0 flex-1" />
         <div className="relative z-30 flex shrink-0 items-center gap-4 overflow-visible pt-0.5">
@@ -303,7 +303,7 @@ export function CardNav({
           </div>
 
           {/* Primary CTAs — golden orange, beside logo */}
-          <div className="flex shrink-0 items-center gap-3 border-l border-border pl-3 sm:pl-4 md:gap-4 lg:gap-5 lg:pl-5">
+          <div className="flex shrink-0 items-center gap-3 pl-3 sm:pl-4 md:gap-4 lg:gap-5 lg:pl-5">
             {primaryCtas.map((cta) => (
               <InternalLink
                 key={cta.href}
@@ -332,7 +332,7 @@ export function CardNav({
             <NavLanguageSwitcher className="lg:hidden" />
             <button
               type="button"
-              className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-lg border border-border transition-colors hover:bg-primary-light ${isHamburgerOpen ? "open" : ""}`}
+              className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-lg transition-colors hover:bg-primary-light ${isHamburgerOpen ? "open" : ""}`}
               onClick={toggleMenu}
               aria-label={isExpanded ? "Close menu" : "Open menu"}
               aria-expanded={isExpanded}
@@ -349,7 +349,7 @@ export function CardNav({
 
         {/* Mega menu panel */}
         <div
-          className={`card-nav-content absolute right-0 bottom-0 left-0 z-[1] border-t border-border/60 bg-background/95 p-4 backdrop-blur-lg sm:px-6 overflow-y-auto ${
+          className={`card-nav-content absolute right-0 bottom-0 left-0 z-[1] bg-background/95 p-4 backdrop-blur-lg sm:px-6 overflow-y-auto ${
             isExpanded ? "visible pointer-events-auto" : "invisible pointer-events-none"
           }`}
           style={{ 
@@ -358,12 +358,12 @@ export function CardNav({
           }}
           aria-hidden={!isExpanded}
         >
-          <div className="mb-4 flex flex-col gap-3 border-b border-border pb-4 lg:hidden">
+          <div className="mb-4 flex flex-col gap-3 pb-4 lg:hidden">
             <NavContactInfo contact={contact} compact />
             <NavSearch className="w-full max-w-sm" />
             <NavAccountMenu label="My Account (Donor Portal)" links={accountLinks} />
             <nav
-              className="grid gap-2 border-t border-border pt-3 md:hidden"
+              className="grid gap-2 pt-3 md:hidden"
               aria-label="Page sections"
             >
               {mainNavLinks.map((link) => (
@@ -384,10 +384,10 @@ export function CardNav({
               <div
                 key={`${item.label}-${idx}`}
                 ref={setCardRef(idx)}
-                className="flex min-w-0 flex-1 flex-col gap-3 rounded-lg border border-border p-4"
+                className="flex min-w-0 flex-1 flex-col gap-3 rounded-2xl p-4 shadow-[0_8px_30px_rgb(0,0,0,0.015)]"
                 style={{ backgroundColor: item.bgColor, color: item.textColor }}
               >
-                <div className="border-l-4 border-primary pl-3 text-lg font-semibold">
+                <div className="border-l-2 border-primary pl-3 text-lg font-semibold">
                   {item.label}
                 </div>
                 <div className="flex flex-col gap-1">
