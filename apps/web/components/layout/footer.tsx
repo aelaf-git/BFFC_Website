@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site";
@@ -43,8 +45,11 @@ export function Footer() {
 
   return (
     <footer className="w-full bg-white text-zinc-600 font-sans">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16">
+        
+        {/* ── Main Links Grid ── */}
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+          
           {/* Logo & Contact details - 4 columns wide */}
           <div className="lg:col-span-4 flex flex-col gap-6">
             <Link href="/" className="inline-flex items-center gap-3" aria-label={brand.logo.alt}>
@@ -59,7 +64,7 @@ export function Footer() {
                 Bright Future for Children
               </span>
             </Link>
-            <p className="text-sm leading-relaxed text-zinc-500 max-w-sm">
+            <p className="text-sm leading-relaxed text-zinc-500 max-w-sm font-light">
               {siteConfig.description}
             </p>
             <div className="flex flex-col gap-3.5 text-xs text-zinc-500">
@@ -102,12 +107,13 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Links columns - 8 columns wide total, divided into subgrids */}
+          {/* Links columns - 8 columns wide total */}
           <div className="lg:col-span-8 grid grid-cols-1 gap-8 sm:grid-cols-3">
+            
             {/* Column 1: Footer Navigation */}
             <div className="flex flex-col gap-4">
               <h2 className="font-serif text-lg font-semibold tracking-wide text-foreground">
-                Footer Navigation
+                Explore
               </h2>
               <nav className="flex flex-col gap-2.5 text-sm" aria-label="Footer navigation">
                 <Link href="/#about" className="hover:text-primary transition-colors">
@@ -134,10 +140,10 @@ export function Footer() {
               </nav>
             </div>
 
-            {/* Column 2: Transparency & Reports */}
+            {/* Column 2: Transparency */}
             <div className="flex flex-col gap-4">
               <h2 className="font-serif text-lg font-semibold tracking-wide text-foreground">
-                Transparency & Reports
+                Transparency
               </h2>
               <nav className="flex flex-col gap-2.5 text-sm" aria-label="Transparency and reports">
                 <Link href="/transparency/annual-report" className="hover:text-primary transition-colors">
@@ -172,7 +178,7 @@ export function Footer() {
                 <h2 className="font-serif text-md font-semibold tracking-wide text-foreground">
                   Connect With Us
                 </h2>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                   {socialLinks.map((social) => {
                     const Icon = social.icon;
                     return (
@@ -181,27 +187,27 @@ export function Footer() {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-50 hover:bg-primary hover:text-white transition-all duration-300 text-zinc-600"
+                        className="text-zinc-400 hover:text-primary transition-colors duration-300"
                         aria-label={social.label}
                       >
-                        <Icon className="h-4 w-4" />
+                        <Icon className="h-4.5 w-4.5" />
                       </a>
                     );
                   })}
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 
-        {/* ── Newsletter Band ── */}
-        <div className="mt-28">
+        {/* ── Newsletter Band (Centered with dynamic title) ── */}
+        <div className="mt-28 mb-16">
           <div className="flex flex-col items-center text-center">
 
-            {/* Heading */}
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-zinc-900 leading-[1.15] max-w-xl">
-              Stay in the Loop.{" "}
-              <span className="text-primary">Make a Difference.</span>
+            {/* Heading: Guaranteed single line on desktop/tablet, wraps fluidly on mobile */}
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-zinc-900 leading-[1.15] whitespace-normal md:whitespace-nowrap">
+              Stay in the Loop. <span className="text-primary">Make a Difference.</span>
             </h2>
 
             <p className="mt-5 text-sm sm:text-base leading-relaxed text-zinc-400 font-light max-w-md">
@@ -210,7 +216,7 @@ export function Footer() {
             </p>
 
             {/* Form — constrained width, centered */}
-            <div className="mt-8 w-full max-w-lg">
+            <div className="mt-10 w-full max-w-lg mx-auto">
               <NewsletterForm variant="light" />
               <p className="mt-4 text-[0.7rem] text-zinc-400 font-light tracking-wide">
                 We respect your privacy. Unsubscribe at any time.
@@ -221,14 +227,15 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-24 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-xs text-zinc-400">
+        <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-xs text-zinc-400">
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
-          <p className="flex items-center gap-1.5">
+          <p className="font-light">
             Bright Future for Children is a registered Canadian charity.
           </p>
         </div>
+
       </div>
     </footer>
   );
