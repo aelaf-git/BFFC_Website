@@ -66,69 +66,67 @@ export function AboutSection() {
         </p>
       </div>
 
-      {/* ── Subsections ── */}
-      {subsections.map((s, index) => {
-        const imageRight = index % 2 === 0;
-        const textBg = index % 2 === 0 ? "bg-white" : "bg-[#fdf9f5]";
+      {/* ── Subsections with clean margins and spacings ── */}
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pb-28 space-y-24 lg:space-y-36">
+        {subsections.map((s, index) => {
+          const imageRight = index % 2 === 0;
 
-        return (
-          <article key={s.id} id={s.id} className="relative w-full">
-            <div className={`flex flex-col ${imageRight ? "lg:flex-row" : "lg:flex-row-reverse"}`}>
+          return (
+            <article key={s.id} id={s.id} className="relative w-full">
+              <div className={`flex flex-col lg:items-center gap-10 lg:gap-16 xl:gap-24 ${imageRight ? "lg:flex-row" : "lg:flex-row-reverse"}`}>
 
-              {/* Photography panel */}
-              <div className="relative w-full lg:w-[55%] aspect-[4/3] sm:aspect-[16/9] lg:aspect-auto lg:min-h-[600px] shrink-0 overflow-hidden">
-                <Image
-                  src={s.image}
-                  alt={s.imageAlt}
-                  fill
-                  className="object-cover transition-transform duration-700 hover:scale-[1.03]"
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                />
-              </div>
-
-              {/* Text panel */}
-              <div
-                className={`
-                  flex flex-col justify-center w-full lg:w-[45%]
-                  px-8 py-16 sm:px-16 sm:py-24 lg:py-32
-                  ${imageRight ? "lg:pl-20 lg:pr-16" : "lg:pr-20 lg:pl-16"}
-                  ${textBg}
-                `}
-              >
-                {/* Title */}
-                <h3 className="font-serif font-medium tracking-tight leading-[1.1]">
-                  <span className="block text-[2rem] sm:text-[2.6rem] lg:text-[3rem] text-zinc-900">
-                    {s.titleLine1}
-                  </span>
-                  <span className="block text-[2rem] sm:text-[2.6rem] lg:text-[3rem] text-primary">
-                    {s.titleLine2}
-                  </span>
-                </h3>
-
-                {/* Body */}
-                <p className="mt-7 text-base sm:text-[1.05rem] leading-[1.9] text-zinc-500 font-light max-w-[36ch]">
-                  {s.body}
-                </p>
-
-                {/* CTA */}
-                <Link
-                  href={s.cta.href}
-                  className="group mt-10 inline-flex items-center gap-4 self-start"
-                  aria-label={s.cta.label}
-                >
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-white transition-all duration-300 group-hover:border-primary group-hover:bg-primary">
-                    <ArrowRight className="h-4 w-4 text-zinc-400 transition-all duration-300 group-hover:text-white group-hover:translate-x-0.5" />
+                {/* Photography panel: framed in a sleek elegant box container */}
+                <div className="w-full lg:w-[50%] shrink-0">
+                  <div className="relative p-3 sm:p-4 rounded-3xl bg-zinc-50/50 border border-zinc-100 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] transition-all duration-500">
+                    <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] overflow-hidden rounded-2xl bg-zinc-100">
+                      <Image
+                        src={s.image}
+                        alt={s.imageAlt}
+                        fill
+                        className="object-cover transition-transform duration-700 hover:scale-[1.03]"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
+                    </div>
                   </div>
-                  <span className="text-sm font-medium text-zinc-600 tracking-wide transition-colors duration-200 group-hover:text-primary">
-                    {s.cta.label}
-                  </span>
-                </Link>
-              </div>
+                </div>
 
-            </div>
-          </article>
-        );
-      })}
+                {/* Text panel */}
+                <div className="flex flex-col justify-center w-full lg:w-[50%] py-2">
+                  {/* Title */}
+                  <h3 className="font-serif font-medium tracking-tight leading-[1.1]">
+                    <span className="block text-[2rem] sm:text-[2.6rem] lg:text-[3rem] text-zinc-900">
+                      {s.titleLine1}
+                    </span>
+                    <span className="block text-[2rem] sm:text-[2.6rem] lg:text-[3rem] text-primary">
+                      {s.titleLine2}
+                    </span>
+                  </h3>
+
+                  {/* Body */}
+                  <p className="mt-7 text-base sm:text-[1.05rem] leading-[1.9] text-zinc-500 font-light max-w-[42ch]">
+                    {s.body}
+                  </p>
+
+                  {/* CTA */}
+                  <Link
+                    href={s.cta.href}
+                    className="group mt-10 inline-flex items-center gap-4 self-start"
+                    aria-label={s.cta.label}
+                  >
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-white transition-all duration-300 group-hover:border-primary group-hover:bg-primary">
+                      <ArrowRight className="h-4 w-4 text-zinc-400 transition-all duration-300 group-hover:text-white group-hover:translate-x-0.5" />
+                    </div>
+                    <span className="text-sm font-medium text-zinc-600 tracking-wide transition-colors duration-200 group-hover:text-primary">
+                      {s.cta.label}
+                    </span>
+                  </Link>
+                </div>
+
+              </div>
+            </article>
+          );
+        })}
+      </div>
 
     </section>
   );
