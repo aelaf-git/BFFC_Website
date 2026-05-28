@@ -7,10 +7,14 @@ const communityGoals = [
   {
     title: "Est. Breakfast & Lunch Programs",
     body: "Collaborating with schools, parents, village elders, local administration, and other stakeholders to provide nutritious meals to children so they can reach their full potential.",
+    image: "/about-us.png",
+    imageAlt: "Children receiving school meals",
   },
   {
     title: "Provision of School Supplies",
     body: "Supplying exercise books and educational materials to children in Afar, Tigray, and Amhara to support learning and long-term growth.",
+    image: "/mission-background.png",
+    imageAlt: "Children learning with school materials in a classroom",
   },
 ];
 
@@ -66,10 +70,21 @@ export function WhatWeDoSection() {
             {communityGoals.map((goal) => (
               <div
                 key={goal.title}
-                className="rounded-xl border border-zinc-200 bg-zinc-50 p-4 sm:p-5"
+                className="overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50"
               >
-                <p className="font-semibold text-zinc-900">{goal.title}</p>
-                <p className="mt-1 text-sm leading-relaxed text-zinc-600">{goal.body}</p>
+                <div className="relative w-full bg-zinc-100">
+                  <Image
+                    src={goal.image}
+                    alt={goal.imageAlt}
+                    width={800}
+                    height={500}
+                    className="h-52 w-full object-cover sm:h-60"
+                  />
+                </div>
+                <div className="p-4 sm:p-5">
+                  <p className="font-semibold text-zinc-900">{goal.title}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-zinc-600">{goal.body}</p>
+                </div>
               </div>
             ))}
           </div>
