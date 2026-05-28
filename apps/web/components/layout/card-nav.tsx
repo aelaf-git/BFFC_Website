@@ -4,11 +4,11 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { gsap } from "gsap";
 import { GoArrowUpRight } from "react-icons/go";
 import { HiChevronDown } from "react-icons/hi2";
 import type { SiteContact } from "@/components/layout/nav-contact-info";
-import { NavContactInfo } from "@/components/layout/nav-contact-info";
 import { NavAccountMenu } from "@/components/layout/nav-account-menu";
 import { NavLanguageSwitcher } from "@/components/layout/nav-language-switcher";
 import { NavSearch } from "@/components/layout/nav-search";
@@ -85,13 +85,23 @@ function NavCardLink({ link }: { link: CardNavLink }) {
   );
 }
 
-function MainNavItem({ link }: { link: MainNavLink }) {
+function MainNavItem({
+  link,
+  isTransparent = false,
+}: {
+  link: MainNavLink;
+  isTransparent?: boolean;
+}) {
   if (!link.children?.length) {
     return (
       <InternalLink
         href={link.href}
         ariaLabel={link.ariaLabel}
-        className="whitespace-nowrap text-sm font-medium text-foreground transition-colors hover:text-primary"
+        className={`whitespace-nowrap text-sm font-medium transition-colors duration-300 ${
+          isTransparent
+            ? "text-white/80 hover:text-white"
+            : "text-foreground hover:text-primary"
+        }`}
       >
         {link.label}
       </InternalLink>
@@ -102,7 +112,11 @@ function MainNavItem({ link }: { link: MainNavLink }) {
     <div className="group relative">
       <button
         type="button"
-        className="inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium text-foreground transition-colors hover:text-primary"
+        className={`inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium transition-colors duration-300 ${
+          isTransparent
+            ? "text-white/80 hover:text-white"
+            : "text-foreground hover:text-primary"
+        }`}
         aria-haspopup="true"
       >
         {link.label}
@@ -111,7 +125,7 @@ function MainNavItem({ link }: { link: MainNavLink }) {
           aria-hidden
         />
       </button>
-      <div className="invisible absolute top-full right-0 z-[200] mt-2 min-w-[240px] rounded-lg border border-border bg-background py-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+      <div className="invisible absolute top-full right-0 z-[200] mt-2 min-w-[240px] rounded-lg border border-border bg-background py-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 shadow-lg">
         {link.children.map((child) => (
           <Link
             key={child.href}
@@ -142,9 +156,31 @@ export function CardNav({
 }: CardNavProps) {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isOpaque, setIsOpaque] = useState(false);
+  const pathname = usePathname();
   const navRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
+
+  const isHomePage = pathname === "/";
+
+  useEffect(() => {
+    if (!isHomePage) {
+      setIsOpaque(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      const H = window.innerHeight;
+      // Fade into opaque when we leave the hero carousel (at H * 3, let's trigger transition 80px early)
+      const threshold = 3 * H - 80;
+      setIsOpaque(window.scrollY >= threshold);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isHomePage]);
 
   useEffect(() => {
     if (isExpanded) {
@@ -258,26 +294,21 @@ export function CardNav({
     if (el) cardsRef.current[i] = el;
   };
 
-  const glassBar =
-    "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75";
+  const showOpaque = isOpaque || isExpanded || !isHomePage;
 
   return (
-    <div className={`w-full overflow-visible ${glassBar} ${className}`}>
-      {/* Utility row — contact left, tools right (desktop) */}
-      <div
-        className={`relative z-30 hidden items-center justify-between gap-6 overflow-visible px-4 py-1.5 sm:px-6 lg:flex ${glassBar}`}
-      >
-        <NavContactInfo contact={contact} className="min-w-0 flex-1" />
-        <div className="relative z-30 flex shrink-0 items-center gap-4 overflow-visible pt-0.5">
-          <NavLanguageSwitcher />
-          <NavAccountMenu label="My Account (Donor Portal)" links={accountLinks} />
-          <NavSearch />
-        </div>
-      </div>
-
+    <div
+      className={`w-full overflow-visible transition-all duration-500 border-b ${
+        showOpaque
+          ? "fixed top-0 left-0 z-50 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 border-border/40 shadow-sm"
+          : "absolute top-0 left-0 z-50 bg-transparent border-transparent shadow-none"
+      } ${className}`}
+    >
       <nav
         ref={navRef}
-        className={`relative z-10 block w-full overflow-hidden will-change-[height] ${glassBar} ${isExpanded ? "open" : ""}`}
+        className={`relative z-10 block w-full overflow-hidden will-change-[height] bg-transparent ${
+          isExpanded ? "open" : ""
+        }`}
         style={{ height: collapsedHeight }}
       >
         {/* Main row */}
@@ -296,7 +327,11 @@ export function CardNav({
                 className="h-8 w-auto max-w-[10rem] object-contain object-left sm:h-11 sm:max-w-[14rem]"
                 priority
               />
-              <span className="hidden font-serif text-lg font-semibold tracking-tight text-foreground sm:block md:text-xl lg:text-2xl">
+              <span
+                className={`hidden font-serif text-lg font-semibold tracking-tight transition-colors duration-300 sm:block md:text-xl lg:text-2xl ${
+                  showOpaque ? "text-foreground" : "text-white"
+                }`}
+              >
                 Bright Future for Children
               </span>
             </Link>
@@ -309,7 +344,9 @@ export function CardNav({
                 key={cta.href}
                 href={cta.href}
                 ariaLabel={cta.ariaLabel}
-                className="inline-flex h-8 items-center rounded-lg bg-primary px-2 text-[10px] font-semibold whitespace-nowrap text-white transition-colors hover:bg-primary-hover sm:h-9 sm:px-4 sm:text-sm"
+                className={`inline-flex h-8 items-center rounded-lg bg-primary px-2 text-[10px] font-semibold whitespace-nowrap text-white transition-all duration-300 hover:bg-primary-hover sm:h-9 sm:px-4 sm:text-sm shadow-sm ${
+                  !showOpaque ? "border border-white/20 hover:border-white/40" : ""
+                }`}
               >
                 {cta.label}
               </InternalLink>
@@ -322,26 +359,71 @@ export function CardNav({
               aria-label="Main navigation"
             >
               {mainNavLinks.map((link) => (
-                <MainNavItem key={link.href + link.label} link={link} />
+                <MainNavItem
+                  key={link.href + link.label}
+                  link={link}
+                  isTransparent={!showOpaque}
+                />
               ))}
             </nav>
+
+            {/* Desktop tools row integrated directly here */}
+            <div className="hidden items-center gap-5 md:flex">
+              <NavSearch isTransparent={!showOpaque} />
+              <NavLanguageSwitcher isTransparent={!showOpaque} />
+              <NavAccountMenu
+                label="My Account"
+                links={accountLinks}
+                isTransparent={!showOpaque}
+              />
+            </div>
           </div>
 
-          {/* Right: language + menu dropdown */}
-          <div className="flex shrink-0 items-center gap-2 lg:gap-3">
-            <NavLanguageSwitcher className="lg:hidden" />
+          {/* Right: language + menu dropdown (mobile/tablet) */}
+          <div className="flex shrink-0 items-center gap-2 lg:gap-3 lg:hidden">
+            <NavLanguageSwitcher className="md:hidden" isTransparent={!showOpaque} />
             <button
               type="button"
-              className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-lg transition-colors hover:bg-primary-light ${isHamburgerOpen ? "open" : ""}`}
+              className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-lg transition-all duration-300 hover:bg-primary-light/10 ${
+                isHamburgerOpen ? "open" : ""
+              }`}
               onClick={toggleMenu}
               aria-label={isExpanded ? "Close menu" : "Open menu"}
               aria-expanded={isExpanded}
             >
               <span
-                className={`h-0.5 w-5 bg-foreground transition-transform duration-300 ${isHamburgerOpen ? "translate-y-[3px] rotate-45" : ""}`}
+                className={`h-0.5 w-5 transition-all duration-300 ${
+                  isHamburgerOpen ? "translate-y-[3px] rotate-45" : ""
+                } ${showOpaque ? "bg-foreground" : "bg-white"}`}
               />
               <span
-                className={`h-0.5 w-5 bg-foreground transition-transform duration-300 ${isHamburgerOpen ? "-translate-y-[3px] -rotate-45" : ""}`}
+                className={`h-0.5 w-5 transition-all duration-300 ${
+                  isHamburgerOpen ? "-translate-y-[3px] -rotate-45" : ""
+                } ${showOpaque ? "bg-foreground" : "bg-white"}`}
+              />
+            </button>
+          </div>
+
+          {/* Hamburger only (desktop - since language switcher and other tools are in the main bar) */}
+          <div className="hidden shrink-0 items-center lg:flex">
+            <button
+              type="button"
+              className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-lg transition-all duration-300 hover:bg-primary-light/10 ${
+                isHamburgerOpen ? "open" : ""
+              }`}
+              onClick={toggleMenu}
+              aria-label={isExpanded ? "Close menu" : "Open menu"}
+              aria-expanded={isExpanded}
+            >
+              <span
+                className={`h-0.5 w-5 transition-all duration-300 ${
+                  isHamburgerOpen ? "translate-y-[3px] rotate-45" : ""
+                } ${showOpaque ? "bg-foreground" : "bg-white"}`}
+              />
+              <span
+                className={`h-0.5 w-5 transition-all duration-300 ${
+                  isHamburgerOpen ? "-translate-y-[3px] -rotate-45" : ""
+                } ${showOpaque ? "bg-foreground" : "bg-white"}`}
               />
             </button>
           </div>
@@ -352,26 +434,23 @@ export function CardNav({
           className={`card-nav-content absolute right-0 bottom-0 left-0 z-[1] bg-background/95 p-4 backdrop-blur-lg sm:px-6 overflow-y-auto ${
             isExpanded ? "visible pointer-events-auto" : "invisible pointer-events-none"
           }`}
-          style={{ 
+          style={{
             top: MAIN_ROW_HEIGHT,
-            maxHeight: `calc(100vh - ${MAIN_ROW_HEIGHT}px - 40px)`
+            maxHeight: `calc(100vh - ${MAIN_ROW_HEIGHT}px - 40px)`,
           }}
           aria-hidden={!isExpanded}
         >
-          <div className="mb-4 flex flex-col gap-3 pb-4 lg:hidden">
-            <NavContactInfo contact={contact} compact />
+          <div className="mb-4 flex flex-col gap-4 pb-4 md:hidden">
             <NavSearch className="w-full max-w-sm" />
+            <NavLanguageSwitcher />
             <NavAccountMenu label="My Account (Donor Portal)" links={accountLinks} />
-            <nav
-              className="grid gap-2 pt-3 md:hidden"
-              aria-label="Page sections"
-            >
+            <nav className="grid gap-2 pt-3" aria-label="Page sections">
               {mainNavLinks.map((link) => (
                 <InternalLink
                   key={link.href}
                   href={link.href}
                   ariaLabel={link.ariaLabel}
-                  className="text-sm font-medium text-foreground hover:text-primary"
+                  className="text-sm font-medium text-foreground hover:text-primary transition-colors"
                 >
                   {link.label}
                 </InternalLink>
@@ -398,9 +477,9 @@ export function CardNav({
               </div>
             ))}
           </div>
-
         </div>
       </nav>
     </div>
   );
 }
+

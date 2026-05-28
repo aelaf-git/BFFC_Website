@@ -8,11 +8,13 @@ import type { NavLink } from "@/components/layout/card-nav";
 type NavAccountMenuProps = {
   label?: string;
   links: NavLink[];
+  isTransparent?: boolean;
 };
 
 export function NavAccountMenu({
   label = "My Account",
   links,
+  isTransparent = false,
 }: NavAccountMenuProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -32,7 +34,11 @@ export function NavAccountMenu({
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-primary"
+        className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 ${
+          isTransparent
+            ? "text-white/80 hover:text-white"
+            : "text-foreground hover:text-primary"
+        }`}
         aria-expanded={open}
         aria-haspopup="true"
       >
@@ -46,7 +52,7 @@ export function NavAccountMenu({
 
       {open && (
         <div
-          className="absolute top-full right-0 z-[200] mt-2 min-w-[220px] rounded-lg border border-border bg-background py-2"
+          className="absolute top-full right-0 z-[200] mt-2 min-w-[220px] rounded-lg border border-border bg-background py-2 shadow-lg"
           role="menu"
         >
           {links.map((link) => (
@@ -66,3 +72,4 @@ export function NavAccountMenu({
     </div>
   );
 }
+
