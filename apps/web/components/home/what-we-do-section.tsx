@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
 const communityGoals = [
   {
@@ -60,32 +59,34 @@ export function WhatWeDoSection() {
           <h3 className="text-center font-serif text-3xl text-zinc-900 sm:text-4xl">
             Community Goals
           </h3>
-          <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-zinc-600 sm:text-base">
-            Bright Future for Children Ethiopia works hand in hand with communities and
-            leaders in Afar, Tigray, and Amhara regions to address their biggest
-            challenges. Our primary goals include:
-          </p>
-          <div className="mt-6 grid gap-8 sm:grid-cols-2 lg:gap-12">
-            {communityGoals.map((goal) => (
-              <div
-                key={goal.title}
-                className="w-full max-w-[26rem] justify-self-center overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50"
-              >
-                <div className="relative w-full bg-zinc-100">
-                  <Image
-                    src={goal.image}
-                    alt={goal.imageAlt}
-                    width={800}
-                    height={500}
-                    className="h-52 w-full object-cover sm:h-60"
-                  />
+          <div className="mx-auto mt-4 w-full max-w-[56rem]">
+            <p className="mx-auto text-center text-sm leading-relaxed text-zinc-600 sm:text-base">
+              Bright Future for Children Ethiopia works hand in hand with communities and
+              leaders in Afar, Tigray, and Amhara regions to address their biggest
+              challenges. Our primary goals include:
+            </p>
+            <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:gap-8">
+              {communityGoals.map((goal) => (
+                <div
+                  key={goal.title}
+                  className="w-full max-w-[26rem] justify-self-center overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50"
+                >
+                  <div className="relative w-full bg-zinc-100">
+                    <Image
+                      src={goal.image}
+                      alt={goal.imageAlt}
+                      width={800}
+                      height={500}
+                      className="h-52 w-full object-cover sm:h-60"
+                    />
+                  </div>
+                  <div className="p-4 sm:p-5">
+                    <p className="font-semibold text-zinc-900">{goal.title}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-zinc-600">{goal.body}</p>
+                  </div>
                 </div>
-                <div className="p-4 sm:p-5">
-                  <p className="font-semibold text-zinc-900">{goal.title}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-zinc-600">{goal.body}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -94,12 +95,6 @@ export function WhatWeDoSection() {
               className="inline-flex items-center gap-3 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
             >
               Donate
-            </Link>
-            <Link
-              href="mailto:info@brightfuture4children.com"
-              className="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-5 py-2.5 text-sm font-semibold text-zinc-800 transition-colors hover:border-primary hover:text-primary"
-            >
-              Write Us <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
