@@ -10,7 +10,7 @@ import { brand } from "@/lib/brand";
 
 export function Header() {
   return (
-    <header className="relative z-50 w-full shrink-0 overflow-visible">
+    <header className="h-0 w-full overflow-visible">
       <CardNav
         logo={brand.logo.src}
         logoAlt={brand.logo.alt}

@@ -231,7 +231,7 @@ export function CardNav({
     const navEl = navRef.current;
     if (!navEl) return null;
 
-    gsap.set(navEl, { height: collapsedHeight, overflow: "hidden" });
+    gsap.set(navEl, { height: collapsedHeight });
     gsap.set(cardsRef.current, { y: 40, opacity: 0 });
 
     const tl = gsap.timeline({ paused: true });
@@ -298,15 +298,15 @@ export function CardNav({
 
   return (
     <div
-      className={`w-full overflow-visible transition-all duration-500 border-b ${
+      className={`fixed top-0 left-0 z-50 w-full overflow-visible transition-all duration-500 border-b ${
         showOpaque
-          ? "fixed top-0 left-0 z-50 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 border-border/40 shadow-sm"
-          : "absolute top-0 left-0 z-50 bg-transparent border-transparent shadow-none"
+          ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 border-border/40 shadow-sm"
+          : "bg-transparent border-transparent shadow-none"
       } ${className}`}
     >
       <nav
         ref={navRef}
-        className={`relative z-10 block w-full overflow-hidden will-change-[height] bg-transparent ${
+        className={`relative z-10 block w-full will-change-[height] bg-transparent ${
           isExpanded ? "open" : ""
         }`}
         style={{ height: collapsedHeight }}

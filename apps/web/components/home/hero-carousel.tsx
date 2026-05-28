@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { HeroSlide } from "@/lib/hero-slides";
@@ -11,57 +11,80 @@ type HeroCarouselProps = {
 };
 
 export function HeroCarousel({ slides }: HeroCarouselProps) {
-  // We only show the first 3 heros as requested, or all if slides.length is 3.
   const displaySlides = slides.slice(0, 3);
+  const isAutoScrolling = useRef(false);
+  const snapTimeout = useRef<NodeJS.Timeout | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   useEffect(() => {
-    let lastY = window.scrollY;
-    let isAutoScrolling = false;
-    let scrollTimeout: NodeJS.Timeout;
+    const H = window.innerHeight;
+    const totalSlides = displaySlides.length;
 
-    const handleScroll = () => {
+    const snapTo = (targetScroll: number) => {
+      isAutoScrolling.current = true;
+      window.scrollTo({ top: targetScroll, behavior: "smooth" });
+      if (snapTimeout.current) clearTimeout(snapTimeout.current);
+      snapTimeout.current = setTimeout(() => {
+        isAutoScrolling.current = false;
+      }, 750);
+    };
+
+    const trySnap = (direction: "down" | "up") => {
+      if (isAutoScrolling.current) return;
       const currentY = window.scrollY;
-      const H = window.innerHeight;
 
-      if (isAutoScrolling) {
-        lastY = currentY;
-        return;
-      }
-
-      const direction = currentY > lastY ? "down" : "up";
-      lastY = currentY;
-
-      // Only snap if we are scrolling down and within the hero carousel range
-      if (direction === "down" && currentY < 2 * H - 30) {
+      if (direction === "down" && currentY < (totalSlides - 1) * H - 30) {
         const currentSlide = Math.floor((currentY + 15) / H);
         const nextSlide = currentSlide + 1;
-        const targetScroll = nextSlide * H;
-
         const offset = currentY % H;
-        // Snap if we scroll down past a minor threshold (e.g. 20px)
         if (offset > 20 && offset < H - 20) {
-          isAutoScrolling = true;
-          window.scrollTo({
-            top: targetScroll,
-            behavior: "smooth",
-          });
-
-          // Debounce and lock scroll snaps until the animation finishes
-          clearTimeout(scrollTimeout);
-          scrollTimeout = setTimeout(() => {
-            isAutoScrolling = false;
-            lastY = window.scrollY;
-          }, 700);
+          snapTo(nextSlide * H);
+        }
+      } else if (direction === "up" && currentY > 30 && currentY < totalSlides * H) {
+        const currentSlide = Math.ceil((currentY - 15) / H);
+        const prevSlide = Math.max(0, currentSlide - 1);
+        const offset = currentY % H;
+        if (offset > 20 && offset < H - 20) {
+          snapTo(prevSlide * H);
         }
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(scrollTimeout);
+    // Wheel: only fires on real user gestures — not on programmatic scrollTo()
+    const handleWheel = (e: WheelEvent) => {
+      const currentY = window.scrollY;
+      // Only operate within the hero zone
+      if (currentY >= totalSlides * H) return;
+      const direction = e.deltaY > 0 ? "down" : "up";
+      trySnap(direction);
     };
-  }, []);
+
+    // Touch: track swipe direction for mobile
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (touchStartY.current === null) return;
+      const deltaY = touchStartY.current - e.changedTouches[0].clientY;
+      touchStartY.current = null;
+      const currentY = window.scrollY;
+      if (currentY >= totalSlides * H) return;
+      if (Math.abs(deltaY) < 30) return; // ignore tiny swipes
+      trySnap(deltaY > 0 ? "down" : "up");
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: true });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
+      if (snapTimeout.current) clearTimeout(snapTimeout.current);
+    };
+  }, [displaySlides.length]);
 
   return (
     <div className="relative w-full">

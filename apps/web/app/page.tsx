@@ -11,7 +11,7 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 /** Scroll targets for top-bar section links (content TBD) */
-const anchorClass = "scroll-mt-36 lg:scroll-mt-44";
+const anchorClass = "scroll-mt-0";
 
 export default function Home() {
   return (
