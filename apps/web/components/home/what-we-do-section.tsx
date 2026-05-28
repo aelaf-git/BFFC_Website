@@ -40,7 +40,7 @@ export function WhatWeDoSection() {
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-6 lg:self-center">
             <div className="relative overflow-hidden rounded-2xl bg-zinc-100">
               <Image
                 src="/mission-background.png"
@@ -50,36 +50,43 @@ export function WhatWeDoSection() {
                 className="h-64 w-full object-cover sm:h-72"
               />
             </div>
+          </div>
+        </div>
 
-            <div className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200 sm:p-8">
-              <h3 className="font-serif text-2xl text-zinc-900">Community Goals</h3>
-              <div className="mt-6 grid gap-4">
-                {communityGoals.map((goal) => (
-                  <div
-                    key={goal.title}
-                    className="rounded-xl border border-zinc-200 bg-zinc-50 p-4 sm:p-5"
-                  >
-                    <p className="font-semibold text-zinc-900">{goal.title}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-zinc-600">{goal.body}</p>
-                  </div>
-                ))}
+        <div className="mx-auto mt-12 w-full max-w-4xl px-2 py-2 sm:px-4">
+          <h3 className="text-center font-serif text-3xl text-zinc-900 sm:text-4xl">
+            Community Goals
+          </h3>
+          <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-zinc-600 sm:text-base">
+            Bright Future for Children Ethiopia works hand in hand with communities and
+            leaders in Afar, Tigray, and Amhara regions to address their biggest
+            challenges. Our primary goals include:
+          </p>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            {communityGoals.map((goal) => (
+              <div
+                key={goal.title}
+                className="rounded-xl border border-zinc-200 bg-zinc-50 p-4 sm:p-5"
+              >
+                <p className="font-semibold text-zinc-900">{goal.title}</p>
+                <p className="mt-1 text-sm leading-relaxed text-zinc-600">{goal.body}</p>
               </div>
+            ))}
+          </div>
 
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link
-                  href="/donate"
-                  className="inline-flex items-center gap-3 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
-                >
-                  Donate
-                </Link>
-                <Link
-                  href="mailto:info@brightfuture4children.com"
-                  className="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-5 py-2.5 text-sm font-semibold text-zinc-800 transition-colors hover:border-primary hover:text-primary"
-                >
-                  Write Us <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/donate"
+              className="inline-flex items-center gap-3 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
+            >
+              Donate
+            </Link>
+            <Link
+              href="mailto:info@brightfuture4children.com"
+              className="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-5 py-2.5 text-sm font-semibold text-zinc-800 transition-colors hover:border-primary hover:text-primary"
+            >
+              Write Us <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </Container>
