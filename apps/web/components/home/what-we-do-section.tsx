@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Container } from "@/components/ui/container";
 
 const communityGoals = [
   {
@@ -21,7 +20,7 @@ const communityGoals = [
 export function WhatWeDoSection() {
   return (
     <section className="bg-white py-20 sm:py-24" aria-label="What we do">
-      <Container>
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
             <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
@@ -57,7 +56,7 @@ export function WhatWeDoSection() {
           </div>
         </div>
 
-        <div className="mx-auto mt-12 w-full max-w-4xl px-2 py-2 sm:px-4">
+        <div className="mt-12 w-full">
           <h3 className="text-center font-serif text-3xl text-zinc-900 sm:text-4xl">
             Community Goals
           </h3>
@@ -66,11 +65,11 @@ export function WhatWeDoSection() {
             leaders in Afar, Tigray, and Amhara regions to address their biggest
             challenges. Our primary goals include:
           </p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <div className="mt-6 grid gap-8 sm:grid-cols-2 lg:gap-12">
             {communityGoals.map((goal) => (
               <div
                 key={goal.title}
-                className="overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50"
+                className="w-full max-w-[26rem] justify-self-center overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50"
               >
                 <div className="relative w-full bg-zinc-100">
                   <Image
@@ -104,7 +103,7 @@ export function WhatWeDoSection() {
             </Link>
           </div>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }
