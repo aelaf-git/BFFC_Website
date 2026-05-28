@@ -118,9 +118,9 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
               </div>
 
               {/* Heading (Serif) */}
-              <h1 className="font-serif text-5xl font-medium leading-[1.1] text-white sm:text-6xl lg:text-8xl">
+              <h2 className="font-serif text-5xl font-medium leading-[1.1] text-white sm:text-6xl lg:text-8xl">
                 {slide.title}
-              </h1>
+              </h2>
 
               {/* Subtitle */}
               <p className="mt-8 max-w-2xl text-xl leading-relaxed text-white/90 sm:text-2xl">
