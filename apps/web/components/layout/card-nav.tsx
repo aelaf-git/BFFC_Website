@@ -299,9 +299,11 @@ export function CardNav({
   return (
     <div
       className={`fixed top-0 left-0 z-50 w-full overflow-visible transition-all duration-500 border-b ${
-        showOpaque
-          ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 border-border/40 shadow-sm"
-          : "bg-transparent border-transparent shadow-none"
+        isExpanded
+          ? "bg-white border-border shadow-sm"
+          : showOpaque
+            ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 border-border/40 shadow-sm"
+            : "bg-transparent border-transparent shadow-none"
       } ${className}`}
     >
       <nav
@@ -328,7 +330,7 @@ export function CardNav({
                 priority
               />
               <span
-                className={`hidden font-serif text-lg font-semibold tracking-tight transition-colors duration-300 sm:block md:text-xl lg:text-2xl ${
+                className={`hidden font-serif text-lg font-semibold tracking-tight transition-colors duration-300 2xl:block 2xl:text-2xl ${
                   showOpaque ? "text-foreground" : "text-white"
                 }`}
               >
@@ -353,9 +355,9 @@ export function CardNav({
             ))}
           </div>
 
-          <div className="flex min-w-0 flex-1 items-center justify-end gap-6 md:gap-8">
+          <div className="flex min-w-0 flex-1 items-center justify-end gap-4 md:gap-6 lg:gap-8">
             <nav
-              className="hidden items-center gap-5 md:flex lg:gap-7"
+              className="hidden items-center gap-5 xl:flex xl:gap-7"
               aria-label="Main navigation"
             >
               {mainNavLinks.map((link) => (
@@ -368,7 +370,7 @@ export function CardNav({
             </nav>
 
             {/* Desktop tools row integrated directly here */}
-            <div className="hidden items-center gap-5 md:flex">
+            <div className="hidden items-center gap-4 xl:flex">
               <NavSearch isTransparent={!showOpaque} />
               <NavLanguageSwitcher isTransparent={!showOpaque} />
               <NavAccountMenu
@@ -380,8 +382,8 @@ export function CardNav({
           </div>
 
           {/* Right: language + menu dropdown (mobile/tablet) */}
-          <div className="flex shrink-0 items-center gap-2 lg:gap-3 lg:hidden">
-            <NavLanguageSwitcher className="md:hidden" isTransparent={!showOpaque} />
+          <div className="flex shrink-0 items-center gap-2 xl:hidden">
+            <NavLanguageSwitcher className="sm:hidden" isTransparent={!showOpaque} />
             <button
               type="button"
               className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-lg transition-all duration-300 hover:bg-primary-light/10 ${
@@ -405,7 +407,7 @@ export function CardNav({
           </div>
 
           {/* Hamburger only (desktop - since language switcher and other tools are in the main bar) */}
-          <div className="hidden shrink-0 items-center lg:flex">
+          <div className="hidden shrink-0 items-center xl:flex">
             <button
               type="button"
               className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-lg transition-all duration-300 hover:bg-primary-light/10 ${
@@ -431,7 +433,7 @@ export function CardNav({
 
         {/* Mega menu panel */}
         <div
-          className={`card-nav-content absolute right-0 bottom-0 left-0 z-[1] bg-background/95 p-4 backdrop-blur-lg sm:px-6 overflow-y-auto ${
+          className={`card-nav-content absolute right-0 bottom-0 left-0 z-[1] bg-white p-4 sm:px-6 overflow-y-auto ${
             isExpanded ? "visible pointer-events-auto" : "invisible pointer-events-none"
           }`}
           style={{
