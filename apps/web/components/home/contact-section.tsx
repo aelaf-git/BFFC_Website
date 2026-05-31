@@ -64,11 +64,11 @@ export function ContactSection() {
           {/* ── Left column: contact cards → map ── */}
           <div className="flex w-full shrink-0 flex-col gap-6 lg:w-[50%]">
 
-            {/* Contact detail cards — above the map */}
+            {/* Contact detail cards — above the map, all equal size */}
             <ul className="grid gap-4 sm:grid-cols-2" role="list">
               {contactDetails.map(({ icon: Icon, label, lines, href }) => (
-                <li key={label}>
-                  <div className="flex gap-3 rounded-2xl border border-zinc-100 bg-zinc-50/60 px-4 py-3.5 transition-shadow hover:shadow-sm">
+                <li key={label} className="flex">
+                  <div className="flex min-h-[8rem] flex-1 gap-3 rounded-2xl border border-zinc-100 bg-zinc-50/60 px-4 py-4 transition-shadow hover:shadow-sm">
                     <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10">
                       <Icon className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
                     </span>
