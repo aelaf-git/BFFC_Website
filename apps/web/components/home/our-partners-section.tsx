@@ -6,7 +6,7 @@ const marqueePartners = [...partners, ...partners];
 
 export function OurPartnersSection() {
   return (
-    <section className="w-full bg-zinc-50" aria-label="Our partners">
+    <section className="w-full bg-white" aria-label="Our partners">
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-16 text-center">
         <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
           Our Partners
