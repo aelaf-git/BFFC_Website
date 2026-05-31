@@ -99,10 +99,8 @@ export function ContactSection() {
               ))}
             </ul>
 
-            {/* Map — fills remaining left-column height */}
-            <div className="relative flex-1 rounded-3xl bg-zinc-50/50 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] sm:p-4"
-              style={{ minHeight: "240px" }}
-            >
+            {/* Map — square: height = column width */}
+            <div className="relative aspect-square rounded-3xl bg-zinc-50/50 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] sm:p-4">
               <div className="absolute inset-3 overflow-hidden rounded-2xl bg-zinc-100 sm:inset-4">
                 <iframe
                   title="Bright Future For Children Ethiopia office location"
