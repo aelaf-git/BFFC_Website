@@ -3,7 +3,7 @@ import type { SiteContact } from "@/components/layout/nav-contact-info";
 import { siteConfig } from "@/lib/site";
 
 export const siteContact: SiteContact = {
-  address: siteConfig.contact.address,
+  address: `${siteConfig.contact.street}, ${siteConfig.contact.city}, ${siteConfig.contact.province} ${siteConfig.contact.postalCode}`,
   charityRegistration: siteConfig.contact.charityRegistration,
   email: siteConfig.contact.email,
   phone: siteConfig.contact.phone,
