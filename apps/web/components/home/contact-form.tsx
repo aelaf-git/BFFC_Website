@@ -38,11 +38,11 @@ export function ContactForm() {
     "h-11 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 text-sm text-zinc-800 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20";
 
   return (
-    <form onSubmit={handleSubmit} noValidate aria-label="Send us a message">
-      <div className="grid grid-cols-2 gap-4">
+    <form onSubmit={handleSubmit} noValidate aria-label="Send us a message" className="flex h-full flex-col">
+      <div className="grid grid-cols-2 items-end gap-4">
         <div>
           <label htmlFor="contact-name" className="mb-1.5 block text-xs font-medium text-zinc-500 tracking-wide uppercase">
-            Full name <span className="text-primary" aria-hidden="true">*</span>
+            Name <span className="text-primary" aria-hidden="true">*</span>
           </label>
           <input
             id="contact-name"
@@ -96,7 +96,7 @@ export function ContactForm() {
         </select>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 flex flex-1 flex-col">
         <label htmlFor="contact-message" className="mb-1.5 block text-xs font-medium text-zinc-500 tracking-wide uppercase">
           Message <span className="text-primary" aria-hidden="true">*</span>
         </label>
@@ -104,11 +104,10 @@ export function ContactForm() {
           id="contact-message"
           name="message"
           required
-          rows={5}
           placeholder="How can we help you?"
           value={form.message}
           onChange={handleChange}
-          className="w-full resize-none rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-800 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
+          className="min-h-[120px] flex-1 w-full resize-none rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-800 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
         />
       </div>
 

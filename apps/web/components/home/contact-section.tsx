@@ -41,7 +41,7 @@ export function ContactSection() {
   return (
     <section className="w-full bg-white" aria-label="Contact us" id="contact">
 
-      {/* ── Heading — matches About / What We Do ── */}
+      {/* ── Heading ── */}
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-16 text-center">
         <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
           Get in Touch
@@ -52,31 +52,20 @@ export function ContactSection() {
         </p>
       </div>
 
-      {/* ── Two-column body — same flex layout as About Us ── */}
+      {/* ── Two-column body ── */}
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pb-28">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-16 xl:gap-24">
+        {/*
+          items-stretch makes both columns the same height on desktop.
+          Left: cards on top, map fills remaining height (flex-1).
+          Right: heading + form, textarea fills remaining height (flex-1).
+        */}
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch lg:gap-16 xl:gap-24">
 
-          {/* Left — Map + contact detail pills */}
-          <div className="w-full shrink-0 lg:w-[50%]">
+          {/* ── Left column: contact cards → map ── */}
+          <div className="flex w-full shrink-0 flex-col gap-6 lg:w-[50%]">
 
-            {/* Map frame — same treatment as section images */}
-            <div className="relative rounded-3xl bg-zinc-50/50 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] sm:p-4">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-zinc-100 sm:aspect-[16/10] lg:aspect-[4/3]">
-                <iframe
-                  title="Bright Future For Children Ethiopia office location"
-                  src={contact.mapEmbedUrl}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, position: "absolute", inset: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-              </div>
-            </div>
-
-            {/* Contact detail cards */}
-            <ul className="mt-8 grid gap-4 sm:grid-cols-2" role="list">
+            {/* Contact detail cards — above the map */}
+            <ul className="grid gap-4 sm:grid-cols-2" role="list">
               {contactDetails.map(({ icon: Icon, label, lines, href }) => (
                 <li key={label}>
                   <div className="flex gap-3 rounded-2xl border border-zinc-100 bg-zinc-50/60 px-4 py-3.5 transition-shadow hover:shadow-sm">
@@ -109,10 +98,26 @@ export function ContactSection() {
                 </li>
               ))}
             </ul>
+
+            {/* Map — fills remaining left-column height */}
+            <div className="relative flex-1 rounded-3xl bg-zinc-50/50 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] sm:p-4"
+              style={{ minHeight: "240px" }}
+            >
+              <div className="absolute inset-3 overflow-hidden rounded-2xl bg-zinc-100 sm:inset-4">
+                <iframe
+                  title="Bright Future For Children Ethiopia office location"
+                  src={contact.mapEmbedUrl}
+                  style={{ border: 0, position: "absolute", inset: 0, width: "100%", height: "100%" }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            </div>
           </div>
 
-          {/* Right — Form panel — matches text panel style */}
-          <div className="flex w-full flex-col justify-start lg:w-[50%]">
+          {/* ── Right column: heading + form (textarea stretches) ── */}
+          <div className="flex w-full flex-col lg:w-[50%]">
             <h3 className="font-serif text-[2rem] font-medium leading-[1.1] tracking-tight text-zinc-900 sm:text-[2.6rem] lg:text-[3rem]">
               Send us a <span className="text-primary">message</span>
             </h3>
@@ -121,7 +126,8 @@ export function ContactSection() {
               please call or email us directly.
             </p>
 
-            <div className="mt-8">
+            {/* flex-1 so the form fills the remaining column height */}
+            <div className="mt-8 flex flex-1 flex-col">
               <ContactForm />
             </div>
           </div>
