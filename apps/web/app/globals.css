@@ -77,4 +77,50 @@
     background-color: color-mix(in srgb, var(--primary) 25%, transparent);
     color: var(--foreground);
   }
+
+  .partners-marquee-mask {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+  }
+
+  .partners-marquee-track {
+    animation: partners-marquee-ltr 45s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes partners-marquee-ltr {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .partners-marquee-track {
+      animation: none;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: center;
+      gap: 2rem;
+      padding-inline: 1.5rem;
+    }
+
+    .partners-marquee-track > *:nth-child(n + 11) {
+      display: none;
+    }
+  }
 }

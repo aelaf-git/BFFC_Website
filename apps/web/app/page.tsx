@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HeroCarousel } from "@/components/home/hero-carousel";
 import { AboutSection } from "@/components/home/about-section";
+import { OurPartnersSection } from "@/components/home/our-partners-section";
 import { WhatWeDoSection } from "@/components/home/what-we-do-section";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { heroSlides } from "@/lib/hero-slides";
@@ -27,6 +28,7 @@ export default function Home() {
       <div id="about" className={anchorClass} tabIndex={-1}>
         <AboutSection />
       </div>
+      <OurPartnersSection />
       <div id="what-we-do" className={anchorClass} tabIndex={-1}>
         <WhatWeDoSection />
       </div>
