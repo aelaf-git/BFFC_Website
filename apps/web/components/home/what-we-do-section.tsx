@@ -18,44 +18,51 @@ const communityGoals = [
 
 export function WhatWeDoSection() {
   return (
-    <section className="bg-white py-20 sm:py-24" aria-label="What we do">
-      <div className="container mx-auto px-6 sm:px-10 lg:px-20">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <div>
-            <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
-              What We Do
-            </h2>
-            <p className="mt-5 max-w-xl text-base sm:text-lg leading-relaxed text-zinc-400 font-light">
-              Feeding children so they can learn, grow, and thrive
-            </p>
-            <p className="mt-6 text-base leading-relaxed text-zinc-600">
-              At Bright Future for Children Ethiopia, we provide life-saving, nutritious,
-              and culturally appropriate meals for children aged 2-8 in war-ravaged regions
-              including Amhara, Afar, and Tigray. We partner with local authorities,
-              schools, and kindergartens to build local capacity and keep children in
-              school with full stomachs.
-            </p>
-            <p className="mt-4 text-base leading-relaxed text-zinc-600">
-              We currently run breakfast and lunch programs for orphaned children in Afar
-              and Amhara, while expanding to other urgent areas affected by displacement and
-              conflict.
-            </p>
-          </div>
+    <section className="bg-white" aria-label="What we do">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-16 text-center">
+        <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
+          What We Do
+        </h2>
+        <p className="mt-5 mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-zinc-400 font-light">
+          Feeding children so they can learn, grow, and thrive
+        </p>
+      </div>
 
-          <div className="space-y-6 lg:self-center">
-            <div className="relative overflow-hidden rounded-2xl bg-zinc-100">
-              <Image
-                src="/mission-background.png"
-                alt="Children sharing a meal at school"
-                width={1200}
-                height={800}
-                className="h-64 w-full object-cover sm:h-72"
-              />
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pb-20 sm:pb-24">
+        <article className="relative w-full">
+          <div className="flex flex-col gap-10 lg:items-center lg:gap-16 xl:gap-24 lg:flex-row">
+            <div className="w-full shrink-0 lg:w-[50%]">
+              <div className="relative rounded-3xl bg-zinc-50/50 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] sm:p-4">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-zinc-100 sm:aspect-[16/10] lg:aspect-[4/3]">
+                  <Image
+                    src="/mission-background.png"
+                    alt="Children sharing a meal at school"
+                    fill
+                    className="object-cover transition-transform duration-700 hover:scale-[1.03]"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex w-full flex-col justify-center py-2 lg:w-[50%]">
+              <p className="max-w-[42ch] text-base leading-[1.9] text-zinc-500 font-light sm:text-[1.05rem]">
+                At Bright Future for Children Ethiopia, we provide life-saving, nutritious,
+                and culturally appropriate meals for children aged 2-8 in war-ravaged regions
+                including Amhara, Afar, and Tigray. We partner with local authorities,
+                schools, and kindergartens to build local capacity and keep children in
+                school with full stomachs.
+              </p>
+              <p className="mt-7 max-w-[42ch] text-base leading-[1.9] text-zinc-500 font-light sm:text-[1.05rem]">
+                We currently run breakfast and lunch programs for orphaned children in Afar
+                and Amhara, while expanding to other urgent areas affected by displacement and
+                conflict.
+              </p>
             </div>
           </div>
-        </div>
+        </article>
 
-        <div className="mt-12 w-full">
+        <div className="mt-24 w-full lg:mt-36">
           <h3 className="text-center font-serif text-3xl text-zinc-900 sm:text-4xl">
             Community Goals
           </h3>
