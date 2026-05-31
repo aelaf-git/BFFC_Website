@@ -96,16 +96,19 @@
   }
 
   .partners-marquee-track {
-    animation: partners-marquee-ltr 45s linear infinite;
-    will-change: transform;
+    animation: partners-marquee-ltr 40s linear infinite;
+  }
+
+  .partners-marquee-mask:hover .partners-marquee-track {
+    animation-play-state: paused;
   }
 
   @keyframes partners-marquee-ltr {
-    from {
+    0% {
       transform: translateX(-50%);
     }
-    to {
-      transform: translateX(0);
+    100% {
+      transform: translateX(0%);
     }
   }
 
@@ -115,7 +118,6 @@
       flex-wrap: wrap;
       width: 100%;
       justify-content: center;
-      gap: 2rem;
       padding-inline: 1.5rem;
     }
 

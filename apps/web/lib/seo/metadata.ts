@@ -19,7 +19,7 @@ export function buildPageMetadata({
 }: PageMetadataOptions = {}): Metadata {
   const canonicalPath = path.startsWith("/") ? path : `/${path}`;
   const canonicalUrl = `${siteConfig.url}${canonicalPath === "/" ? "" : canonicalPath}`;
-  const imageUrl = ogImage ?? `${siteConfig.url}/og-default.png`;
+  const imageUrl = ogImage ?? `${siteConfig.url}/og-default.jpg`;
   const socialTitle = title
     ? `${title} | ${siteConfig.name}`
     : siteConfig.title;

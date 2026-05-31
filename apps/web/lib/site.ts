@@ -3,11 +3,11 @@
  * Set NEXT_PUBLIC_SITE_URL in production (e.g. https://www.yourdomain.org).
  */
 export const siteConfig = {
-  name: "Bright Future For Children Organization",
-  legalName: "BFFC",
-  title: "Bright Future For Children Organization",
+  name: "Bright Future For Children Ethiopia",
+  legalName: "Bright Future For Children Ethiopia",
+  title: "Bright Future For Children Ethiopia",
   description:
-    "BFFC brings communities together through programs, sport, and opportunity. Donate, get involved, and see the impact of your support.",
+    "Providing life-saving, nutritious meals to children aged 2–8 in war-affected regions of Ethiopia — Amhara, Afar, and Tigray. Donate, sponsor a child, or get involved to help build brighter futures.",
   url:
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
     "http://localhost:3000",

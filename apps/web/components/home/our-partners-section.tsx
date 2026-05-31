@@ -2,8 +2,6 @@ import Image from "next/image";
 import { brand } from "@/lib/brand";
 import { partners } from "@/lib/partners";
 
-const marqueePartners = [...partners, ...partners];
-
 export function OurPartnersSection() {
   return (
     <section className="w-full bg-white" aria-label="Our partners">
@@ -17,29 +15,49 @@ export function OurPartnersSection() {
         </p>
       </div>
 
-      <div className="pb-20 sm:pb-24">
-        <div className="partners-marquee-mask relative overflow-hidden">
-          <div className="partners-marquee-track flex w-max items-center gap-12 sm:gap-16 lg:gap-20">
-            {marqueePartners.map((partner, index) => (
+      <div className="partners-marquee-mask relative overflow-hidden pb-20 sm:pb-24">
+        <div
+          className="partners-marquee-track flex w-max items-center"
+          aria-label="Partner organizations"
+        >
+          {/* Primary set — readable by screen readers */}
+          {partners.map((partner) => (
+            <div
+              key={partner.id}
+              className="flex h-16 w-36 shrink-0 items-center justify-center pr-12 sm:h-20 sm:w-44 sm:pr-16 lg:h-24 lg:w-52 lg:pr-20"
+            >
+              <Image
+                src={partner.logo}
+                alt={partner.name}
+                width={brand.logo.width}
+                height={brand.logo.height}
+                className="h-full w-auto max-w-full object-contain opacity-70 transition-opacity duration-300 hover:opacity-100"
+                draggable={false}
+                loading="eager"
+              />
+            </div>
+          ))}
+
+          {/* Duplicate set — hidden from screen readers, used only for seamless loop */}
+          <div aria-hidden="true" className="flex w-max items-center">
+            {partners.map((partner) => (
               <div
-                key={`${partner.id}-${index}`}
-                className="flex h-16 w-36 shrink-0 items-center justify-center sm:h-20 sm:w-44 lg:h-24 lg:w-52"
+                key={`${partner.id}-dup`}
+                className="flex h-16 w-36 shrink-0 items-center justify-center pr-12 sm:h-20 sm:w-44 sm:pr-16 lg:h-24 lg:w-52 lg:pr-20"
               >
                 <Image
                   src={partner.logo}
-                  alt={partner.name}
+                  alt=""
                   width={brand.logo.width}
                   height={brand.logo.height}
-                  className="h-full w-auto max-w-full object-contain opacity-80 transition-opacity duration-300 hover:opacity-100"
+                  className="h-full w-auto max-w-full object-contain opacity-70 transition-opacity duration-300 hover:opacity-100"
                   draggable={false}
+                  loading="eager"
                 />
               </div>
             ))}
           </div>
         </div>
-        <p className="sr-only">
-          Partner organizations supporting Bright Future for Children Ethiopia
-        </p>
       </div>
     </section>
   );
