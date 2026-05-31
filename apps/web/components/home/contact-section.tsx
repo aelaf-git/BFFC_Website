@@ -114,8 +114,7 @@ export function ContactSection() {
           {/* Right — Form panel — matches text panel style */}
           <div className="flex w-full flex-col justify-start lg:w-[50%]">
             <h3 className="font-serif text-[2rem] font-medium leading-[1.1] tracking-tight text-zinc-900 sm:text-[2.6rem] lg:text-[3rem]">
-              Send us a<br />
-              <span className="text-primary">message</span>
+              Send us a <span className="text-primary">message</span>
             </h3>
             <p className="mt-5 text-base leading-[1.9] text-zinc-500 font-light sm:text-[1.05rem]">
               We typically respond within 1–2 business days. For urgent matters,

@@ -35,7 +35,7 @@ export default function Home() {
       <div id="what-we-do" className={anchorClass} tabIndex={-1}>
         <WhatWeDoSection />
       </div>
-      <div id="get-involved" className={anchorClass} tabIndex={-1}>
+      <div id="get-in-touch" className={anchorClass} tabIndex={-1}>
         <ContactSection />
       </div>
     </div>

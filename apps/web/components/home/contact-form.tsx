@@ -34,12 +34,12 @@ export function ContactForm() {
     }, 1200);
   }
 
-  const inputClass =
-    "w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-800 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20";
+  const fieldClass =
+    "h-11 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 text-sm text-zinc-800 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20";
 
   return (
     <form onSubmit={handleSubmit} noValidate aria-label="Send us a message">
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-2 gap-4">
         <div>
           <label htmlFor="contact-name" className="mb-1.5 block text-xs font-medium text-zinc-500 tracking-wide uppercase">
             Full name <span className="text-primary" aria-hidden="true">*</span>
@@ -53,7 +53,7 @@ export function ContactForm() {
             placeholder="Your name"
             value={form.name}
             onChange={handleChange}
-            className={inputClass}
+            className={fieldClass}
           />
         </div>
 
@@ -70,7 +70,7 @@ export function ContactForm() {
             placeholder="you@example.com"
             value={form.email}
             onChange={handleChange}
-            className={inputClass}
+            className={fieldClass}
           />
         </div>
       </div>
@@ -84,7 +84,7 @@ export function ContactForm() {
           name="subject"
           value={form.subject}
           onChange={handleChange}
-          className={inputClass}
+          className={fieldClass}
         >
           <option value="">Select a topic…</option>
           <option value="donation">Make a donation</option>
@@ -108,7 +108,7 @@ export function ContactForm() {
           placeholder="How can we help you?"
           value={form.message}
           onChange={handleChange}
-          className={`${inputClass} resize-none`}
+          className="w-full resize-none rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-800 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
         />
       </div>
 

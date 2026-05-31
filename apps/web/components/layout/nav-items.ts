@@ -19,7 +19,7 @@ export const primaryCtas: NavLink[] = [
 export const mainNavLinks: MainNavLink[] = [
   { label: "About Us", href: "/#about", ariaLabel: "About us" },
   { label: "What We Do", href: "/#what-we-do", ariaLabel: "What we do" },
-  { label: "Get Involved", href: "/#get-involved", ariaLabel: "Get involved" },
+  { label: "Get in Touch", href: "/#get-in-touch", ariaLabel: "Get in touch" },
 ];
 
 /** Donor portal — utility row account menu */
