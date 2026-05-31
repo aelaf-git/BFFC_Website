@@ -39,7 +39,7 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate aria-label="Send us a message" className="flex h-full flex-col">
-      <div className="grid grid-cols-2 items-end gap-4">
+      <div className="grid grid-cols-1 items-end gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="contact-name" className="mb-1.5 block text-xs font-medium text-zinc-500 tracking-wide uppercase">
             Name <span className="text-primary" aria-hidden="true">*</span>
