@@ -16,11 +16,12 @@ export function OurPartnersSection() {
       </div>
 
       <div className="partners-marquee-mask relative overflow-hidden pb-20 sm:pb-24">
-        <div
-          className="partners-marquee-track flex w-max items-center"
-          aria-label="Partner organizations"
-        >
-          {/* Primary set — readable by screen readers */}
+        {/*
+          Flat list of 20 items (10 + 10 clones).
+          The CSS animates translateX(-50% → 0%), which equals exactly one set's width.
+          Clone items use alt="" so screen readers skip them (decorative duplicates).
+        */}
+        <div className="partners-marquee-track flex w-max items-center">
           {partners.map((partner) => (
             <div
               key={partner.id}
@@ -37,26 +38,23 @@ export function OurPartnersSection() {
               />
             </div>
           ))}
-
-          {/* Duplicate set — hidden from screen readers, used only for seamless loop */}
-          <div aria-hidden="true" className="flex w-max items-center">
-            {partners.map((partner) => (
-              <div
-                key={`${partner.id}-dup`}
-                className="flex h-16 w-36 shrink-0 items-center justify-center pr-12 sm:h-20 sm:w-44 sm:pr-16 lg:h-24 lg:w-52 lg:pr-20"
-              >
-                <Image
-                  src={partner.logo}
-                  alt=""
-                  width={brand.logo.width}
-                  height={brand.logo.height}
-                  className="h-full w-auto max-w-full object-contain opacity-70 transition-opacity duration-300 hover:opacity-100"
-                  draggable={false}
-                  loading="eager"
-                />
-              </div>
-            ))}
-          </div>
+          {partners.map((partner) => (
+            <div
+              key={`${partner.id}-clone`}
+              aria-hidden="true"
+              className="flex h-16 w-36 shrink-0 items-center justify-center pr-12 sm:h-20 sm:w-44 sm:pr-16 lg:h-24 lg:w-52 lg:pr-20"
+            >
+              <Image
+                src={partner.logo}
+                alt=""
+                width={brand.logo.width}
+                height={brand.logo.height}
+                className="h-full w-auto max-w-full object-contain opacity-70 transition-opacity duration-300 hover:opacity-100"
+                draggable={false}
+                loading="eager"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>
