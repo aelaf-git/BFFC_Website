@@ -1,7 +1,10 @@
 export type BlogPost = {
   slug: string;
   category: string;
+  /** Human-readable display date */
   date: string;
+  /** ISO 8601 date for <time dateTime> and structured data */
+  dateIso: string;
   title: string;
   excerpt: string;
   image: string;
@@ -14,6 +17,7 @@ export const featuredPosts: BlogPost[] = [
     slug: "school-feeding-program-afar",
     category: "Impact",
     date: "May 15, 2026",
+    dateIso: "2026-05-15",
     title: "How Our School Feeding Program Is Changing Lives in Afar",
     excerpt:
       "Every morning, 40 children in the Afar region sit down to a warm breakfast before class. What sounds simple is in fact life-changing — learn how consistent nutrition is transforming school attendance and performance.",
@@ -25,6 +29,7 @@ export const featuredPosts: BlogPost[] = [
     slug: "school-supplies-drive-tigray",
     category: "Community",
     date: "April 3, 2026",
+    dateIso: "2026-04-03",
     title: "Thousands of Exercise Books Delivered to Tigray Schools",
     excerpt:
       "Thanks to generous donors and local partnerships, we recently distributed over 5,000 exercise books to students in the Tigray region — giving children the tools they need to learn and grow.",
@@ -36,6 +41,7 @@ export const featuredPosts: BlogPost[] = [
     slug: "volunteer-spotlight-amhara",
     category: "Stories",
     date: "March 20, 2026",
+    dateIso: "2026-03-20",
     title: "Meet the Volunteers Making a Difference in Amhara",
     excerpt:
       "Behind every meal served and every book handed out is a dedicated team of volunteers. We shine a spotlight on the everyday heroes helping us build brighter futures for children in Amhara.",
