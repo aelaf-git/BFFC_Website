@@ -3,6 +3,7 @@ import { HeroCarousel } from "@/components/home/hero-carousel";
 import { AboutSection } from "@/components/home/about-section";
 import { OurPartnersSection } from "@/components/home/our-partners-section";
 import { WhatWeDoSection } from "@/components/home/what-we-do-section";
+import { BlogSection } from "@/components/home/blog-section";
 import { ContactSection } from "@/components/home/contact-section";
 import { HomePageJsonLd } from "@/components/seo/json-ld";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -34,6 +35,9 @@ export default function Home() {
       <OurPartnersSection />
       <div id="what-we-do" className={anchorClass} tabIndex={-1}>
         <WhatWeDoSection />
+      </div>
+      <div id="stories" className={anchorClass} tabIndex={-1}>
+        <BlogSection />
       </div>
       <div id="get-in-touch" className={anchorClass} tabIndex={-1}>
         <ContactSection />
