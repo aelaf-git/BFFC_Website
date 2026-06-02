@@ -45,24 +45,37 @@ export function BlogSection() {
 
   return (
     <section
-      className="relative w-full bg-zinc-900 bg-scroll lg:bg-fixed"
+      className="relative w-full bg-zinc-900"
       aria-label="Latest stories and articles"
       id="latest-stories"
-      style={{
-        backgroundImage: "url('/mission-background.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
     >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Dark overlay — only covers this section */}
-      <div className="absolute inset-0 bg-black/65" aria-hidden="true" />
+      {/*
+        Sticky background — works on ALL devices including iOS Safari.
+        The div sticks to the top of the viewport as content scrolls over it.
+        Negative margin-bottom pulls the content up to overlap the sticky layer.
+      */}
+      <div
+        className="sticky top-0 h-screen -mb-[100vh] overflow-hidden"
+        aria-hidden="true"
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('/mission-background.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/65" />
+      </div>
 
-      {/* All content sits above the overlay */}
+      {/* All content sits above the sticky background via z-index */}
       <div className="relative z-10">
 
         {/* ── Heading ── */}
