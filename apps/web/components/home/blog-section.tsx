@@ -46,6 +46,7 @@ export function BlogSection() {
   return (
     <section
       className="relative w-full bg-zinc-900"
+      style={{ overflow: "clip" }}
       aria-label="Latest stories and articles"
       id="latest-stories"
     >
@@ -59,20 +60,25 @@ export function BlogSection() {
         The div sticks to the top of the viewport as content scrolls over it.
         Negative margin-bottom pulls the content up to overlap the sticky layer.
       */}
-      <div
-        className="sticky top-0 h-screen -mb-[100vh] overflow-hidden"
-        aria-hidden="true"
-      >
+      {/*
+        h-0 means the sticky container takes zero height in the flow → no extra
+        space at the bottom. The inner absolute div fills the viewport instead.
+      */}
+      <div className="sticky top-0 h-0" aria-hidden="true">
         <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "url('/mission-background.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/65" />
+          className="absolute inset-x-0 top-0 h-screen overflow-hidden"
+        >
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: "url('/mission-background.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-black/65" />
+        </div>
       </div>
 
       {/* All content sits above the sticky background via z-index */}
