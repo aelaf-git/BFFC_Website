@@ -14,11 +14,17 @@ export const siteConfig = {
   locale: "en_US",
   language: "en",
   contact: {
-    address: "",
+    street: "303-1835 10 Ave SE",
+    city: "Calgary",
+    province: "Alberta",
+    postalCode: "T2G 5N7",
+    country: "Canada",
     charityRegistration: "726794944RR0001",
     email: "Info@brightfuture4children.com",
     phone: "+1 (867) 678-5383",
-    phoneHref: "+18676785383",
+    phoneHref: "tel:+18676785383",
+    mapEmbedUrl:
+      "https://maps.google.com/maps?q=1835+10+Ave+SE+Calgary+AB+T2G+5N7+Canada&output=embed&z=15",
   },
   social: {
     twitter: "",
