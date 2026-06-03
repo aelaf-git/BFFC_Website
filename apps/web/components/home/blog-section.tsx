@@ -45,8 +45,7 @@ export function BlogSection() {
 
   return (
     <section
-      className="relative w-full bg-zinc-900"
-      style={{ overflow: "clip" }}
+      className="relative w-full"
       aria-label="Latest stories and articles"
       id="latest-stories"
     >
@@ -56,32 +55,26 @@ export function BlogSection() {
       />
 
       {/*
-        Sticky background — works on ALL devices including iOS Safari.
-        The div sticks to the top of the viewport as content scrolls over it.
-        Negative margin-bottom pulls the content up to overlap the sticky layer.
+        position: fixed at z-index -1 means this image is ALWAYS anchored to
+        the viewport — it never moves on any device. Other sections have solid
+        backgrounds that paint over it; this section has no background, so the
+        image shows through. No JavaScript or scroll listeners needed.
       */}
-      {/*
-        h-0 means the sticky container takes zero height in the flow → no extra
-        space at the bottom. The inner absolute div fills the viewport instead.
-      */}
-      <div className="sticky top-0 h-0" aria-hidden="true">
-        <div
-          className="absolute inset-x-0 top-0 h-screen overflow-hidden"
-        >
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: "url('/mission-background.png')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/65" />
-        </div>
-      </div>
+      <div
+        className="fixed inset-0"
+        style={{
+          backgroundImage: "url('/mission-background.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          zIndex: -1,
+        }}
+        aria-hidden="true"
+      />
 
-      {/* All content sits above the sticky background via z-index */}
+      {/* Dark overlay — absolute, stays within this section's bounds */}
+      <div className="absolute inset-0 bg-black/65" aria-hidden="true" />
+
+      {/* All content sits above the overlay */}
       <div className="relative z-10">
 
         {/* ── Heading ── */}

@@ -22,7 +22,7 @@ const anchorClass = "scroll-mt-0";
 
 export default function Home() {
   return (
-    <div className="flex-1 bg-background" aria-label="Home">
+    <div className="flex-1" aria-label="Home">
       <HomePageJsonLd url={siteConfig.url} />
       <h1 className="sr-only">
         Bright Future For Children Ethiopia — Providing life-saving meals to children
