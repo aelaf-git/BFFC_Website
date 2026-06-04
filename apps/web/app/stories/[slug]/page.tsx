@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, User, Calendar } from "lucide-react";
+import { User, Calendar } from "lucide-react";
 
 import { featuredPosts, getPostBySlug } from "@/lib/blog-posts";
 import { siteConfig } from "@/lib/site";
@@ -128,30 +128,22 @@ export default async function StoryPage({
             sizes="100vw"
             itemProp="image"
           />
-          {/* Gradient overlay for legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+          {/* Gradient: subtle at top (for nav), strong at bottom (for title) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/30" />
 
-          {/* Back link over the hero */}
-          <div className="absolute left-6 top-6 sm:left-10 lg:left-20">
-            <Link
-              href="/#stories"
-              className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20"
-              aria-label="Back to stories"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to stories
-            </Link>
-          </div>
-
-          {/* Title block over the hero */}
-          <div className="absolute bottom-0 left-0 right-0 px-6 pb-10 sm:px-10 lg:px-20">
-            <div className="mx-auto max-w-3xl">
+          {/* Title block — centred at the bottom of the hero */}
+          <div className="absolute bottom-0 left-0 right-0 px-6 pb-12 sm:px-10 lg:px-20">
+            <div className="mx-auto max-w-4xl text-center">
               <h1
-                className="font-serif text-3xl font-medium leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl"
+                className="font-serif text-3xl font-medium leading-tight tracking-tight text-white drop-shadow-sm sm:text-4xl lg:text-5xl xl:text-6xl"
                 itemProp="headline"
               >
                 {post.title}
               </h1>
+              <p className="mt-4 text-sm font-light text-white/70 sm:text-base">
+                By {post.author} &nbsp;·&nbsp;{" "}
+                <time dateTime={post.dateIso}>{post.date}</time>
+              </p>
             </div>
           </div>
         </div>

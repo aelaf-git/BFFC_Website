@@ -163,24 +163,31 @@ export function CardNav({
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
   const isHomePage = pathname === "/";
+  const isStoryPage = pathname.startsWith("/stories/");
 
   useEffect(() => {
-    if (!isHomePage) {
+    if (!isHomePage && !isStoryPage) {
       setIsOpaque(true);
       return;
     }
 
     const handleScroll = () => {
       const H = window.innerHeight;
-      // Fade into opaque when we leave the hero carousel (at H * 3, let's trigger transition 80px early)
-      const threshold = 3 * H - 80;
+      let threshold: number;
+      if (isStoryPage) {
+        // Blog detail hero is ~60vh — go opaque just before the hero ends
+        threshold = H * 0.55;
+      } else {
+        // Homepage: three-slide carousel
+        threshold = 3 * H - 80;
+      }
       setIsOpaque(window.scrollY >= threshold);
     };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomePage]);
+  }, [isHomePage, isStoryPage]);
 
   useEffect(() => {
     if (isExpanded) {
@@ -294,7 +301,7 @@ export function CardNav({
     if (el) cardsRef.current[i] = el;
   };
 
-  const showOpaque = isOpaque || isExpanded || !isHomePage;
+  const showOpaque = isOpaque || isExpanded || (!isHomePage && !isStoryPage);
 
   return (
     <div
