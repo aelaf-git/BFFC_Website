@@ -1,7 +1,3 @@
-/**
- * Central site config — used for SEO metadata, sitemap, and structured data.
- * Set NEXT_PUBLIC_SITE_URL in production (e.g. https://www.yourdomain.org).
- */
 export const siteConfig = {
   name: "Bright Future For Children Ethiopia",
   legalName: "Bright Future For Children Ethiopia",

@@ -4,12 +4,6 @@ import { ArrowRight } from "lucide-react";
 import { featuredPosts } from "@/lib/blog-posts";
 import { siteConfig } from "@/lib/site";
 
-const categoryColors: Record<string, string> = {
-  Impact: "bg-primary/10 text-primary",
-  Community: "bg-emerald-50 text-emerald-700",
-  Stories: "bg-sky-50 text-sky-700",
-};
-
 export function BlogSection() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -23,22 +17,34 @@ export function BlogSection() {
       position: i + 1,
       item: {
         "@type": "BlogPosting",
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `${siteConfig.url}${post.href}`,
+        },
         headline: post.title,
         description: post.excerpt,
         datePublished: post.dateIso,
-        image: `${siteConfig.url}${post.image}`,
+        dateModified: post.dateIso,
+        image: {
+          "@type": "ImageObject",
+          url: `${siteConfig.url}${post.image}`,
+          description: post.imageAlt,
+        },
         url: `${siteConfig.url}${post.href}`,
         author: {
-          "@type": "Organization",
-          name: siteConfig.name,
-          url: siteConfig.url,
+          "@type": "Person",
+          name: post.author,
         },
         publisher: {
           "@type": "Organization",
           name: siteConfig.name,
           url: siteConfig.url,
+          logo: {
+            "@type": "ImageObject",
+            url: `${siteConfig.url}/logo/bffc-logo.png`,
+          },
         },
-        articleSection: post.category,
+        inLanguage: "en",
       },
     })),
   };
@@ -99,17 +105,27 @@ export function BlogSection() {
                 <article
                   className="group flex w-full flex-col overflow-hidden rounded-3xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)]"
                   aria-label={post.title}
+                  itemScope
+                  itemType="https://schema.org/BlogPosting"
                 >
+                  {/* Hidden microdata fields */}
+                  <meta itemProp="datePublished" content={post.dateIso} />
+                  <meta itemProp="dateModified" content={post.dateIso} />
+                  <meta itemProp="author" content={post.author} />
+                  <meta itemProp="url" content={`${siteConfig.url}${post.href}`} />
+
                   {/* Image */}
-                  <Link href={post.href} aria-label={`Read: ${post.title}`} tabIndex={-1}>
+                  <Link href={post.href} aria-label={`Read: ${post.title}`} tabIndex={-1} itemProp="url">
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100">
                       <Image
                         src={post.image}
                         alt={post.imageAlt}
                         fill
                         priority={index === 0}
+                        loading={index === 0 ? "eager" : "lazy"}
                         className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        itemProp="image"
                       />
                     </div>
                   </Link>
@@ -118,28 +134,30 @@ export function BlogSection() {
                   <div className="flex flex-1 flex-col p-6 sm:p-7">
 
                     {/* Meta row */}
-                    <div className="flex items-center gap-3">
-                      <span
-                        className={`inline-block rounded-full px-3 py-0.5 text-[10px] font-semibold uppercase tracking-widest ${categoryColors[post.category] ?? "bg-zinc-100 text-zinc-500"}`}
-                        aria-label={`Category: ${post.category}`}
-                      >
-                        {post.category}
-                      </span>
-                      <time
-                        dateTime={post.dateIso}
-                        className="text-xs text-zinc-400 font-light"
-                      >
-                        {post.date}
-                      </time>
-                    </div>
+                    <header>
+                      <div className="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 shrink-0 text-zinc-400" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                        </svg>
+                        <span className="text-xs text-zinc-500 font-medium">{post.author}</span>
+                        <span className="text-zinc-300" aria-hidden="true">·</span>
+                        <time
+                          dateTime={post.dateIso}
+                          className="text-xs text-zinc-400 font-light"
+                          itemProp="datePublished"
+                        >
+                          {post.date}
+                        </time>
+                      </div>
 
-                    {/* Title */}
-                    <h3 className="mt-4 font-serif text-xl font-medium leading-snug tracking-tight text-zinc-900 group-hover:text-primary transition-colors duration-200">
-                      <Link href={post.href}>{post.title}</Link>
-                    </h3>
+                      {/* Title */}
+                      <h3 className="mt-4 font-serif text-xl font-medium leading-snug tracking-tight text-zinc-900 group-hover:text-primary transition-colors duration-200" itemProp="headline">
+                        <Link href={post.href}>{post.title}</Link>
+                      </h3>
+                    </header>
 
                     {/* Excerpt */}
-                    <p className="mt-3 flex-1 text-sm leading-[1.85] text-zinc-500 font-light">
+                    <p className="mt-3 flex-1 text-sm leading-[1.85] text-zinc-500 font-light" itemProp="description">
                       {post.excerpt}
                     </p>
 

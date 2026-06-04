@@ -1,6 +1,6 @@
 export type BlogPost = {
   slug: string;
-  category: string;
+  author: string;
   /** Human-readable display date */
   date: string;
   /** ISO 8601 date for <time dateTime> and structured data */
@@ -15,7 +15,7 @@ export type BlogPost = {
 export const featuredPosts: BlogPost[] = [
   {
     slug: "school-feeding-program-afar",
-    category: "Impact",
+    author: "Bright Future Team",
     date: "May 15, 2026",
     dateIso: "2026-05-15",
     title: "How Our School Feeding Program Is Changing Lives in Afar",
@@ -27,7 +27,7 @@ export const featuredPosts: BlogPost[] = [
   },
   {
     slug: "school-supplies-drive-tigray",
-    category: "Community",
+    author: "Aelaf Eskinder",
     date: "April 3, 2026",
     dateIso: "2026-04-03",
     title: "Thousands of Exercise Books Delivered to Tigray Schools",
@@ -39,7 +39,7 @@ export const featuredPosts: BlogPost[] = [
   },
   {
     slug: "volunteer-spotlight-amhara",
-    category: "Stories",
+    author: "Bright Future Team",
     date: "March 20, 2026",
     dateIso: "2026-03-20",
     title: "Meet the Volunteers Making a Difference in Amhara",
