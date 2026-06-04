@@ -57,6 +57,7 @@ export function AboutSection() {
 
       {/* ── Section Heading ── */}
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-16 text-center">
+        <span id="about" aria-hidden="true" className="block scroll-mt-20" />
         <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
           About Us
         </h2>

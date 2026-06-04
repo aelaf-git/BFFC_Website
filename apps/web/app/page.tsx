@@ -17,9 +17,6 @@ export const metadata: Metadata = buildPageMetadata({
   ogImage: "/hero/hero1.jpg",
 });
 
-/** Scroll targets for top-bar section links (content TBD) */
-const anchorClass = "scroll-mt-16";
-
 export default function Home() {
   return (
     <div className="flex-1" aria-label="Home">
@@ -29,19 +26,11 @@ export default function Home() {
         in Amhara, Afar, and Tigray
       </h1>
       <HeroCarousel slides={heroSlides} />
-      <div id="about" className={anchorClass} tabIndex={-1}>
-        <AboutSection />
-      </div>
+      <AboutSection />
       <OurPartnersSection />
-      <div id="what-we-do" className={anchorClass} tabIndex={-1}>
-        <WhatWeDoSection />
-      </div>
-      <div id="stories" className={anchorClass} tabIndex={-1}>
-        <BlogSection />
-      </div>
-      <div id="get-in-touch" className={anchorClass} tabIndex={-1}>
-        <ContactSection />
-      </div>
+      <WhatWeDoSection />
+      <BlogSection />
+      <ContactSection />
     </div>
   );
 }
