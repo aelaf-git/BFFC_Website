@@ -274,7 +274,7 @@ export function CardNav({
     <div
       className={`fixed top-0 left-0 z-50 w-full overflow-visible transition-all duration-500 ${
         showOpaque
-          ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 border-b border-border/40 shadow-sm"
+          ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 shadow-sm"
           : "bg-transparent"
       } ${className}`}
     >
