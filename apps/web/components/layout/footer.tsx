@@ -106,7 +106,7 @@ export function Footer() {
           </div>
 
           {/* Links columns - 8 columns wide total */}
-          <div className="lg:col-span-8 grid grid-cols-1 gap-8 sm:grid-cols-3">
+          <div className="lg:col-span-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
             
             {/* Column 1: Footer Navigation */}
             <div className="flex flex-col gap-4">
@@ -138,22 +138,7 @@ export function Footer() {
               </nav>
             </div>
 
-            {/* Column 2: Transparency */}
-            <div className="flex flex-col gap-4">
-              <h2 className="font-serif text-lg font-semibold tracking-wide text-foreground">
-                Transparency
-              </h2>
-              <nav className="flex flex-col gap-2.5 text-sm" aria-label="Transparency and reports">
-                <Link href="/transparency/annual-report" className="hover:text-primary transition-colors">
-                  Annual Report
-                </Link>
-                <Link href="/transparency/financial-accountability" className="hover:text-primary transition-colors">
-                  Financial Accountability
-                </Link>
-              </nav>
-            </div>
-
-            {/* Column 3: Legal & Social */}
+            {/* Column 2: Legal & Social */}
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4">
                 <h2 className="font-serif text-lg font-semibold tracking-wide text-foreground">
