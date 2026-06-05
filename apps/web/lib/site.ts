@@ -21,8 +21,10 @@ export const siteConfig = {
     country: "Canada",
     charityRegistration: "726794944RR0001",
     email: "Info@brightfuture4children.com",
-    phone: "+1 (867) 678-5383",
-    phoneHref: "tel:+18676785383",
+    phone: "+1 825 454 5383",
+    phoneHref: "tel:+18254545383",
+    phoneAlt: "+251 952 333 366",
+    phoneAltHref: "tel:+251952333366",
     mapEmbedUrl:
       "https://maps.google.com/maps?q=1835+10+Ave+SE+Calgary+AB+T2G+5N7+Canada&output=embed&z=15",
   },

@@ -8,6 +8,8 @@ export const siteContact: SiteContact = {
   email: siteConfig.contact.email,
   phone: siteConfig.contact.phone,
   phoneHref: siteConfig.contact.phoneHref,
+  phoneAlt: siteConfig.contact.phoneAlt,
+  phoneAltHref: siteConfig.contact.phoneAltHref,
 };
 
 /** Primary CTA beside the logo */

@@ -4,7 +4,14 @@ import { siteConfig } from "@/lib/site";
 
 const { contact } = siteConfig;
 
-const contactDetails = [
+type ContactLine = string | { text: string; href: string };
+
+const contactDetails: {
+  icon: typeof MapPin;
+  label: string;
+  lines: ContactLine[];
+  href?: string;
+}[] = [
   {
     icon: MapPin,
     label: "Office address",
@@ -26,8 +33,10 @@ const contactDetails = [
   {
     icon: Phone,
     label: "Call us",
-    lines: [contact.phone],
-    href: contact.phoneHref,
+    lines: [
+      { text: contact.phone, href: contact.phoneHref },
+      { text: contact.phoneAlt, href: contact.phoneAltHref },
+    ],
   },
   {
     icon: Building2,
@@ -77,23 +86,25 @@ export function ContactSection() {
                       <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">
                         {label}
                       </p>
-                      {lines.map((line) =>
-                        href ? (
+                      {lines.map((line) => {
+                        const text = typeof line === "string" ? line : line.text;
+                        const lineHref = typeof line === "string" ? href : line.href;
+                        return lineHref ? (
                           <a
-                            key={line}
-                            href={href}
-                            target={href.startsWith("http") ? "_blank" : undefined}
-                            rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                            key={text}
+                            href={lineHref}
+                            target={lineHref.startsWith("http") ? "_blank" : undefined}
+                            rel={lineHref.startsWith("http") ? "noopener noreferrer" : undefined}
                             className="mt-0.5 block truncate text-sm font-medium text-zinc-700 transition-colors hover:text-primary"
                           >
-                            {line}
+                            {text}
                           </a>
                         ) : (
-                          <p key={line} className="mt-0.5 truncate text-sm font-medium text-zinc-700">
-                            {line}
+                          <p key={text} className="mt-0.5 truncate text-sm font-medium text-zinc-700">
+                            {text}
                           </p>
-                        ),
-                      )}
+                        );
+                      })}
                     </div>
                   </div>
                 </li>
