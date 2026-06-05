@@ -224,8 +224,7 @@ export function CardNav({
     gsap.set(backdrop, { opacity: 0 });
 
     const tl = gsap.timeline({ paused: true });
-    tl.to(backdrop, { opacity: 1, duration: 0.25, ease: "none" });
-    tl.to(drawer, { x: "0%", duration: 0.35, ease }, "-=0.25");
+    tl.to(drawer, { x: "0%", duration: 0.4, ease });
 
     return tl;
   }, [ease]);
@@ -415,37 +414,34 @@ export function CardNav({
           </div>
         </div>
 
-        {/* Right-side drawer */}
+        {/* Right-side drawer — Packard style */}
         <div
           ref={drawerRef}
-          className={`fixed top-0 right-0 z-[100] flex h-screen w-72 flex-col bg-white shadow-2xl ${
+          className={`fixed top-0 right-0 z-[100] flex h-screen w-96 flex-col bg-white ${
             isExpanded ? "pointer-events-auto" : "pointer-events-none"
           }`}
           aria-hidden={!isExpanded}
           style={{ transform: "translateX(100%)" }}
         >
-          {/* Drawer header */}
-          <div className="flex items-center justify-between border-b border-zinc-100 px-5 py-4">
-            <span className="font-serif text-base font-semibold text-zinc-900">Menu</span>
+          {/* Top bar: label + close */}
+          <div className="flex items-center justify-between px-8 pt-8 pb-6">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">
+              Navigate
+            </span>
             <button
               type="button"
               onClick={toggleMenu}
               aria-label="Close menu"
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700"
+              className="text-zinc-400 transition-colors hover:text-zinc-800"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </button>
           </div>
 
-          {/* Search */}
-          <div className="border-b border-zinc-100 px-5 py-3">
-            <NavSearch className="w-full" />
-          </div>
-
-          {/* Nav links */}
-          <nav className="flex flex-1 flex-col overflow-y-auto px-5 py-2" aria-label="Site navigation">
+          {/* Nav links — large serif */}
+          <nav className="flex flex-1 flex-col overflow-y-auto px-8" aria-label="Site navigation">
             {[
               { label: "Our Work", href: "/#what-we-do" },
               { label: "Ways to Give", href: "/ways-to-give" },
@@ -457,16 +453,29 @@ export function CardNav({
                 key={link.href}
                 href={link.href}
                 onClick={toggleMenu}
-                className="border-b border-zinc-100 py-4 text-sm font-medium text-zinc-700 transition-colors hover:text-primary last:border-0"
+                className="border-b border-zinc-100 py-5 font-serif text-2xl font-medium text-zinc-800 transition-colors duration-200 hover:text-primary last:border-0"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* Language switcher at bottom */}
-          <div className="border-t border-zinc-100 px-5 py-4">
-            <NavLanguageSwitcher />
+          {/* Bottom: social */}
+          <div className="px-8 pb-10 pt-6">
+            <div className="flex items-center gap-5">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-zinc-400 transition-colors hover:text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-zinc-400 transition-colors hover:text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-zinc-400 transition-colors hover:text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-zinc-400 transition-colors hover:text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              </a>
+            </div>
           </div>
         </div>
       </nav>
