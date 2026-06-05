@@ -1,0 +1,16 @@
+# Build outputs
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+.vs/
+
+# NuGet packages are restored — never commit them
+*.nupkg
+packages/
+
+# Secrets — copy .env.example to .env and fill in your keys
+.env
+!.env.example

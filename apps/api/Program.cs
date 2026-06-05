@@ -1,41 +1,57 @@
+using Api.Endpoints;
+using Api.Services;
+using DotNetEnv;
+using System.Text.Json;
+
+// Load Stripe keys and other secrets from apps/api/.env (see .env.example).
+Env.TraversePath().Load();
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// ── OpenAPI ───────────────────────────────────────────────────────────────────
 builder.Services.AddOpenApi();
+
+// Accept camelCase JSON from the Next.js frontend (amountCents, donorEmail, …)
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+});
+
+// ── CORS ──────────────────────────────────────────────────────────────────────
+// Allow the Next.js frontend (localhost:3000 in dev, your Vercel domain in prod).
+// In production, replace the origin list with your actual frontend URL.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        var origins = builder.Configuration
+            .GetSection("AllowedOrigins")
+            .Get<string[]>() ?? ["http://localhost:3000"];
+
+        policy.WithOrigins(origins)
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+// ── Stripe ────────────────────────────────────────────────────────────────────
+// IStripeService is registered as a singleton because StripeConfiguration.ApiKey
+// is a global static — initialising it once is correct and thread-safe.
+builder.Services.AddSingleton<IStripeService, StripeService>();
+
+// ── Email (tax receipts via Resend) ───────────────────────────────────────────
+builder.Services.AddHttpClient<IEmailService, TaxReceiptEmailService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ── Middleware pipeline ───────────────────────────────────────────────────────
 if (app.Environment.IsDevelopment())
-{
     app.MapOpenApi();
-}
 
 app.UseHttpsRedirection();
+app.UseCors("FrontendPolicy");
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+// ── Endpoints ─────────────────────────────────────────────────────────────────
+app.MapDonationEndpoints();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
