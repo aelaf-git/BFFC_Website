@@ -162,6 +162,8 @@ export function CardNav({
   const [isOpaque, setIsOpaque] = useState(false);
   const pathname = usePathname();
   const navRef = useRef<HTMLDivElement | null>(null);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+  const backdropRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
@@ -213,56 +215,20 @@ export function CardNav({
 
   const collapsedHeight = MAIN_ROW_HEIGHT;
 
-  const calculateHeight = useCallback(() => {
-    const navEl = navRef.current;
-    if (!navEl) return 320;
-
-    const contentEl = navEl.querySelector(".card-nav-content") as HTMLElement;
-    if (!contentEl) return 320;
-
-    const wasVisible = contentEl.style.visibility;
-    const wasPointerEvents = contentEl.style.pointerEvents;
-    const wasPosition = contentEl.style.position;
-    const wasHeight = contentEl.style.height;
-
-    contentEl.style.visibility = "visible";
-    contentEl.style.pointerEvents = "auto";
-    contentEl.style.position = "static";
-    contentEl.style.height = "auto";
-    void contentEl.offsetHeight;
-
-    const padding = 16;
-    const contentHeight = contentEl.scrollHeight;
-    const currentWindowHeight = window.innerHeight || 800;
-    const maxHeight = currentWindowHeight - collapsedHeight - 40;
-
-    contentEl.style.visibility = wasVisible;
-    contentEl.style.pointerEvents = wasPointerEvents;
-    contentEl.style.position = wasPosition;
-    contentEl.style.height = wasHeight;
-
-    const targetContentHeight = Math.max(0, Math.min(contentHeight, maxHeight));
-    return collapsedHeight + targetContentHeight + padding;
-  }, [collapsedHeight]);
-
   const createTimeline = useCallback(() => {
-    const navEl = navRef.current;
-    if (!navEl) return null;
+    const drawer = drawerRef.current;
+    const backdrop = backdropRef.current;
+    if (!drawer || !backdrop) return null;
 
-    gsap.set(navEl, { height: collapsedHeight });
-    gsap.set(cardsRef.current, { y: 40, opacity: 0 });
+    gsap.set(drawer, { x: "100%" });
+    gsap.set(backdrop, { opacity: 0 });
 
     const tl = gsap.timeline({ paused: true });
-
-    tl.to(navEl, { height: calculateHeight, duration: 0.4, ease });
-    tl.to(
-      cardsRef.current,
-      { y: 0, opacity: 1, duration: 0.4, ease, stagger: 0.08 },
-      "-=0.1",
-    );
+    tl.to(backdrop, { opacity: 1, duration: 0.25, ease: "none" });
+    tl.to(drawer, { x: "0%", duration: 0.35, ease }, "-=0.25");
 
     return tl;
-  }, [calculateHeight, collapsedHeight, ease]);
+  }, [ease]);
 
   useLayoutEffect(() => {
     const tl = createTimeline();
@@ -271,28 +237,21 @@ export function CardNav({
       tl?.kill();
       tlRef.current = null;
     };
-  }, [createTimeline, items]);
+  }, [createTimeline]);
 
   useLayoutEffect(() => {
     const handleResize = () => {
       if (!tlRef.current) return;
-      if (isExpanded) {
-        gsap.set(navRef.current, { height: calculateHeight() });
-        tlRef.current.kill();
-        const newTl = createTimeline();
-        if (newTl) {
-          newTl.progress(1);
-          tlRef.current = newTl;
-        }
-      } else {
-        tlRef.current.kill();
-        const newTl = createTimeline();
-        if (newTl) tlRef.current = newTl;
+      tlRef.current.kill();
+      const newTl = createTimeline();
+      if (newTl) {
+        if (isExpanded) newTl.progress(1);
+        tlRef.current = newTl;
       }
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [isExpanded, calculateHeight, createTimeline]);
+  }, [isExpanded, createTimeline]);
 
   const toggleMenu = () => {
     const tl = tlRef.current;
@@ -312,23 +271,28 @@ export function CardNav({
     if (el) cardsRef.current[i] = el;
   };
 
-  const showOpaque = isOpaque || isExpanded || !isHeroPage;
+  const showOpaque = isOpaque || !isHeroPage;
 
   return (
     <div
       className={`fixed top-0 left-0 z-50 w-full overflow-visible transition-all duration-500 border-b ${
-        isExpanded
-          ? "bg-white border-border shadow-sm"
-          : showOpaque
-            ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 border-border/40 shadow-sm"
-            : "bg-transparent border-transparent shadow-none"
+        showOpaque
+          ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 border-border/40 shadow-sm"
+          : "bg-transparent border-transparent shadow-none"
       } ${className}`}
     >
+      {/* Invisible click-away area — no dark overlay */}
+      <div
+        ref={backdropRef}
+        className={`fixed inset-0 z-[99] ${isExpanded ? "pointer-events-auto" : "pointer-events-none"}`}
+        aria-hidden="true"
+        onClick={toggleMenu}
+        style={{ opacity: 0 }}
+      />
+
       <nav
         ref={navRef}
-        className={`relative z-10 block w-full will-change-[height] bg-transparent ${
-          isExpanded ? "open" : ""
-        }`}
+        className="relative z-10 block w-full bg-transparent"
         style={{ height: collapsedHeight }}
       >
         {/* Main row */}
@@ -451,65 +415,58 @@ export function CardNav({
           </div>
         </div>
 
-        {/* Mega menu panel */}
+        {/* Right-side drawer */}
         <div
-          className={`card-nav-content absolute right-0 bottom-0 left-0 z-[1] bg-white p-4 sm:px-6 overflow-y-auto ${
-            isExpanded ? "visible pointer-events-auto" : "invisible pointer-events-none"
+          ref={drawerRef}
+          className={`fixed top-0 right-0 z-[100] flex h-screen w-72 flex-col bg-white shadow-2xl ${
+            isExpanded ? "pointer-events-auto" : "pointer-events-none"
           }`}
-          style={{
-            top: MAIN_ROW_HEIGHT,
-            maxHeight: `calc(100vh - ${MAIN_ROW_HEIGHT}px - 40px)`,
-          }}
           aria-hidden={!isExpanded}
+          style={{ transform: "translateX(100%)" }}
         >
-          <div className="mb-4 flex flex-col gap-4 pb-4 md:hidden">
-            <NavSearch className="w-full max-w-sm" />
-            <NavLanguageSwitcher />
-            {/* My Account — hidden until donor portal is ready
-            <NavAccountMenu label="My Account (Donor Portal)" links={accountLinks} />
-            */}
-            <nav className="grid gap-2 pt-3" aria-label="Page sections">
-              {mainNavLinks.map((link) => (
-                <InternalLink
-                  key={link.href}
-                  href={link.href}
-                  ariaLabel={link.ariaLabel}
-                  className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-                >
-                  {link.label}
-                </InternalLink>
-              ))}
-            </nav>
+          {/* Drawer header */}
+          <div className="flex items-center justify-between border-b border-zinc-100 px-5 py-4">
+            <span className="font-serif text-base font-semibold text-zinc-900">Menu</span>
+            <button
+              type="button"
+              onClick={toggleMenu}
+              aria-label="Close menu"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
           </div>
 
-          <div className="flex flex-col gap-3 md:flex-row md:gap-4">
-            {items.map((item, idx) => (
-              <div
-                key={`${item.label}-${idx}`}
-                ref={setCardRef(idx)}
-                className="flex min-w-0 flex-1 flex-col gap-3 rounded-2xl p-4 shadow-[0_8px_30px_rgb(0,0,0,0.015)]"
-                style={{ backgroundColor: item.bgColor, color: item.textColor }}
+          {/* Search */}
+          <div className="border-b border-zinc-100 px-5 py-3">
+            <NavSearch className="w-full" />
+          </div>
+
+          {/* Nav links */}
+          <nav className="flex flex-1 flex-col overflow-y-auto px-5 py-2" aria-label="Site navigation">
+            {[
+              { label: "Our Work", href: "/#what-we-do" },
+              { label: "Ways to Give", href: "/ways-to-give" },
+              { label: "Stories", href: "/stories" },
+              { label: "Resources", href: "/resources" },
+              { label: "FAQs", href: "/faqs" },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={toggleMenu}
+                className="border-b border-zinc-100 py-4 text-sm font-medium text-zinc-700 transition-colors hover:text-primary last:border-0"
               >
-                {item.href ? (
-                  <Link
-                    href={item.href}
-                    className="block border-l-2 border-primary pl-3 text-lg font-semibold transition-colors hover:text-primary"
-                    onClick={toggleMenu}
-                  >
-                    {item.label}
-                  </Link>
-                ) : (
-                  <div className="border-l-2 border-primary pl-3 text-lg font-semibold">
-                    {item.label}
-                  </div>
-                )}
-                <div className="flex flex-col gap-1">
-                  {item.links.map((lnk, i) => (
-                    <NavCardLink key={`${lnk.label}-${i}`} link={lnk} />
-                  ))}
-                </div>
-              </div>
+                {link.label}
+              </Link>
             ))}
+          </nav>
+
+          {/* Language switcher at bottom */}
+          <div className="border-t border-zinc-100 px-5 py-4">
+            <NavLanguageSwitcher />
           </div>
         </div>
       </nav>
