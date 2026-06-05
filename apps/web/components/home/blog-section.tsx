@@ -21,10 +21,6 @@ export function BlogSection() {
           "@type": "WebPage",
           "@id": `${siteConfig.url}${post.href}`,
         },
-        mainEntityOfPage: {
-          "@type": "WebPage",
-          "@id": `${siteConfig.url}${post.href}`,
-        },
         headline: post.title,
         description: post.excerpt,
         datePublished: post.dateIso,
@@ -34,16 +30,8 @@ export function BlogSection() {
           url: `${siteConfig.url}${post.image}`,
           description: post.imageAlt,
         },
-        dateModified: post.dateIso,
-        image: {
-          "@type": "ImageObject",
-          url: `${siteConfig.url}${post.image}`,
-          description: post.imageAlt,
-        },
         url: `${siteConfig.url}${post.href}`,
         author: {
-          "@type": "Person",
-          name: post.author,
           "@type": "Person",
           name: post.author,
         },
@@ -56,7 +44,6 @@ export function BlogSection() {
             url: `${siteConfig.url}/logo/bffc-logo.png`,
           },
         },
-        inLanguage: "en",
         inLanguage: "en",
       },
     })),
@@ -137,10 +124,8 @@ export function BlogSection() {
                         fill
                         priority={index === 0}
                         loading={index === 0 ? "eager" : "lazy"}
-                        loading={index === 0 ? "eager" : "lazy"}
                         className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        itemProp="image"
                         itemProp="image"
                       />
                     </div>
@@ -168,16 +153,15 @@ export function BlogSection() {
 
                         {/* Title */}
                         <h3
-                        className="mt-4 font-serif text-xl font-medium leading-snug tracking-tight text-zinc-900 group-hover:text-primary transition-colors duration-200" itemProp="headline"
-                        itemProp="headline"
-                      >
+                          className="mt-4 font-serif text-xl font-medium leading-snug tracking-tight text-zinc-900 group-hover:text-primary transition-colors duration-200"
+                          itemProp="headline"
+                        >
                           <Link href={post.href}>{post.title}</Link>
                         </h3>
                     </header>
-                    </header>
 
                     {/* Excerpt */}
-                    <p className="mt-3 flex-1 text-sm leading-[1.85] text-zinc-500 font-light" itemProp="description" itemProp="description">
+                    <p className="mt-3 flex-1 text-sm leading-[1.85] text-zinc-500 font-light" itemProp="description">
                       {post.excerpt}
                     </p>
 
