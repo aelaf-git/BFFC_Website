@@ -171,28 +171,26 @@ export function CardNav({
   const isStoryPage = pathname.startsWith("/stories/");
   const { heroThreshold: ctxHeroThreshold } = useHeroNav();
 
-  // A page is a "hero page" if it's the homepage, a story page, OR if it
-  // registered a custom hero threshold via <HeroNavSignal />.
-  const isHeroPage = isHomePage || isStoryPage || ctxHeroThreshold !== null;
+  // Every page starts transparent (navbar floats over the hero image).
+  // It becomes opaque once the user scrolls past the hero area.
+  const isHeroPage = true;
 
   useEffect(() => {
-    if (!isHeroPage) {
-      setIsOpaque(true);
-      return;
-    }
-
     const handleScroll = () => {
       const H = window.innerHeight;
       let threshold: number;
       if (ctxHeroThreshold !== null) {
-        // Custom threshold set by a page (e.g. not-found, future hero pages)
+        // Page supplied a custom threshold via <HeroNavSignal />
         threshold = ctxHeroThreshold;
+      } else if (isHomePage) {
+        // Homepage: full-screen three-slide carousel
+        threshold = 3 * H - 80;
       } else if (isStoryPage) {
-        // Blog detail hero is ~60vh — go opaque just before the hero ends
+        // Blog detail hero is ~60 vh
         threshold = H * 0.55;
       } else {
-        // Homepage: three-slide carousel
-        threshold = 3 * H - 80;
+        // All other pages: standard short hero banner (~256 px / h-64)
+        threshold = 200;
       }
       setIsOpaque(window.scrollY >= threshold);
     };
@@ -200,7 +198,7 @@ export function CardNav({
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHeroPage, isHomePage, isStoryPage, ctxHeroThreshold]);
+  }, [isHomePage, isStoryPage, ctxHeroThreshold]);
 
   useEffect(() => {
     if (isExpanded) {
@@ -270,14 +268,14 @@ export function CardNav({
     if (el) cardsRef.current[i] = el;
   };
 
-  const showOpaque = isOpaque || !isHeroPage;
+  const showOpaque = isOpaque;
 
   return (
     <div
-      className={`fixed top-0 left-0 z-50 w-full overflow-visible transition-all duration-500 border-b ${
+      className={`fixed top-0 left-0 z-50 w-full overflow-visible transition-all duration-500 ${
         showOpaque
-          ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 border-border/40 shadow-sm"
-          : "bg-transparent border-transparent shadow-none"
+          ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 border-b border-border/40 shadow-sm"
+          : "bg-transparent"
       } ${className}`}
     >
       {/* Invisible ref target — pointer-events always off so it never intercepts clicks */}
@@ -359,7 +357,7 @@ export function CardNav({
           </div>
 
           {/* Right: language + menu dropdown (mobile/tablet) */}
-          <div className="flex shrink-0 items-center gap-2 xl:hidden">
+          <div className="relative z-[101] flex shrink-0 items-center gap-2 xl:hidden">
             <NavLanguageSwitcher className="sm:hidden" isTransparent={!showOpaque} />
             <button
               type="button"
@@ -372,19 +370,19 @@ export function CardNav({
             >
               <span
                 className={`h-0.5 w-5 transition-all duration-300 ${
-                  isHamburgerOpen ? "translate-y-[3px] rotate-45" : ""
-                } ${showOpaque ? "bg-foreground" : "bg-white"}`}
+                  isHamburgerOpen ? "translate-y-[3px] rotate-45 bg-foreground" : showOpaque ? "bg-foreground" : "bg-white"
+                }`}
               />
               <span
                 className={`h-0.5 w-5 transition-all duration-300 ${
-                  isHamburgerOpen ? "-translate-y-[3px] -rotate-45" : ""
-                } ${showOpaque ? "bg-foreground" : "bg-white"}`}
+                  isHamburgerOpen ? "-translate-y-[3px] -rotate-45 bg-foreground" : showOpaque ? "bg-foreground" : "bg-white"
+                }`}
               />
             </button>
           </div>
 
           {/* Hamburger only (desktop - since language switcher and other tools are in the main bar) */}
-          <div className="hidden shrink-0 items-center xl:flex">
+          <div className="relative z-[101] hidden shrink-0 items-center xl:flex">
             <button
               type="button"
               className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-lg transition-all duration-300 hover:bg-primary-light/10 ${
@@ -396,13 +394,13 @@ export function CardNav({
             >
               <span
                 className={`h-0.5 w-5 transition-all duration-300 ${
-                  isHamburgerOpen ? "translate-y-[3px] rotate-45" : ""
-                } ${showOpaque ? "bg-foreground" : "bg-white"}`}
+                  isHamburgerOpen ? "translate-y-[3px] rotate-45 bg-foreground" : showOpaque ? "bg-foreground" : "bg-white"
+                }`}
               />
               <span
                 className={`h-0.5 w-5 transition-all duration-300 ${
-                  isHamburgerOpen ? "-translate-y-[3px] -rotate-45" : ""
-                } ${showOpaque ? "bg-foreground" : "bg-white"}`}
+                  isHamburgerOpen ? "-translate-y-[3px] -rotate-45 bg-foreground" : showOpaque ? "bg-foreground" : "bg-white"
+                }`}
               />
             </button>
           </div>
