@@ -12,6 +12,7 @@ import type { SiteContact } from "@/components/layout/nav-contact-info";
 import { NavAccountMenu } from "@/components/layout/nav-account-menu";
 import { NavLanguageSwitcher } from "@/components/layout/nav-language-switcher";
 import { NavSearch } from "@/components/layout/nav-search";
+import { useHeroNav } from "@/components/layout/hero-nav-provider";
 
 export type NavLink = {
   label: string;
@@ -164,9 +165,14 @@ export function CardNav({
 
   const isHomePage = pathname === "/";
   const isStoryPage = pathname.startsWith("/stories/");
+  const { heroThreshold: ctxHeroThreshold } = useHeroNav();
+
+  // A page is a "hero page" if it's the homepage, a story page, OR if it
+  // registered a custom hero threshold via <HeroNavSignal />.
+  const isHeroPage = isHomePage || isStoryPage || ctxHeroThreshold !== null;
 
   useEffect(() => {
-    if (!isHomePage && !isStoryPage) {
+    if (!isHeroPage) {
       setIsOpaque(true);
       return;
     }
@@ -174,7 +180,10 @@ export function CardNav({
     const handleScroll = () => {
       const H = window.innerHeight;
       let threshold: number;
-      if (isStoryPage) {
+      if (ctxHeroThreshold !== null) {
+        // Custom threshold set by a page (e.g. not-found, future hero pages)
+        threshold = ctxHeroThreshold;
+      } else if (isStoryPage) {
         // Blog detail hero is ~60vh — go opaque just before the hero ends
         threshold = H * 0.55;
       } else {
@@ -187,7 +196,7 @@ export function CardNav({
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomePage, isStoryPage]);
+  }, [isHeroPage, isHomePage, isStoryPage, ctxHeroThreshold]);
 
   useEffect(() => {
     if (isExpanded) {
@@ -301,7 +310,7 @@ export function CardNav({
     if (el) cardsRef.current[i] = el;
   };
 
-  const showOpaque = isOpaque || isExpanded || (!isHomePage && !isStoryPage);
+  const showOpaque = isOpaque || isExpanded || !isHeroPage;
 
   return (
     <div
@@ -380,11 +389,13 @@ export function CardNav({
             <div className="hidden items-center gap-4 xl:flex">
               <NavSearch isTransparent={!showOpaque} />
               <NavLanguageSwitcher isTransparent={!showOpaque} />
+              {/* My Account — hidden until donor portal is ready
               <NavAccountMenu
                 label="My Account"
                 links={accountLinks}
                 isTransparent={!showOpaque}
               />
+              */}
             </div>
           </div>
 
@@ -452,7 +463,9 @@ export function CardNav({
           <div className="mb-4 flex flex-col gap-4 pb-4 md:hidden">
             <NavSearch className="w-full max-w-sm" />
             <NavLanguageSwitcher />
+            {/* My Account — hidden until donor portal is ready
             <NavAccountMenu label="My Account (Donor Portal)" links={accountLinks} />
+            */}
             <nav className="grid gap-2 pt-3" aria-label="Page sections">
               {mainNavLinks.map((link) => (
                 <InternalLink
