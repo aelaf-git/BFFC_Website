@@ -112,11 +112,6 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
           {/* Content Layer */}
           <div className="container relative z-10 mx-auto flex h-full items-center px-6 sm:px-10 lg:px-16">
             <div className="max-w-4xl">
-              {/* Tag/Label (Packard Style) */}
-              <div className="mb-6 inline-block rounded-full bg-primary/20 px-4 py-1 text-sm font-bold tracking-wider text-primary backdrop-blur-md uppercase">
-                Featured Impact
-              </div>
-
               {/* Heading (Serif) */}
               <h2 className="font-serif text-5xl font-medium leading-[1.1] text-white sm:text-6xl lg:text-8xl">
                 {slide.title}
