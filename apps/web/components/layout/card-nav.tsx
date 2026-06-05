@@ -28,6 +28,8 @@ export type CardNavLink = NavLink;
 
 export type CardNavItem = {
   label: string;
+  /** If set, the card title becomes a clickable link to this href */
+  href?: string;
   bgColor: string;
   textColor: string;
   links: CardNavLink[];
@@ -488,9 +490,19 @@ export function CardNav({
                 className="flex min-w-0 flex-1 flex-col gap-3 rounded-2xl p-4 shadow-[0_8px_30px_rgb(0,0,0,0.015)]"
                 style={{ backgroundColor: item.bgColor, color: item.textColor }}
               >
-                <div className="border-l-2 border-primary pl-3 text-lg font-semibold">
-                  {item.label}
-                </div>
+                {item.href ? (
+                  <Link
+                    href={item.href}
+                    className="block border-l-2 border-primary pl-3 text-lg font-semibold transition-colors hover:text-primary"
+                    onClick={toggleMenu}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <div className="border-l-2 border-primary pl-3 text-lg font-semibold">
+                    {item.label}
+                  </div>
+                )}
                 <div className="flex flex-col gap-1">
                   {item.links.map((lnk, i) => (
                     <NavCardLink key={`${lnk.label}-${i}`} link={lnk} />

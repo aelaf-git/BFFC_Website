@@ -69,14 +69,10 @@ export const accountLinks: NavLink[] = [
 export const dropdownNavItems: CardNavItem[] = [
   {
     label: "Sponsor a Child",
+    href: "/sponsor-a-child",
     bgColor: "#fef3e8",
     textColor: "#000000",
     links: [
-      {
-        label: "Overview",
-        href: "/sponsor-a-child",
-        ariaLabel: "Child sponsorship overview",
-      },
       {
         label: "Browse children & projects",
         href: "/sponsor-a-child/browse",
@@ -96,14 +92,10 @@ export const dropdownNavItems: CardNavItem[] = [
   },
   {
     label: "Gift Catalogue",
+    href: "/gift-catalogue",
     bgColor: "#ffffff",
     textColor: "#000000",
     links: [
-      {
-        label: "Shop all gifts",
-        href: "/gift-catalogue",
-        ariaLabel: "Browse gift catalogue",
-      },
       {
         label: "Education supplies",
         href: "/gift-catalogue#education",
@@ -128,14 +120,10 @@ export const dropdownNavItems: CardNavItem[] = [
   },
   {
     label: "Ways to Give",
+    href: "/ways-to-give",
     bgColor: "#fef3e8",
     textColor: "#000000",
     links: [
-      {
-        label: "All ways to give",
-        href: "/ways-to-give",
-        ariaLabel: "Explore ways to give",
-      },
       {
         label: "One-time donation",
         href: "/donate",
@@ -160,14 +148,10 @@ export const dropdownNavItems: CardNavItem[] = [
   },
   {
     label: "Impact & Stories",
+    href: "/impact",
     bgColor: "#ffffff",
     textColor: "#000000",
     links: [
-      {
-        label: "See our impact",
-        href: "/impact",
-        ariaLabel: "See our impact",
-      },
       {
         label: "Impact statistics",
         href: "/impact#statistics",
