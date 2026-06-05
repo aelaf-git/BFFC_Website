@@ -81,18 +81,26 @@ export function Footer() {
               <span className="inline-flex items-start gap-2.5">
                 <HiMapPin className="h-4 w-4 shrink-0 text-primary mt-0.5" aria-hidden />
                 <span>
-                  303-1835 10Ave SE
+                  {siteConfig.contact.street}
                   <br />
-                  Calgary, AB T2G 5N7, Canada
+                  {siteConfig.contact.city}, {siteConfig.contact.province} {siteConfig.contact.postalCode}, {siteConfig.contact.country}
                 </span>
               </span>
               <a
-                href={`tel:${siteConfig.contact.phoneHref}`}
+                href={siteConfig.contact.phoneHref}
                 className="inline-flex items-center gap-2.5 hover:text-primary transition-colors"
                 aria-label={`Call us at ${siteConfig.contact.phone}`}
               >
                 <HiPhone className="h-4 w-4 shrink-0 text-primary" aria-hidden />
                 <span>{siteConfig.contact.phone}</span>
+              </a>
+              <a
+                href={siteConfig.contact.phoneAltHref}
+                className="inline-flex items-center gap-2.5 hover:text-primary transition-colors"
+                aria-label={`Call us at ${siteConfig.contact.phoneAlt}`}
+              >
+                <HiPhone className="h-4 w-4 shrink-0 text-primary" aria-hidden />
+                <span>{siteConfig.contact.phoneAlt}</span>
               </a>
               <a
                 href={`mailto:${siteConfig.contact.email}`}
