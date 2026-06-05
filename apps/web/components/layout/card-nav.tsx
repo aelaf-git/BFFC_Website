@@ -280,14 +280,8 @@ export function CardNav({
           : "bg-transparent border-transparent shadow-none"
       } ${className}`}
     >
-      {/* Invisible click-away area — no dark overlay */}
-      <div
-        ref={backdropRef}
-        className={`fixed inset-0 z-[99] ${isExpanded ? "pointer-events-auto" : "pointer-events-none"}`}
-        aria-hidden="true"
-        onClick={toggleMenu}
-        style={{ opacity: 0 }}
-      />
+      {/* Invisible ref target — pointer-events always off so it never intercepts clicks */}
+      <div ref={backdropRef} className="pointer-events-none fixed inset-0" aria-hidden="true" />
 
       <nav
         ref={navRef}
@@ -417,7 +411,7 @@ export function CardNav({
         {/* Right-side drawer — Packard style */}
         <div
           ref={drawerRef}
-          className={`fixed top-0 right-0 z-[100] flex h-screen w-96 flex-col bg-white ${
+          className={`fixed top-0 right-0 z-[100] flex h-screen w-[28rem] flex-col bg-white ${
             isExpanded ? "pointer-events-auto" : "pointer-events-none"
           }`}
           aria-hidden={!isExpanded}
