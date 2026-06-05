@@ -20,6 +20,7 @@ export function WhatWeDoSection() {
   return (
     <section className="bg-white" aria-label="What we do">
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-16 text-center">
+        <span id="what-we-do" aria-hidden="true" className="block scroll-mt-20" />
         <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
           What We Do
         </h2>

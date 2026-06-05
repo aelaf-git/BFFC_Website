@@ -6,6 +6,8 @@ export type SiteContact = {
   email: string;
   phone: string;
   phoneHref: string;
+  phoneAlt: string;
+  phoneAltHref: string;
 };
 
 type NavContactInfoProps = {
@@ -44,12 +46,21 @@ export function NavContactInfo({
         )}
 
         <a
-          href={`tel:${contact.phoneHref}`}
+          href={contact.phoneHref}
           className="inline-flex items-center gap-1.5 transition-colors hover:text-primary"
           aria-label={`Call us at ${contact.phone}`}
         >
           <HiPhone className="h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
           <span className="whitespace-nowrap">{contact.phone}</span>
+        </a>
+
+        <a
+          href={contact.phoneAltHref}
+          className="inline-flex items-center gap-1.5 transition-colors hover:text-primary"
+          aria-label={`Call us at ${contact.phoneAlt}`}
+        >
+          <HiPhone className="h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
+          <span className="whitespace-nowrap">{contact.phoneAlt}</span>
         </a>
 
         <a

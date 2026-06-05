@@ -81,18 +81,26 @@ export function Footer() {
               <span className="inline-flex items-start gap-2.5">
                 <HiMapPin className="h-4 w-4 shrink-0 text-primary mt-0.5" aria-hidden />
                 <span>
-                  303-1835 10Ave SE
+                  {siteConfig.contact.street}
                   <br />
-                  Calgary, AB T2G 5N7, Canada
+                  {siteConfig.contact.city}, {siteConfig.contact.province} {siteConfig.contact.postalCode}, {siteConfig.contact.country}
                 </span>
               </span>
               <a
-                href={`tel:${siteConfig.contact.phoneHref}`}
+                href={siteConfig.contact.phoneHref}
                 className="inline-flex items-center gap-2.5 hover:text-primary transition-colors"
                 aria-label={`Call us at ${siteConfig.contact.phone}`}
               >
                 <HiPhone className="h-4 w-4 shrink-0 text-primary" aria-hidden />
                 <span>{siteConfig.contact.phone}</span>
+              </a>
+              <a
+                href={siteConfig.contact.phoneAltHref}
+                className="inline-flex items-center gap-2.5 hover:text-primary transition-colors"
+                aria-label={`Call us at ${siteConfig.contact.phoneAlt}`}
+              >
+                <HiPhone className="h-4 w-4 shrink-0 text-primary" aria-hidden />
+                <span>{siteConfig.contact.phoneAlt}</span>
               </a>
               <a
                 href={`mailto:${siteConfig.contact.email}`}
@@ -106,7 +114,7 @@ export function Footer() {
           </div>
 
           {/* Links columns - 8 columns wide total */}
-          <div className="lg:col-span-8 grid grid-cols-1 gap-8 sm:grid-cols-3">
+          <div className="lg:col-span-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
             
             {/* Column 1: Footer Navigation */}
             <div className="flex flex-col gap-4">
@@ -138,22 +146,7 @@ export function Footer() {
               </nav>
             </div>
 
-            {/* Column 2: Transparency */}
-            <div className="flex flex-col gap-4">
-              <h2 className="font-serif text-lg font-semibold tracking-wide text-foreground">
-                Transparency
-              </h2>
-              <nav className="flex flex-col gap-2.5 text-sm" aria-label="Transparency and reports">
-                <Link href="/transparency/annual-report" className="hover:text-primary transition-colors">
-                  Annual Report
-                </Link>
-                <Link href="/transparency/financial-accountability" className="hover:text-primary transition-colors">
-                  Financial Accountability
-                </Link>
-              </nav>
-            </div>
-
-            {/* Column 3: Legal & Social */}
+            {/* Column 2: Legal & Social */}
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4">
                 <h2 className="font-serif text-lg font-semibold tracking-wide text-foreground">

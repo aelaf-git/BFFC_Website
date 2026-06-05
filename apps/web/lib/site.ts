@@ -17,8 +17,10 @@ export const siteConfig = {
     country: "Canada",
     charityRegistration: "726794944RR0001",
     email: "Info@brightfuture4children.com",
-    phone: "+1 (867) 678-5383",
-    phoneHref: "tel:+18676785383",
+    phone: "+1 825 454 5383",
+    phoneHref: "tel:+18254545383",
+    phoneAlt: "+251 952 333 366",
+    phoneAltHref: "tel:+251952333366",
     mapEmbedUrl:
       "https://maps.google.com/maps?q=1835+10+Ave+SE+Calgary+AB+T2G+5N7+Canada&output=embed&z=15",
   },
@@ -37,6 +39,9 @@ export const siteConfig = {
     { path: "/ways-to-give", changeFrequency: "monthly" as const, priority: 0.85 },
     { path: "/impact", changeFrequency: "weekly" as const, priority: 0.85 },
     { path: "/stories", changeFrequency: "weekly" as const, priority: 0.8 },
+    { path: "/stories/school-feeding-program-afar", changeFrequency: "monthly" as const, priority: 0.75 },
+    { path: "/stories/school-supplies-drive-tigray", changeFrequency: "monthly" as const, priority: 0.75 },
+    { path: "/stories/volunteer-spotlight-amhara", changeFrequency: "monthly" as const, priority: 0.75 },
     { path: "/learn-more", changeFrequency: "monthly" as const, priority: 0.8 },
     {
       path: "/how-we-use-donations",

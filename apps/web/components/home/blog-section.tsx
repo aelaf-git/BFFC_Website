@@ -21,6 +21,10 @@ export function BlogSection() {
           "@type": "WebPage",
           "@id": `${siteConfig.url}${post.href}`,
         },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `${siteConfig.url}${post.href}`,
+        },
         headline: post.title,
         description: post.excerpt,
         datePublished: post.dateIso,
@@ -30,8 +34,16 @@ export function BlogSection() {
           url: `${siteConfig.url}${post.image}`,
           description: post.imageAlt,
         },
+        dateModified: post.dateIso,
+        image: {
+          "@type": "ImageObject",
+          url: `${siteConfig.url}${post.image}`,
+          description: post.imageAlt,
+        },
         url: `${siteConfig.url}${post.href}`,
         author: {
+          "@type": "Person",
+          name: post.author,
           "@type": "Person",
           name: post.author,
         },
@@ -44,6 +56,7 @@ export function BlogSection() {
             url: `${siteConfig.url}/logo/bffc-logo.png`,
           },
         },
+        inLanguage: "en",
         inLanguage: "en",
       },
     })),
@@ -64,7 +77,7 @@ export function BlogSection() {
         position: fixed at z-index -1 means this image is ALWAYS anchored to
         the viewport — it never moves on any device. Other sections have solid
         backgrounds that paint over it; this section has no background, so the
-        image shows through. No JavaScript or scroll listeners needed.
+        image shows through.
       */}
       <div
         className="fixed inset-0"
@@ -85,6 +98,7 @@ export function BlogSection() {
 
         {/* ── Heading ── */}
         <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-16 text-center">
+          <span id="stories" aria-hidden="true" className="block scroll-mt-20" />
           <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-white">
             Latest Stories
           </h2>
@@ -123,8 +137,10 @@ export function BlogSection() {
                         fill
                         priority={index === 0}
                         loading={index === 0 ? "eager" : "lazy"}
+                        loading={index === 0 ? "eager" : "lazy"}
                         className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        itemProp="image"
                         itemProp="image"
                       />
                     </div>
@@ -150,14 +166,18 @@ export function BlogSection() {
                         </time>
                       </div>
 
-                      {/* Title */}
-                      <h3 className="mt-4 font-serif text-xl font-medium leading-snug tracking-tight text-zinc-900 group-hover:text-primary transition-colors duration-200" itemProp="headline">
-                        <Link href={post.href}>{post.title}</Link>
-                      </h3>
+                        {/* Title */}
+                        <h3
+                        className="mt-4 font-serif text-xl font-medium leading-snug tracking-tight text-zinc-900 group-hover:text-primary transition-colors duration-200" itemProp="headline"
+                        itemProp="headline"
+                      >
+                          <Link href={post.href}>{post.title}</Link>
+                        </h3>
+                    </header>
                     </header>
 
                     {/* Excerpt */}
-                    <p className="mt-3 flex-1 text-sm leading-[1.85] text-zinc-500 font-light" itemProp="description">
+                    <p className="mt-3 flex-1 text-sm leading-[1.85] text-zinc-500 font-light" itemProp="description" itemProp="description">
                       {post.excerpt}
                     </p>
 
@@ -198,7 +218,7 @@ export function BlogSection() {
           </div>
         </div>
 
-      </div>{/* end z-10 wrapper */}
+      </div>
     </section>
   );
 }

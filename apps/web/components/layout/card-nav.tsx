@@ -12,6 +12,7 @@ import type { SiteContact } from "@/components/layout/nav-contact-info";
 import { NavAccountMenu } from "@/components/layout/nav-account-menu";
 import { NavLanguageSwitcher } from "@/components/layout/nav-language-switcher";
 import { NavSearch } from "@/components/layout/nav-search";
+import { useHeroNav } from "@/components/layout/hero-nav-provider";
 
 export type NavLink = {
   label: string;
@@ -27,6 +28,8 @@ export type CardNavLink = NavLink;
 
 export type CardNavItem = {
   label: string;
+  /** If set, the card title becomes a clickable link to this href */
+  href?: string;
   bgColor: string;
   textColor: string;
   links: CardNavLink[];
@@ -159,28 +162,43 @@ export function CardNav({
   const [isOpaque, setIsOpaque] = useState(false);
   const pathname = usePathname();
   const navRef = useRef<HTMLDivElement | null>(null);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+  const backdropRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
   const isHomePage = pathname === "/";
+  const isStoryPage = pathname.startsWith("/stories/");
+  const { heroThreshold: ctxHeroThreshold } = useHeroNav();
+
+  // Every page starts transparent (navbar floats over the hero image).
+  // It becomes opaque once the user scrolls past the hero area.
+  const isHeroPage = true;
 
   useEffect(() => {
-    if (!isHomePage) {
-      setIsOpaque(true);
-      return;
-    }
-
     const handleScroll = () => {
       const H = window.innerHeight;
-      // Fade into opaque when we leave the hero carousel (at H * 3, let's trigger transition 80px early)
-      const threshold = 3 * H - 80;
+      let threshold: number;
+      if (ctxHeroThreshold !== null) {
+        // Page supplied a custom threshold via <HeroNavSignal />
+        threshold = ctxHeroThreshold;
+      } else if (isHomePage) {
+        // Homepage: full-screen three-slide carousel
+        threshold = 3 * H - 80;
+      } else if (isStoryPage) {
+        // Blog detail hero is ~60 vh
+        threshold = H * 0.55;
+      } else {
+        // All other pages: standard short hero banner (~256 px / h-64)
+        threshold = 200;
+      }
       setIsOpaque(window.scrollY >= threshold);
     };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomePage]);
+  }, [isHomePage, isStoryPage, ctxHeroThreshold]);
 
   useEffect(() => {
     if (isExpanded) {
@@ -195,56 +213,19 @@ export function CardNav({
 
   const collapsedHeight = MAIN_ROW_HEIGHT;
 
-  const calculateHeight = useCallback(() => {
-    const navEl = navRef.current;
-    if (!navEl) return 320;
-
-    const contentEl = navEl.querySelector(".card-nav-content") as HTMLElement;
-    if (!contentEl) return 320;
-
-    const wasVisible = contentEl.style.visibility;
-    const wasPointerEvents = contentEl.style.pointerEvents;
-    const wasPosition = contentEl.style.position;
-    const wasHeight = contentEl.style.height;
-
-    contentEl.style.visibility = "visible";
-    contentEl.style.pointerEvents = "auto";
-    contentEl.style.position = "static";
-    contentEl.style.height = "auto";
-    void contentEl.offsetHeight;
-
-    const padding = 16;
-    const contentHeight = contentEl.scrollHeight;
-    const currentWindowHeight = window.innerHeight || 800;
-    const maxHeight = currentWindowHeight - collapsedHeight - 40;
-
-    contentEl.style.visibility = wasVisible;
-    contentEl.style.pointerEvents = wasPointerEvents;
-    contentEl.style.position = wasPosition;
-    contentEl.style.height = wasHeight;
-
-    const targetContentHeight = Math.max(0, Math.min(contentHeight, maxHeight));
-    return collapsedHeight + targetContentHeight + padding;
-  }, [collapsedHeight]);
-
   const createTimeline = useCallback(() => {
-    const navEl = navRef.current;
-    if (!navEl) return null;
+    const drawer = drawerRef.current;
+    const backdrop = backdropRef.current;
+    if (!drawer || !backdrop) return null;
 
-    gsap.set(navEl, { height: collapsedHeight });
-    gsap.set(cardsRef.current, { y: 40, opacity: 0 });
+    gsap.set(drawer, { x: "100%" });
+    gsap.set(backdrop, { opacity: 0 });
 
     const tl = gsap.timeline({ paused: true });
-
-    tl.to(navEl, { height: calculateHeight, duration: 0.4, ease });
-    tl.to(
-      cardsRef.current,
-      { y: 0, opacity: 1, duration: 0.4, ease, stagger: 0.08 },
-      "-=0.1",
-    );
+    tl.to(drawer, { x: "0%", duration: 0.4, ease });
 
     return tl;
-  }, [calculateHeight, collapsedHeight, ease]);
+  }, [ease]);
 
   useLayoutEffect(() => {
     const tl = createTimeline();
@@ -253,28 +234,21 @@ export function CardNav({
       tl?.kill();
       tlRef.current = null;
     };
-  }, [createTimeline, items]);
+  }, [createTimeline]);
 
   useLayoutEffect(() => {
     const handleResize = () => {
       if (!tlRef.current) return;
-      if (isExpanded) {
-        gsap.set(navRef.current, { height: calculateHeight() });
-        tlRef.current.kill();
-        const newTl = createTimeline();
-        if (newTl) {
-          newTl.progress(1);
-          tlRef.current = newTl;
-        }
-      } else {
-        tlRef.current.kill();
-        const newTl = createTimeline();
-        if (newTl) tlRef.current = newTl;
+      tlRef.current.kill();
+      const newTl = createTimeline();
+      if (newTl) {
+        if (isExpanded) newTl.progress(1);
+        tlRef.current = newTl;
       }
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [isExpanded, calculateHeight, createTimeline]);
+  }, [isExpanded, createTimeline]);
 
   const toggleMenu = () => {
     const tl = tlRef.current;
@@ -294,23 +268,22 @@ export function CardNav({
     if (el) cardsRef.current[i] = el;
   };
 
-  const showOpaque = isOpaque || isExpanded || !isHomePage;
+  const showOpaque = isOpaque;
 
   return (
     <div
-      className={`fixed top-0 left-0 z-50 w-full overflow-visible transition-all duration-500 border-b ${
-        isExpanded
-          ? "bg-white border-border shadow-sm"
-          : showOpaque
-            ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 border-border/40 shadow-sm"
-            : "bg-transparent border-transparent shadow-none"
+      className={`fixed top-0 left-0 z-50 w-full overflow-visible transition-all duration-500 ${
+        showOpaque
+          ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 border-b border-border/40 shadow-sm"
+          : "bg-transparent"
       } ${className}`}
     >
+      {/* Invisible ref target — pointer-events always off so it never intercepts clicks */}
+      <div ref={backdropRef} className="pointer-events-none fixed inset-0" aria-hidden="true" />
+
       <nav
         ref={navRef}
-        className={`relative z-10 block w-full will-change-[height] bg-transparent ${
-          isExpanded ? "open" : ""
-        }`}
+        className="relative z-10 block w-full bg-transparent"
         style={{ height: collapsedHeight }}
       >
         {/* Main row */}
@@ -373,16 +346,18 @@ export function CardNav({
             <div className="hidden items-center gap-4 xl:flex">
               <NavSearch isTransparent={!showOpaque} />
               <NavLanguageSwitcher isTransparent={!showOpaque} />
+              {/* My Account — hidden until donor portal is ready
               <NavAccountMenu
                 label="My Account"
                 links={accountLinks}
                 isTransparent={!showOpaque}
               />
+              */}
             </div>
           </div>
 
           {/* Right: language + menu dropdown (mobile/tablet) */}
-          <div className="flex shrink-0 items-center gap-2 xl:hidden">
+          <div className="relative z-[101] flex shrink-0 items-center gap-2 xl:hidden">
             <NavLanguageSwitcher className="sm:hidden" isTransparent={!showOpaque} />
             <button
               type="button"
@@ -395,19 +370,19 @@ export function CardNav({
             >
               <span
                 className={`h-0.5 w-5 transition-all duration-300 ${
-                  isHamburgerOpen ? "translate-y-[3px] rotate-45" : ""
-                } ${showOpaque ? "bg-foreground" : "bg-white"}`}
+                  isHamburgerOpen ? "translate-y-[3px] rotate-45 bg-foreground" : showOpaque ? "bg-foreground" : "bg-white"
+                }`}
               />
               <span
                 className={`h-0.5 w-5 transition-all duration-300 ${
-                  isHamburgerOpen ? "-translate-y-[3px] -rotate-45" : ""
-                } ${showOpaque ? "bg-foreground" : "bg-white"}`}
+                  isHamburgerOpen ? "-translate-y-[3px] -rotate-45 bg-foreground" : showOpaque ? "bg-foreground" : "bg-white"
+                }`}
               />
             </button>
           </div>
 
           {/* Hamburger only (desktop - since language switcher and other tools are in the main bar) */}
-          <div className="hidden shrink-0 items-center xl:flex">
+          <div className="relative z-[101] hidden shrink-0 items-center xl:flex">
             <button
               type="button"
               className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-lg transition-all duration-300 hover:bg-primary-light/10 ${
@@ -419,65 +394,80 @@ export function CardNav({
             >
               <span
                 className={`h-0.5 w-5 transition-all duration-300 ${
-                  isHamburgerOpen ? "translate-y-[3px] rotate-45" : ""
-                } ${showOpaque ? "bg-foreground" : "bg-white"}`}
+                  isHamburgerOpen ? "translate-y-[3px] rotate-45 bg-foreground" : showOpaque ? "bg-foreground" : "bg-white"
+                }`}
               />
               <span
                 className={`h-0.5 w-5 transition-all duration-300 ${
-                  isHamburgerOpen ? "-translate-y-[3px] -rotate-45" : ""
-                } ${showOpaque ? "bg-foreground" : "bg-white"}`}
+                  isHamburgerOpen ? "-translate-y-[3px] -rotate-45 bg-foreground" : showOpaque ? "bg-foreground" : "bg-white"
+                }`}
               />
             </button>
           </div>
         </div>
 
-        {/* Mega menu panel */}
+        {/* Right-side drawer — Packard style */}
         <div
-          className={`card-nav-content absolute right-0 bottom-0 left-0 z-[1] bg-white p-4 sm:px-6 overflow-y-auto ${
-            isExpanded ? "visible pointer-events-auto" : "invisible pointer-events-none"
+          ref={drawerRef}
+          className={`fixed top-0 right-0 z-[100] flex h-screen w-[28rem] flex-col bg-white ${
+            isExpanded ? "pointer-events-auto" : "pointer-events-none"
           }`}
-          style={{
-            top: MAIN_ROW_HEIGHT,
-            maxHeight: `calc(100vh - ${MAIN_ROW_HEIGHT}px - 40px)`,
-          }}
           aria-hidden={!isExpanded}
+          style={{ transform: "translateX(100%)" }}
         >
-          <div className="mb-4 flex flex-col gap-4 pb-4 md:hidden">
-            <NavSearch className="w-full max-w-sm" />
-            <NavLanguageSwitcher />
-            <NavAccountMenu label="My Account (Donor Portal)" links={accountLinks} />
-            <nav className="grid gap-2 pt-3" aria-label="Page sections">
-              {mainNavLinks.map((link) => (
-                <InternalLink
-                  key={link.href}
-                  href={link.href}
-                  ariaLabel={link.ariaLabel}
-                  className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-                >
-                  {link.label}
-                </InternalLink>
-              ))}
-            </nav>
+          {/* Top bar: label + close */}
+          <div className="flex items-center justify-between px-8 pt-8 pb-6">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">
+              Navigate
+            </span>
+            <button
+              type="button"
+              onClick={toggleMenu}
+              aria-label="Close menu"
+              className="text-zinc-400 transition-colors hover:text-zinc-800"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
           </div>
 
-          <div className="flex flex-col gap-3 md:flex-row md:gap-4">
-            {items.map((item, idx) => (
-              <div
-                key={`${item.label}-${idx}`}
-                ref={setCardRef(idx)}
-                className="flex min-w-0 flex-1 flex-col gap-3 rounded-2xl p-4 shadow-[0_8px_30px_rgb(0,0,0,0.015)]"
-                style={{ backgroundColor: item.bgColor, color: item.textColor }}
+          {/* Nav links — large serif */}
+          <nav className="flex flex-1 flex-col overflow-y-auto px-8" aria-label="Site navigation">
+            {[
+              { label: "Our Work", href: "/#what-we-do" },
+              { label: "Ways to Give", href: "/ways-to-give" },
+              { label: "Stories", href: "/stories" },
+              { label: "Resources", href: "/resources" },
+              { label: "FAQs", href: "/faqs" },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={toggleMenu}
+                className="border-b border-zinc-100 py-5 font-serif text-2xl font-medium text-zinc-800 transition-colors duration-200 hover:text-primary last:border-0"
               >
-                <div className="border-l-2 border-primary pl-3 text-lg font-semibold">
-                  {item.label}
-                </div>
-                <div className="flex flex-col gap-1">
-                  {item.links.map((lnk, i) => (
-                    <NavCardLink key={`${lnk.label}-${i}`} link={lnk} />
-                  ))}
-                </div>
-              </div>
+                {link.label}
+              </Link>
             ))}
+          </nav>
+
+          {/* Bottom: social */}
+          <div className="px-8 pb-10 pt-6">
+            <div className="flex items-center gap-5">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-zinc-400 transition-colors hover:text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-zinc-400 transition-colors hover:text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-zinc-400 transition-colors hover:text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-zinc-400 transition-colors hover:text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              </a>
+            </div>
           </div>
         </div>
       </nav>
