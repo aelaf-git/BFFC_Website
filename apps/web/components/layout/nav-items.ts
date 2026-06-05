@@ -111,11 +111,6 @@ export const dropdownNavItems: CardNavItem[] = [
         href: "/gift-catalogue#water-health",
         ariaLabel: "Water and health gifts",
       },
-      {
-        label: "Example: school kit",
-        href: "/gift-catalogue/school-kit",
-        ariaLabel: "School kit gift",
-      },
     ],
   },
   {
