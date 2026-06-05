@@ -43,13 +43,13 @@ export function Footer() {
 
   return (
     <footer className="w-full bg-white text-zinc-600 font-sans">
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16">
+      <div className="mx-auto max-w-7xl px-6 py-14 sm:px-10 lg:px-16">
         
         {/* ── Main Links Grid ── */}
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
           
           {/* Logo & Contact details - 4 columns wide */}
-          <div className="lg:col-span-4 flex flex-col gap-6">
+          <div className="lg:col-span-4 flex flex-col gap-5">
             <Link href="/" className="inline-flex items-center gap-3" aria-label={brand.logo.alt}>
               <Image
                 src={brand.logo.src}
@@ -62,8 +62,8 @@ export function Footer() {
                 Bright Future for Children
               </span>
             </Link>
-            <p className="text-sm leading-relaxed text-zinc-500 max-w-sm font-light">
-              {siteConfig.description}
+            <p className="text-sm leading-relaxed text-zinc-500 max-w-xs font-light">
+              Providing life-saving meals to children in war-affected regions of Ethiopia — Amhara, Afar, and Tigray.
             </p>
             <div className="flex flex-col gap-3.5 text-xs text-zinc-500">
               <a
@@ -114,7 +114,7 @@ export function Footer() {
           </div>
 
           {/* Links columns - 8 columns wide total */}
-          <div className="lg:col-span-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
+          <div className="lg:col-span-8 grid grid-cols-2 gap-8 sm:grid-cols-3">
             
             {/* Column 1: Footer Navigation */}
             <div className="flex flex-col gap-4">
@@ -140,52 +140,48 @@ export function Footer() {
                 <Link href="/faqs" className="hover:text-primary transition-colors">
                   FAQs
                 </Link>
-                <Link href="/contact" className="hover:text-primary transition-colors">
-                  Contact Us
+              </nav>
+            </div>
+
+            {/* Column 2: Legal */}
+            <div className="flex flex-col gap-4">
+              <h2 className="font-serif text-lg font-semibold tracking-wide text-foreground">
+                Legal
+              </h2>
+              <nav className="flex flex-col gap-2.5 text-sm" aria-label="Legal information">
+                <Link href="/legal/privacy-policy" className="hover:text-primary transition-colors">
+                  Privacy Policy
+                </Link>
+                <Link href="/legal/terms-of-use" className="hover:text-primary transition-colors">
+                  Terms of Use
+                </Link>
+                <Link href="/legal/accessibility-statement" className="hover:text-primary transition-colors">
+                  Accessibility Statement
                 </Link>
               </nav>
             </div>
 
-            {/* Column 2: Legal & Social */}
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col gap-4">
-                <h2 className="font-serif text-lg font-semibold tracking-wide text-foreground">
-                  Legal
-                </h2>
-                <nav className="flex flex-col gap-2.5 text-sm" aria-label="Legal information">
-                  <Link href="/legal/privacy-policy" className="hover:text-primary transition-colors">
-                    Privacy Policy
-                  </Link>
-                  <Link href="/legal/terms-of-use" className="hover:text-primary transition-colors">
-                    Terms of Use
-                  </Link>
-                  <Link href="/legal/accessibility-statement" className="hover:text-primary transition-colors">
-                    Accessibility Statement
-                  </Link>
-                </nav>
-              </div>
-
-              <div className="flex flex-col gap-4 pt-2">
-                <h2 className="font-serif text-md font-semibold tracking-wide text-foreground">
-                  Connect With Us
-                </h2>
-                <div className="flex items-center gap-4">
-                  {socialLinks.map((social) => {
-                    const Icon = social.icon;
-                    return (
-                      <a
-                        key={social.label}
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-zinc-400 hover:text-primary transition-colors duration-300"
-                        aria-label={social.label}
-                      >
-                        <Icon className="h-4.5 w-4.5" />
-                      </a>
-                    );
-                  })}
-                </div>
+            {/* Column 3: Connect */}
+            <div className="flex flex-col gap-4">
+              <h2 className="font-serif text-lg font-semibold tracking-wide text-foreground">
+                Connect
+              </h2>
+              <div className="flex flex-wrap items-center gap-4">
+                {socialLinks.map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-zinc-400 hover:text-primary transition-colors duration-300"
+                      aria-label={social.label}
+                    >
+                      <Icon className="h-4.5 w-4.5" />
+                    </a>
+                  );
+                })}
               </div>
             </div>
 
@@ -193,7 +189,7 @@ export function Footer() {
         </div>
 
         {/* ── Newsletter Band (Centered with dynamic title) ── */}
-        <div className="mt-28 mb-16">
+        <div className="mt-16 mb-10 border-t border-zinc-100 pt-14">
           <div className="flex flex-col items-center text-center">
 
             {/* Heading: Guaranteed single line on desktop/tablet, wraps fluidly on mobile */}
