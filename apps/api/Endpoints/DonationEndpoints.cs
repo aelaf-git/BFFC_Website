@@ -39,6 +39,7 @@ public static class DonationEndpoints
             HttpRequest httpRequest,
             IConfiguration config,
             IEmailService emailService,
+            StripeClient stripe,
             ILogger<Program> logger) =>
         {
             var webhookSecret = config["Stripe:WebhookSecret"];
@@ -108,7 +109,7 @@ public static class DonationEndpoints
 
                     if (inv is not null && inv.AmountPaid > 0)
                     {
-                        var receipt = await BuildReceiptFromInvoiceAsync(inv);
+                        var receipt = await BuildReceiptFromInvoiceAsync(inv, stripe);
                         if (receipt is not null)
                             await emailService.SendTaxReceiptAsync(receipt);
                     }
@@ -143,7 +144,7 @@ public static class DonationEndpoints
         );
     }
 
-    private static async Task<TaxReceiptInfo?> BuildReceiptFromInvoiceAsync(Invoice inv)
+    private static async Task<TaxReceiptInfo?> BuildReceiptFromInvoiceAsync(Invoice inv, StripeClient stripe)
     {
         var email = inv.CustomerEmail;
         if (string.IsNullOrWhiteSpace(email))
@@ -154,7 +155,7 @@ public static class DonationEndpoints
             donorName = inv.Customer.Name;
         else if (!string.IsNullOrWhiteSpace(inv.CustomerId))
         {
-            var customer = await new CustomerService().GetAsync(inv.CustomerId);
+            var customer = await new CustomerService(stripe).GetAsync(inv.CustomerId);
             donorName = customer.Name ?? donorName;
         }
 

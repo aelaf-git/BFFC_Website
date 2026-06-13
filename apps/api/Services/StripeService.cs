@@ -5,19 +5,15 @@ namespace Api.Services;
 
 public class StripeService : IStripeService
 {
+    private readonly StripeClient _stripe;
     private readonly string _publishableKey;
 
-    public StripeService(IConfiguration config)
+    public StripeService(IConfiguration config, StripeClient stripe)
     {
-        var secretKey = config["Stripe:SecretKey"]
-            ?? throw new InvalidOperationException("Stripe:SecretKey is not configured.");
-
         _publishableKey = config["Stripe:PublishableKey"]
             ?? throw new InvalidOperationException("Stripe:PublishableKey is not configured.");
 
-        // Setting the API key globally is idiomatic for Stripe.net.
-        // In a multi-tenant scenario you would pass it per-request instead.
-        StripeConfiguration.ApiKey = secretKey;
+        _stripe = stripe;
     }
 
     public Task<CreatePaymentIntentResponse> CreatePaymentIntentAsync(CreatePaymentIntentRequest request) =>
@@ -49,7 +45,7 @@ public class StripeService : IStripeService
             },
         };
 
-        var service = new PaymentIntentService();
+        var service = new PaymentIntentService(_stripe);
         var intent  = await service.CreateAsync(options);
 
         return new CreatePaymentIntentResponse(intent.ClientSecret!, _publishableKey);
@@ -67,7 +63,7 @@ public class StripeService : IStripeService
         CreatePaymentIntentRequest request)
     {
         // 1 — Customer
-        var customerService = new CustomerService();
+        var customerService = new CustomerService(_stripe);
         var customer = await customerService.CreateAsync(new CustomerCreateOptions
         {
             Email    = request.DonorEmail,
@@ -77,7 +73,7 @@ public class StripeService : IStripeService
         });
 
         // 2 — Price (created inline so the amount is dynamic)
-        var priceService = new PriceService();
+        var priceService = new PriceService(_stripe);
         var price = await priceService.CreateAsync(new PriceCreateOptions
         {
             UnitAmount  = request.AmountCents,
@@ -92,7 +88,7 @@ public class StripeService : IStripeService
         // 3+4 — Subscription
         // Stripe API 2025-03-31+ removed Invoice.PaymentIntent; the client secret
         // is now at Invoice.ConfirmationSecret.ClientSecret.
-        var subscriptionService = new SubscriptionService();
+        var subscriptionService = new SubscriptionService(_stripe);
         var subscription = await subscriptionService.CreateAsync(new SubscriptionCreateOptions
         {
             Customer = customer.Id,

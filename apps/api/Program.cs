@@ -1,6 +1,7 @@
 using Api.Endpoints;
 using Api.Services;
 using DotNetEnv;
+using Stripe;
 using System.Text.Json;
 
 // Load Stripe keys and other secrets from apps/api/.env (see .env.example).
@@ -46,8 +47,13 @@ builder.Services.AddCors(options =>
 });
 
 // ── Stripe ────────────────────────────────────────────────────────────────────
-// IStripeService is registered as a singleton because StripeConfiguration.ApiKey
-// is a global static — initialising it once is correct and thread-safe.
+builder.Services.AddSingleton(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var secretKey = config["Stripe:SecretKey"]
+        ?? throw new InvalidOperationException("Stripe:SecretKey is not configured.");
+    return new StripeClient(secretKey);
+});
 builder.Services.AddSingleton<IStripeService, StripeService>();
 
 // ── Email (tax receipts via Resend) ───────────────────────────────────────────
