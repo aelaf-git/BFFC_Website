@@ -18,17 +18,28 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
-// Allow the Next.js frontend (localhost:3000 in dev, your Vercel domain in prod).
-// In production, replace the origin list with your actual frontend URL.
+// Allow the Next.js frontend (localhost in dev, Azure SWA / custom domain in prod).
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendPolicy", policy =>
     {
         var origins = builder.Configuration
             .GetSection("AllowedOrigins")
-            .Get<string[]>() ?? ["http://localhost:3000"];
+            .Get<string[]>()?
+            .Where(o => !string.IsNullOrWhiteSpace(o))
+            .ToList() ?? [];
 
-        policy.WithOrigins(origins)
+        var extra = builder.Configuration["ALLOWED_ORIGINS"];
+        if (!string.IsNullOrWhiteSpace(extra))
+        {
+            origins.AddRange(
+                extra.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
+        }
+
+        if (origins.Count == 0)
+            origins.Add("http://localhost:3000");
+
+        policy.WithOrigins(origins.Distinct(StringComparer.OrdinalIgnoreCase).ToArray())
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -52,6 +63,7 @@ app.UseHttpsRedirection();
 app.UseCors("FrontendPolicy");
 
 // ── Endpoints ─────────────────────────────────────────────────────────────────
+app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
 app.MapDonationEndpoints();
 
 app.Run();
