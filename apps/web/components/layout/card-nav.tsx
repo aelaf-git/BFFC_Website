@@ -203,11 +203,14 @@ export function CardNav({
   useEffect(() => {
     if (isExpanded) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflowX = "hidden";
     } else {
       document.body.style.overflow = "";
+      document.documentElement.style.overflowX = "";
     }
     return () => {
       document.body.style.overflow = "";
+      document.documentElement.style.overflowX = "";
     };
   }, [isExpanded]);
 
@@ -272,7 +275,7 @@ export function CardNav({
 
   return (
     <div
-      className={`fixed top-0 left-0 z-50 w-full overflow-visible transition-all duration-500 ${
+      className={`fixed top-0 left-0 z-50 w-full max-w-[100vw] overflow-x-hidden transition-all duration-500 ${
         showOpaque
           ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 shadow-sm"
           : "bg-transparent"
@@ -283,23 +286,23 @@ export function CardNav({
 
       <nav
         ref={navRef}
-        className="relative z-10 block w-full bg-transparent"
+        className="relative z-10 block w-full min-w-0 max-w-full bg-transparent"
         style={{ height: collapsedHeight }}
       >
         {/* Main row */}
         <div
-          className="relative z-[2] flex items-center gap-3 px-4 sm:gap-4 sm:px-6"
+          className="relative z-[2] flex min-w-0 max-w-full items-center gap-2 px-3 sm:gap-3 sm:px-4 md:gap-4 md:px-6"
           style={{ height: MAIN_ROW_HEIGHT }}
         >
           {/* Brand */}
-          <div className="flex shrink-0 items-center gap-3">
-            <Link href="/" className="flex items-center gap-3" aria-label={logoAlt}>
+          <div className="flex min-w-0 shrink items-center gap-2 sm:gap-3">
+            <Link href="/" className="flex min-w-0 items-center gap-2 sm:gap-3" aria-label={logoAlt}>
               <Image
                 src={logo}
                 alt={logoAlt}
                 width={logoWidth}
                 height={logoHeight}
-                className="h-8 w-auto max-w-[10rem] object-contain object-left sm:h-11 sm:max-w-[14rem]"
+                className="h-8 w-auto max-w-[6.75rem] object-contain object-left min-[380px]:max-w-[8.5rem] sm:h-11 sm:max-w-[10rem] md:max-w-[14rem]"
                 priority
               />
               <span
@@ -313,13 +316,13 @@ export function CardNav({
           </div>
 
           {/* Primary CTAs — golden orange, beside logo */}
-          <div className="flex shrink-0 items-center gap-3 pl-3 sm:pl-4 md:gap-4 lg:gap-5 lg:pl-5">
+          <div className="flex shrink-0 items-center gap-2 pl-1 sm:gap-3 sm:pl-3 md:gap-4 lg:gap-5 lg:pl-5">
             {primaryCtas.map((cta) => (
               <InternalLink
                 key={cta.href}
                 href={cta.href}
                 ariaLabel={cta.ariaLabel}
-                className={`inline-flex h-8 items-center rounded-lg bg-primary px-2 text-[10px] font-semibold whitespace-nowrap text-white transition-all duration-300 hover:bg-primary-hover sm:h-9 sm:px-4 sm:text-sm shadow-sm ${
+                className={`inline-flex h-8 max-w-full items-center rounded-lg bg-primary px-2.5 text-[11px] font-semibold whitespace-nowrap text-white transition-all duration-300 hover:bg-primary-hover sm:h-9 sm:px-4 sm:text-sm shadow-sm ${
                   !showOpaque ? "border border-white/20 hover:border-white/40" : ""
                 }`}
               >
@@ -357,8 +360,8 @@ export function CardNav({
           </div>
 
           {/* Right: language + menu dropdown (mobile/tablet) */}
-          <div className="relative z-[101] flex shrink-0 items-center gap-2 xl:hidden">
-            <NavLanguageSwitcher className="sm:hidden" isTransparent={!showOpaque} />
+          <div className="relative z-[101] ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2 xl:hidden">
+            <NavLanguageSwitcher className="max-[359px]:hidden sm:hidden" isTransparent={!showOpaque} />
             <button
               type="button"
               className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-lg transition-all duration-300 hover:bg-primary-light/10 ${
@@ -406,17 +409,17 @@ export function CardNav({
           </div>
         </div>
 
-        {/* Right-side drawer — Packard style */}
+        {/* Right-side drawer — full width on phones, capped on larger screens */}
         <div
           ref={drawerRef}
-          className={`fixed top-0 right-0 z-[100] flex h-screen w-[28rem] flex-col bg-white ${
+          className={`fixed top-0 right-0 z-[100] flex h-[100dvh] w-full max-w-[min(100vw,28rem)] flex-col overflow-x-hidden overscroll-contain bg-white shadow-[-4px_0_24px_rgba(0,0,0,0.08)] ${
             isExpanded ? "pointer-events-auto" : "pointer-events-none"
           }`}
           aria-hidden={!isExpanded}
           style={{ transform: "translateX(100%)" }}
         >
           {/* Top bar: label + close */}
-          <div className="flex items-center justify-between px-8 pt-8 pb-6">
+          <div className="flex shrink-0 items-center justify-between px-4 pt-6 pb-4 sm:px-8 sm:pt-8 sm:pb-6">
             <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">
               Navigate
             </span>
@@ -433,7 +436,7 @@ export function CardNav({
           </div>
 
           {/* Nav links — large serif */}
-          <nav className="flex flex-1 flex-col overflow-y-auto px-8" aria-label="Site navigation">
+          <nav className="flex min-h-0 flex-1 flex-col overflow-y-auto overflow-x-hidden px-4 sm:px-8" aria-label="Site navigation">
             {[
               { label: "Our Work", href: "/#what-we-do" },
               { label: "Ways to Give", href: "/ways-to-give" },
@@ -445,7 +448,7 @@ export function CardNav({
                 key={link.href}
                 href={link.href}
                 onClick={toggleMenu}
-                className="border-b border-zinc-100 py-5 font-serif text-2xl font-medium text-zinc-800 transition-colors duration-200 hover:text-primary last:border-0"
+                className="min-w-0 break-words border-b border-zinc-100 py-4 font-serif text-xl font-medium text-zinc-800 transition-colors duration-200 hover:text-primary last:border-0 sm:py-5 sm:text-2xl"
               >
                 {link.label}
               </Link>
@@ -453,7 +456,7 @@ export function CardNav({
           </nav>
 
           {/* Bottom: social */}
-          <div className="px-8 pb-10 pt-6">
+          <div className="shrink-0 px-4 pb-8 pt-4 sm:px-8 sm:pb-10 sm:pt-6">
             <div className="flex items-center gap-5">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-zinc-400 transition-colors hover:text-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
