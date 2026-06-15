@@ -31,6 +31,7 @@ export const siteConfig = {
   },
   routes: [
     { path: "/", changeFrequency: "weekly" as const, priority: 1 },
+    { path: "/childrens-village", changeFrequency: "weekly" as const, priority: 0.9 },
     { path: "/donate", changeFrequency: "monthly" as const, priority: 0.95 },
     { path: "/sponsor-a-child", changeFrequency: "monthly" as const, priority: 0.9 },
     { path: "/sponsor-a-child/browse", changeFrequency: "weekly" as const, priority: 0.85 },

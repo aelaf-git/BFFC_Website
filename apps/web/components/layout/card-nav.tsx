@@ -450,6 +450,7 @@ export function CardNav({
           <nav className="flex min-h-0 flex-1 flex-col overflow-y-auto overflow-x-hidden px-4 sm:px-8" aria-label="Site navigation">
             {[
               { label: "Our Work", href: "/#what-we-do" },
+              { label: "Children's Village", href: "/childrens-village" },
               { label: "Ways to Give", href: "/ways-to-give" },
               { label: "Stories", href: "/stories" },
               { label: "Resources", href: "/resources" },

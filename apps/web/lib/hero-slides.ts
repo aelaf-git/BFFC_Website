@@ -1,5 +1,8 @@
 export type HeroSlide = {
+  /** Background image, or poster frame when `video` is set */
   image: string;
+  /** Optional looping background video (replaces image when set) */
+  video?: string;
   title: string;
   subtitle: string;
   cta: { label: string; href: string; ariaLabel: string };
@@ -9,17 +12,16 @@ export type HeroSlide = {
 
 export const heroSlides: HeroSlide[] = [
   {
-    image: "/hero/hero1.jpg",
-    title: "Together, we can build brighter futures",
+    image: "/Bright-Future-Academy-for-Afar-Empowerment/img1.png",
+    video: "/Bright-Future-Academy-for-Afar-Empowerment/video.mp4",
+    title: "Bright Future Academy for Afar Empowerment",
     subtitle:
-      "Your donation helps children and families access education, nutrition, and lasting opportunity.",
+      "A modern 430-bed student village is rising in Awash — a safe, nurturing campus where disadvantaged children from Grade 3 to Grade 9 can live, learn, and grow.",
     cta: {
-      label: "Donate today",
-      href: "/donate",
-      ariaLabel: "Make a donation today",
+      label: "See the full project",
+      href: "/childrens-village",
+      ariaLabel: "Read about Bright Future Academy for Afar Empowerment",
     },
-    quote: "“It is more blessed to give than to receive.”",
-    quoteAttribution: "Acts 20:35",
   },
   {
     image: "/hero/hero2.jpg",
@@ -33,16 +35,16 @@ export const heroSlides: HeroSlide[] = [
     },
   },
   {
-    image: "/hero/hero3.jpg",
-    title: "Give hope that lasts",
+    image: "/hero/hero1.jpg",
+    title: "Together, we can build brighter futures",
     subtitle:
-      "From emergency relief to long-term development — your generosity fuels real change where it is needed most.",
+      "Your donation helps children and families access education, nutrition, and lasting opportunity.",
     cta: {
-      label: "Ways to give",
-      href: "/ways-to-give",
-      ariaLabel: "Explore ways to give",
+      label: "Donate today",
+      href: "/donate",
+      ariaLabel: "Make a donation today",
     },
-    quote: "“Whoever is kind to the poor lends to the Lord.”",
-    quoteAttribution: "Proverbs 19:17",
+    quote: "“It is more blessed to give than to receive.”",
+    quoteAttribution: "Acts 20:35",
   },
 ];

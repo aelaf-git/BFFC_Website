@@ -90,19 +90,32 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
     <div className="relative w-full">
       {displaySlides.map((slide, index) => (
         <section
-          key={slide.image}
+          key={slide.video ?? slide.image}
           className="sticky top-0 h-screen w-full overflow-hidden"
           style={{ zIndex: index * 10 }}
         >
-          {/* Background Image */}
+          {/* Background media */}
           <div className="absolute inset-0">
-            <Image
-              src={slide.image}
-              alt={slide.title}
-              fill
-              priority={index === 0}
-              className="object-cover object-center"
-            />
+            {slide.video ? (
+              <video
+                src={slide.video}
+                poster={slide.image}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="h-full w-full object-cover object-center"
+                aria-hidden
+              />
+            ) : (
+              <Image
+                src={slide.image}
+                alt={slide.title}
+                fill
+                priority={index === 0}
+                className="object-cover object-center"
+              />
+            )}
             {/* Dark Overlay for visibility */}
             <div className="absolute inset-0 bg-black/50" />
             {/* Optional Gradient for extra depth */}

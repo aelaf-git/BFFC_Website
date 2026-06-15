@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HeroCarousel } from "@/components/home/hero-carousel";
 import { AboutSection } from "@/components/home/about-section";
+import { ChildrensVillageSection } from "@/components/home/childrens-village-section";
 import { OurPartnersSection } from "@/components/home/our-partners-section";
 import { WhatWeDoSection } from "@/components/home/what-we-do-section";
 import { BlogSection } from "@/components/home/blog-section";
@@ -27,6 +28,7 @@ export default function Home() {
       </h1>
       <HeroCarousel slides={heroSlides} />
       <AboutSection />
+      <ChildrensVillageSection />
       <OurPartnersSection />
       <WhatWeDoSection />
       <BlogSection />
