@@ -51,7 +51,7 @@ export function ContactSection() {
     <section className="w-full bg-white" aria-label="Contact us" id="contact">
 
       {/* ── Heading ── */}
-      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-16 text-center">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-14 pb-8 text-center sm:pt-20 sm:pb-12 lg:pt-24 lg:pb-16">
         <span id="get-in-touch" aria-hidden="true" className="block scroll-mt-20" />
         <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
           Get in Touch
@@ -63,13 +63,13 @@ export function ContactSection() {
       </div>
 
       {/* ── Two-column body ── */}
-      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pb-28">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pb-16 sm:pb-20 lg:pb-28">
         {/*
           items-stretch makes both columns the same height on desktop.
           Left: cards on top, map fills remaining height (flex-1).
           Right: heading + form, textarea fills remaining height (flex-1).
         */}
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch lg:gap-16 xl:gap-24">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-16 xl:gap-24">
 
           {/* ── Left column: contact cards → map ── */}
           <div className="flex w-full shrink-0 flex-col gap-6 lg:w-[50%]">

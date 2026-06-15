@@ -28,7 +28,7 @@ export default function PrivacyPolicyPage() {
       {/* ── Hero ── */}
       <div className="relative h-56 w-full overflow-hidden bg-zinc-900 sm:h-64">
         <Image
-          src="/about-us.png"
+          src="/about-one.jpeg"
           alt=""
           fill
           priority

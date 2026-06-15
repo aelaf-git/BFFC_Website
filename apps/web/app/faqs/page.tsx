@@ -26,7 +26,7 @@ export default function FaqsPage() {
       {/* ── Hero ── */}
       <div className="relative h-64 w-full overflow-hidden bg-zinc-900 sm:h-80">
         <Image
-          src="/leadership-background.png"
+          src="/about-four.jpeg"
           alt="Children at school"
           fill
           priority

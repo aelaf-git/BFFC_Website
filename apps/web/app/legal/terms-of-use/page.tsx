@@ -28,7 +28,7 @@ export default function TermsOfUsePage() {
       {/* ── Hero ── */}
       <div className="relative h-56 w-full overflow-hidden bg-zinc-900 sm:h-64">
         <Image
-          src="/mission-background.png"
+          src="/whatwedo.jpeg"
           alt=""
           fill
           priority

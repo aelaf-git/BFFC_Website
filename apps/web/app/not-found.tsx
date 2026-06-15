@@ -18,7 +18,7 @@ export default function NotFound() {
       {/* Background image */}
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/mission-background.png"
+          src="/whatwedo.jpeg"
           alt=""
           fill
           priority

@@ -5,7 +5,7 @@ import { partners } from "@/lib/partners";
 export function OurPartnersSection() {
   return (
     <section className="w-full bg-white" aria-label="Our partners">
-      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-16 text-center">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-14 pb-8 text-center sm:pt-20 sm:pb-12 lg:pt-24 lg:pb-16">
         <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
           Our Partners
         </h2>
@@ -15,7 +15,7 @@ export function OurPartnersSection() {
         </p>
       </div>
 
-      <div className="partners-marquee-mask relative overflow-hidden pb-20 sm:pb-24">
+      <div className="partners-marquee-mask relative overflow-hidden pb-12 sm:pb-16 lg:pb-24">
         {/*
           Flat list of 20 items (10 + 10 clones).
           The CSS animates translateX(-50% → 0%), which equals exactly one set's width.

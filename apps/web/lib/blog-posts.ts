@@ -16,61 +16,27 @@ export type BlogPost = {
 
 export const featuredPosts: BlogPost[] = [
   {
-    slug: "school-feeding-program-afar",
+    slug: "from-empty-plates-to-bright-futures-afar",
     author: "Bright Future Team",
-    date: "May 15, 2026",
-    dateIso: "2026-05-15",
-    title: "How Our School Feeding Program Is Changing Lives in Afar",
+    date: "June 15, 2026",
+    dateIso: "2026-06-15",
+    title: "From Empty Plates to Bright Futures: Transforming Lives in Afar",
     excerpt:
-      "Every morning, 40 children in the Afar region sit down to a warm breakfast before class. What sounds simple is in fact life-changing — learn how consistent nutrition is transforming school attendance and performance.",
+      "Since 2023, Bright Future for Children has reached 3,621 vulnerable children in Ethiopia's Afar Zone 2 and 3 through its Food for School initiative — turning daily survival into dreams of education, one breakfast and notebook at a time.",
     content: [
-      "Every morning, before the sun climbs high over the Afar lowlands, 40 children gather at their local school for a warm breakfast. For many of them, this is the only guaranteed meal of the day. What sounds like a simple act of kindness is, in reality, a lifeline — one that is measurably changing the trajectory of hundreds of young lives.",
-      "Bright Future For Children Ethiopia launched its school feeding program in the Afar region in response to a stark reality: children who arrive at school hungry cannot learn. Teachers reported that attendance was erratic, concentration was poor, and dropout rates — especially among girls — were alarmingly high. Food insecurity was not just a health crisis; it was an education crisis.",
-      "Since the program began, school attendance among participating children has risen by over 60%. Teachers note that children are more alert, more participatory, and less likely to leave school early. For families who previously kept children home to help forage for food, the promise of a nutritious meal at school has become a powerful incentive to enrol and stay.",
-      "The meals are carefully designed in collaboration with local nutritionists and community elders to be culturally appropriate and nutritionally balanced. They typically include a combination of injera, lentils, and seasonal vegetables — providing the protein, carbohydrates, and micronutrients growing children need. We source ingredients locally where possible, which also supports small farmers in the region.",
-      "Behind every meal served is a team of community volunteers, local administrators, and partner organisations who believe that feeding a child is an investment in the future of an entire community. Your donations make this possible. With just a few dollars a month, you can ensure a child in Afar starts their day not with hunger, but with hope.",
+      "In the sun-scorched lands of Ethiopia's Afar Zone 2 and 3, where daily survival has long overshadowed dreams of education, a quiet revolution is taking place. Since 2023, the Bright Future for Children charity has been lighting the path for hundreds of disadvantaged children through their inspiring project, \"Food for School: Making AfAR Children the Next Leaders.\"",
+      "Through this initiative, the charity has reached 3,621 vulnerable children aged 2 to 12. Every school day, these young learners receive nutritious breakfast and essential educational materials — items that many families simply could not afford. What began as support for basic needs has blossomed into something far greater.",
+      "Since the project started, Awash Primary School has witnessed a remarkable transformation. Enrollment has increased significantly, and children who once struggled are now confidently learning to read and write. Beyond academics, the children have shown visible improvement both physically and mentally — healthier bodies, brighter smiles, and stronger minds ready to take on the future.",
+      "The entire community feels the positive ripple effect. Parents in Afar Zone 2 and 3 now send their children to school filled with hope and determination, knowing that education is no longer a distant dream but a daily reality.",
+      "Seven-year-old Aman beams with joy when speaking about the program. \"I like it so much,\" he says. \"I am happy because I get my breakfast and educational materials. It helps me a lot.\"",
+      "Little Yenus, just three years old, was interviewed by Bright Future for Children staff. With sparkling eyes he shared, \"Before, I could never get food early in the morning because of poverty. Now I am happy to go to school, play with my friends, and learn.\"",
+      "Belani, a 39-year-old mother of five, speaks for many families in the community: \"Bright Future for Children is truly benefiting all of us. My children are healthier and learning every day. This program is changing our whole community.\"",
+      "Thanks to the dedication of Bright Future for Children, thousands of young Afar lives are no longer defined by hardship, but by possibility. One breakfast, one notebook, and one hopeful morning at a time — the next generation of leaders is rising.",
     ],
-    image: "/about-us.png",
-    imageAlt: "Children eating a nutritious breakfast at a school in Afar",
-    href: "/stories/school-feeding-program-afar",
-  },
-  {
-    slug: "school-supplies-drive-tigray",
-    author: "Aelaf Eskinder",
-    date: "April 3, 2026",
-    dateIso: "2026-04-03",
-    title: "Thousands of Exercise Books Delivered to Tigray Schools",
-    excerpt:
-      "Thanks to generous donors and local partnerships, we recently distributed over 5,000 exercise books to students in the Tigray region — giving children the tools they need to learn and grow.",
-    content: [
-      "Earlier this spring, a convoy of vehicles wound its way through the hills of Tigray, carrying a cargo that may seem ordinary in much of the world but is anything but ordinary here: thousands of exercise books, pencils, and learning materials for children who have spent years without adequate school supplies.",
-      "The conflict that swept through Tigray left education infrastructure in ruins. Schools were damaged, teachers displaced, and entire generations of children lost years of schooling. As communities begin the long process of rebuilding, the hunger to return to learning is palpable — but the tools to do so are in desperately short supply.",
-      "Our school supplies drive, made possible through the generosity of donors across Canada and around the world, delivered over 5,000 exercise books to 12 schools across Tigray. Each book was distributed directly to students by their teachers, and the scenes of children receiving their own materials — some for the very first time — were deeply moving.",
-      "One teacher in a small village outside Adwa described the impact: 'Before, children shared one book between three students, or they wrote on the ground with sticks. Now each child has their own book. You can see the pride on their faces.' Such moments remind us why every donation, no matter the size, translates into something tangible and transformative.",
-      "We are committed to expanding this program to reach more schools in the coming months. If you would like to sponsor a school supply kit for a child in Tigray, please consider making a donation. Together, we can ensure that no child is held back from learning simply because they lack a pencil and a page to write on.",
-    ],
-    image: "/mission-background.png",
-    imageAlt: "Students receiving exercise books and school materials",
-    href: "/stories/school-supplies-drive-tigray",
-  },
-  {
-    slug: "volunteer-spotlight-amhara",
-    author: "Bright Future Team",
-    date: "March 20, 2026",
-    dateIso: "2026-03-20",
-    title: "Meet the Volunteers Making a Difference in Amhara",
-    excerpt:
-      "Behind every meal served and every book handed out is a dedicated team of volunteers. We shine a spotlight on the everyday heroes helping us build brighter futures for children in Amhara.",
-    content: [
-      "They wake before dawn. They travel long distances on unpaved roads. They give their weekends, their evenings, and sometimes much more. They are the volunteers of Bright Future For Children Ethiopia — and without them, none of what we do would be possible.",
-      "In the Amhara region, our volunteer network has grown to over 50 individuals from all walks of life: retired teachers, university students, local business owners, and parents. What unites them is a shared conviction that the children of Amhara deserve better — better food, better education, and better futures.",
-      "Tadesse, a retired primary school principal from Bahir Dar, has been volunteering with us since the programme's inception. Now in his late sixties, he coordinates meal distribution at three local schools every week. 'I spent my life teaching children,' he says. 'Now I help make sure they are strong enough to learn. It is the same work, just a different kind.'",
-      "Mekdes, a 22-year-old university student studying public health, first joined as a one-time volunteer but has stayed for two years. She conducts nutritional assessments on participating children and helps train community health workers in basic child nutrition. 'The data we collect is showing real results,' she tells us. 'Children who were stunted a year ago are now at healthy weights. That is because of consistent meals and community care.'",
-      "Volunteering with Bright Future For Children Ethiopia is open to anyone who shares our mission. Whether you are based in Ethiopia or abroad, there are meaningful ways to contribute your time and skills. Reach out to us through our contact page to learn how you can get involved. Every hour you give is an hour invested in a child's future.",
-    ],
-    image: "/leadership-background.png",
-    imageAlt: "Community volunteers working together with children in Amhara",
-    href: "/stories/volunteer-spotlight-amhara",
+    image: "/blog/blog1.jpeg",
+    imageAlt:
+      "Children in Afar receiving breakfast and educational materials through the Food for School program",
+    href: "/stories/from-empty-plates-to-bright-futures-afar",
   },
 ];
 

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { User, Calendar } from "lucide-react";
 
 import { featuredPosts, getPostBySlug } from "@/lib/blog-posts";
+import { brand } from "@/lib/brand";
 import { siteConfig } from "@/lib/site";
 
 /* ─── Static generation ───────────────────────────────────────────────────── */
@@ -65,6 +66,7 @@ export default async function StoryPage({
   if (!post) notFound();
 
   const canonicalUrl = `${siteConfig.url}${post.href}`;
+  const otherPosts = featuredPosts.filter((other) => other.slug !== post.slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -92,7 +94,7 @@ export default async function StoryPage({
       url: siteConfig.url,
       logo: {
         "@type": "ImageObject",
-        url: `${siteConfig.url}/logo/bffc-logo.png`,
+        url: `${siteConfig.url}${brand.logo.src}`,
       },
     },
     articleBody: post.content.join(" "),
@@ -184,6 +186,7 @@ export default async function StoryPage({
           </div>
 
           {/* ── Sidebar: other stories ───────────────────────────────────── */}
+          {otherPosts.length > 0 && (
           <aside
             className="mt-14 shrink-0 lg:mt-0 lg:w-72 xl:w-80"
             aria-label="Other stories"
@@ -194,18 +197,12 @@ export default async function StoryPage({
               </h2>
               <nav aria-label="Stories navigation">
                 <ul className="space-y-4" role="list">
-                  {featuredPosts.map((other) => {
-                    const isCurrent = other.slug === post.slug;
+                  {otherPosts.map((other) => {
                     return (
                       <li key={other.slug}>
                         <Link
                           href={other.href}
-                          aria-current={isCurrent ? "page" : undefined}
-                          className={`group flex gap-4 rounded-2xl p-3 transition-colors duration-200 ${
-                            isCurrent
-                              ? "border border-zinc-200"
-                              : "hover:bg-zinc-50"
-                          }`}
+                          className="group flex gap-4 rounded-2xl p-3 transition-colors duration-200 hover:bg-zinc-50"
                         >
                           {/* Thumbnail */}
                           <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-zinc-100">
@@ -235,6 +232,7 @@ export default async function StoryPage({
               </nav>
             </div>
           </aside>
+          )}
 
         </div>
       </article>

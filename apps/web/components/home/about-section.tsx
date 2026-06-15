@@ -56,7 +56,7 @@ export function AboutSection() {
     <section className="w-full bg-white" aria-label="About Bright Future for Children">
 
       {/* ── Section Heading ── */}
-      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-16 text-center">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-14 pb-8 text-center sm:pt-20 sm:pb-12 lg:pt-24 lg:pb-16">
         <span id="about" aria-hidden="true" className="block scroll-mt-20" />
         <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
           About Us
@@ -68,13 +68,13 @@ export function AboutSection() {
       </div>
 
       {/* ── Subsections with clean margins and spacings ── */}
-      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pb-28 space-y-24 lg:space-y-36">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pb-16 space-y-14 sm:space-y-20 sm:pb-20 lg:space-y-36 lg:pb-28">
         {subsections.map((s, index) => {
           const imageRight = index % 2 === 0;
 
           return (
             <article key={s.id} id={s.id} className="relative w-full">
-              <div className={`flex flex-col lg:items-center gap-10 lg:gap-16 xl:gap-24 ${imageRight ? "lg:flex-row" : "lg:flex-row-reverse"}`}>
+              <div className={`flex flex-col lg:items-center gap-8 sm:gap-10 lg:gap-16 xl:gap-24 ${imageRight ? "lg:flex-row" : "lg:flex-row-reverse"}`}>
 
                 {/* Photography panel: framed in a sleek elegant box container */}
                 <div className="w-full lg:w-[50%] shrink-0">

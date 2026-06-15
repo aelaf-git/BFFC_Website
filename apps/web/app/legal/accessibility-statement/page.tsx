@@ -28,7 +28,7 @@ export default function AccessibilityStatementPage() {
       {/* ── Hero ── */}
       <div className="relative h-56 w-full overflow-hidden bg-zinc-900 sm:h-64">
         <Image
-          src="/leadership-background.png"
+          src="/about-four.jpeg"
           alt=""
           fill
           priority

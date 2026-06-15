@@ -3,12 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { User, Calendar, ArrowRight } from "lucide-react";
 import { featuredPosts } from "@/lib/blog-posts";
+import { blogGridClasses } from "@/lib/blog-grid";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: `Stories | ${siteConfig.name}`,
   description:
-    "Read stories of impact from the ground — the children, communities, and volunteers behind our mission in Afar, Tigray, and Amhara.",
+    "Read stories of impact from the ground — the children, communities, and programs behind our mission across Ethiopia.",
   alternates: { canonical: `${siteConfig.url}/stories` },
   openGraph: {
     title: "Stories",
@@ -16,18 +17,20 @@ export const metadata: Metadata = {
       "Real stories from the communities we serve. Read about the children, volunteers, and programs making a difference.",
     url: `${siteConfig.url}/stories`,
     siteName: siteConfig.name,
-    images: [{ url: `${siteConfig.url}/hero/hero1.jpg` }],
+    images: [{ url: `${siteConfig.url}/blog/blog1.jpeg` }],
     type: "website",
   },
 };
 
 export default function StoriesPage() {
+  const gridClasses = blogGridClasses(featuredPosts.length, "page");
+
   return (
     <div className="flex-1 bg-white">
       {/* ── Hero ── */}
       <div className="relative h-64 w-full overflow-hidden bg-zinc-900 sm:h-80">
         <Image
-          src="/mission-background.png"
+          src="/whatwedo.jpeg"
           alt="Children in Ethiopia"
           fill
           priority
@@ -50,7 +53,7 @@ export default function StoriesPage() {
 
       {/* ── Posts grid ── */}
       <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={gridClasses}>
           {featuredPosts.map((post) => (
             <article
               key={post.slug}

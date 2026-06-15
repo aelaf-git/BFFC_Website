@@ -81,7 +81,7 @@ export const rootMetadata: Metadata = {
   category: "nonprofit",
   icons: {
     icon: [{ url: brand.icon.src, sizes: "32x32", type: "image/png" }],
-    apple: "/apple-icon.png",
+    apple: brand.icon.src,
     shortcut: brand.icon.src,
   },
   alternates: {

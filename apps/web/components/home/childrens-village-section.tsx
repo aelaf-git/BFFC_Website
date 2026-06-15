@@ -31,7 +31,7 @@ export function ChildrensVillageSection() {
   return (
     <section className="w-full bg-white" aria-label="Bright Future Academy for Afar Empowerment">
       {/* ── Section heading (matches the rest of the landing page) ── */}
-      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-16 text-center">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-14 pb-8 text-center sm:pt-20 sm:pb-12 lg:pt-24 lg:pb-16">
         <span id="childrens-village" aria-hidden="true" className="block scroll-mt-20" />
         <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
           Bright Future Academy for Afar Empowerment
@@ -65,8 +65,8 @@ export function ChildrensVillageSection() {
       </div>
 
       {/* ── Intro + stats ── */}
-      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-16">
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-20">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-10 sm:pt-16">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-20">
           <div className="space-y-6 text-base leading-[1.9] text-zinc-500 font-light sm:text-[1.05rem]">
             <p>
               In the heart of Ethiopia&rsquo;s Afar region, a life-changing project is about to begin.
@@ -97,7 +97,7 @@ export function ChildrensVillageSection() {
       </div>
 
       {/* ── Highlights ── */}
-      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-16">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-10 sm:pt-16">
         <div className="grid gap-6 sm:grid-cols-3 lg:gap-8">
           {highlights.map(({ icon: Icon, title, body }) => (
             <div key={title} className="rounded-3xl border border-zinc-100 bg-zinc-50 p-7">
@@ -112,7 +112,7 @@ export function ChildrensVillageSection() {
       </div>
 
       {/* ── CTA ── */}
-      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-12 pb-24 text-center">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-8 pb-14 text-center sm:pt-12 sm:pb-20 lg:pb-24">
         <Link
           href="/childrens-village"
           className="group inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-primary-hover"

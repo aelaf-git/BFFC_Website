@@ -50,16 +50,13 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       }
     };
 
-    // Wheel: only fires on real user gestures — not on programmatic scrollTo()
     const handleWheel = (e: WheelEvent) => {
       const currentY = window.scrollY;
-      // Only operate within the hero zone
       if (currentY >= totalSlides * H) return;
       const direction = e.deltaY > 0 ? "down" : "up";
       trySnap(direction);
     };
 
-    // Touch: track swipe direction for mobile
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY.current = e.touches[0].clientY;
     };
@@ -70,7 +67,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       touchStartY.current = null;
       const currentY = window.scrollY;
       if (currentY >= totalSlides * H) return;
-      if (Math.abs(deltaY) < 30) return; // ignore tiny swipes
+      if (Math.abs(deltaY) < 30) return;
       trySnap(deltaY > 0 ? "down" : "up");
     };
 
@@ -87,14 +84,13 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
   }, [displaySlides.length]);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full shrink-0">
       {displaySlides.map((slide, index) => (
         <section
           key={slide.video ?? slide.image}
           className="sticky top-0 h-screen w-full overflow-hidden"
           style={{ zIndex: index * 10 }}
         >
-          {/* Background media */}
           <div className="absolute inset-0">
             {slide.video ? (
               <video
@@ -116,26 +112,20 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                 className="object-cover object-center"
               />
             )}
-            {/* Dark Overlay for visibility */}
             <div className="absolute inset-0 bg-black/50" />
-            {/* Optional Gradient for extra depth */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
           </div>
 
-          {/* Content Layer */}
           <div className="container relative z-10 mx-auto flex h-full items-center px-6 sm:px-10 lg:px-16">
             <div className="max-w-4xl">
-              {/* Heading (Serif) */}
               <h2 className="font-serif text-5xl font-medium leading-[1.1] text-white sm:text-6xl lg:text-8xl">
                 {slide.title}
               </h2>
 
-              {/* Subtitle */}
               <p className="mt-8 max-w-2xl text-xl leading-relaxed text-white/90 sm:text-2xl">
                 {slide.subtitle}
               </p>
 
-              {/* CTA Button (Packard Style: Circular with Arrow) */}
               <div className="mt-12">
                 <Link
                   href={slide.cta.href}

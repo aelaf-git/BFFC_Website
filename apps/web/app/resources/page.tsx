@@ -102,7 +102,7 @@ export default function ResourcesPage() {
       {/* ── Hero ── */}
       <div className="relative h-64 w-full overflow-hidden bg-zinc-900 sm:h-80">
         <Image
-          src="/about-us.png"
+          src="/about-one.jpeg"
           alt="Children in a classroom"
           fill
           priority

@@ -1,10 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { brand } from "@/lib/brand";
+import { blogGridClasses } from "@/lib/blog-grid";
 import { featuredPosts } from "@/lib/blog-posts";
 import { siteConfig } from "@/lib/site";
 
 export function BlogSection() {
+  const postCount = featuredPosts.length;
+  const gridClasses = blogGridClasses(postCount, "home");
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -41,7 +45,7 @@ export function BlogSection() {
           url: siteConfig.url,
           logo: {
             "@type": "ImageObject",
-            url: `${siteConfig.url}/logo/bffc-logo.png`,
+            url: `${siteConfig.url}${brand.logo.src}`,
           },
         },
         inLanguage: "en",
@@ -69,7 +73,7 @@ export function BlogSection() {
       <div
         className="fixed inset-0"
         style={{
-          backgroundImage: "url('/mission-background.png')",
+          backgroundImage: "url('/whatwedo.jpeg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           zIndex: -1,
@@ -84,7 +88,7 @@ export function BlogSection() {
       <div className="relative z-10">
 
         {/* ── Heading ── */}
-        <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-16 text-center">
+        <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-14 pb-8 text-center sm:pt-20 sm:pb-12 lg:pt-24 lg:pb-16">
           <span id="stories" aria-hidden="true" className="block scroll-mt-20" />
           <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-white">
             Latest Stories
@@ -96,9 +100,9 @@ export function BlogSection() {
         </div>
 
         {/* ── Card grid ── */}
-        <div className="container mx-auto px-6 sm:px-10 lg:px-20 pb-28">
+        <div className="container mx-auto px-6 sm:px-10 lg:px-20 pb-16 sm:pb-20 lg:pb-28">
           <ul
-            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+            className={gridClasses}
             role="list"
           >
             {featuredPosts.map((post, index) => (
@@ -186,7 +190,7 @@ export function BlogSection() {
           </ul>
 
           {/* View all CTA */}
-          <div className="mt-14 flex justify-center">
+          <div className="mt-10 flex justify-center sm:mt-14">
             <Link
               href="/stories"
               className="group inline-flex items-center gap-4"

@@ -40,9 +40,7 @@ export const siteConfig = {
     { path: "/ways-to-give", changeFrequency: "monthly" as const, priority: 0.85 },
     { path: "/impact", changeFrequency: "weekly" as const, priority: 0.85 },
     { path: "/stories", changeFrequency: "weekly" as const, priority: 0.8 },
-    { path: "/stories/school-feeding-program-afar", changeFrequency: "monthly" as const, priority: 0.75 },
-    { path: "/stories/school-supplies-drive-tigray", changeFrequency: "monthly" as const, priority: 0.75 },
-    { path: "/stories/volunteer-spotlight-amhara", changeFrequency: "monthly" as const, priority: 0.75 },
+    { path: "/stories/from-empty-plates-to-bright-futures-afar", changeFrequency: "monthly" as const, priority: 0.75 },
     { path: "/learn-more", changeFrequency: "monthly" as const, priority: 0.8 },
     {
       path: "/how-we-use-donations",
