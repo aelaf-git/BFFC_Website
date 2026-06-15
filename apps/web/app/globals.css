@@ -57,6 +57,9 @@
     letter-spacing: 0.01em;
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
+    /* Off-canvas nav drawer parks off the right edge when closed; clip prevents
+       a horizontal scrollbar without creating a scroll container (unlike hidden). */
+    overflow-x: clip;
   }
 
   h1, h2, h3, h4, h5, h6 {

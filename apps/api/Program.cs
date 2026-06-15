@@ -65,7 +65,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 
-app.UseHttpsRedirection();
+// In a container (e.g. Azure App Service) TLS is terminated at the edge and the
+// app only serves HTTP internally, so HTTPS redirection would loop/fail. Keep it
+// for local development only.
+var inContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
+if (!inContainer)
+    app.UseHttpsRedirection();
+
 app.UseCors("FrontendPolicy");
 
 // ── Endpoints ─────────────────────────────────────────────────────────────────

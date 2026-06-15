@@ -275,12 +275,23 @@ export function CardNav({
 
   return (
     <div
-      className={`fixed top-0 left-0 z-50 w-full max-w-[100vw] overflow-x-hidden transition-all duration-500 ${
-        showOpaque
-          ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 shadow-sm"
-          : "bg-transparent"
-      } ${className}`}
+      className={`fixed top-0 left-0 z-50 w-full max-w-[100vw] transition-all duration-500 ${className}`}
     >
+      {/*
+        Opaque bar background lives on its OWN layer (sibling of the drawer),
+        not on an ancestor. A backdrop-filter/filter on an ancestor would become
+        the containing block for the fixed drawer and clip it to the thin header
+        bar — making the menu vanish on scrolled (opaque) pages.
+      */}
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 transition-all duration-500 ${
+          showOpaque
+            ? "bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 shadow-sm"
+            : "bg-transparent"
+        }`}
+      />
+
       {/* Invisible ref target — pointer-events always off so it never intercepts clicks */}
       <div ref={backdropRef} className="pointer-events-none fixed inset-0" aria-hidden="true" />
 

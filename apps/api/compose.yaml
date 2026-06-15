@@ -1,0 +1,30 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # Hot-reload dev image (dotnet watch). Production uses the `final` stage.
+      target: dev
+    ports:
+      # Host 5000 -> container 8080 (matches the Stripe CLI webhook forward URL)
+      - "5000:8080"
+    # Loads Stripe__* / Email__* secrets from apps/api/.env (not baked into the image)
+    env_file:
+      - .env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      # Comma-separated list of frontend origins allowed by CORS
+      - ALLOWED_ORIGINS=http://localhost:3000
+    restart: unless-stopped
+    develop:
+      watch:
+        # Sync source changes into the container; dotnet watch recompiles them.
+        - action: sync
+          path: .
+          target: /src
+          ignore:
+            - bin/
+            - obj/
+        # Rebuild the image when dependencies change (need a fresh restore).
+        - action: rebuild
+          path: api.csproj

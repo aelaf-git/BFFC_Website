@@ -2,11 +2,11 @@ namespace Api.Models;
 
 /// <summary>
 /// Sent by the frontend when the donor clicks "Continue to Payment".
-/// AmountCents is dollars × 100 — e.g. $50 CAD = 5000.
+/// AmountCents is dollars × 100 — e.g. $50 USD = 5000.
 /// </summary>
 public record CreatePaymentIntentRequest(
     int    AmountCents,
-    string Currency,       // "cad"
+    string Currency,       // "usd"
     string DonorEmail,
     string DonorName,
     string Mode,           // "one-time" | "monthly"

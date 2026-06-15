@@ -7,7 +7,7 @@ import { loadStripe, type Stripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import {
   Heart, RefreshCw, ShieldCheck, Users, BookOpen,
-  Utensils, ArrowRight, CheckCircle2, ArrowLeft,
+  ArrowRight, CheckCircle2, ArrowLeft,
 } from "lucide-react";
 import { CheckoutForm } from "@/components/donate/checkout-form";
 import { createPaymentIntent } from "@/lib/api/donations";
@@ -46,13 +46,6 @@ const trustPoints = [
     title: "Full Transparency",
     body: "Annual reports and financial statements are published so you can see every dollar.",
   },
-];
-
-const breakdownItems = [
-  { label: "School Meals & Nutrition", pct: 72, color: "bg-primary" },
-  { label: "School Supplies",          pct: 14, color: "bg-amber-400" },
-  { label: "Community Programs",       pct: 9,  color: "bg-sky-400" },
-  { label: "Administration",           pct: 5,  color: "bg-zinc-300" },
 ];
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -108,7 +101,7 @@ export default function DonatePage() {
     try {
       const response = await createPaymentIntent({
         amountCents: effectiveAmount * 100,
-        currency:    "cad",
+        currency:    "usd",
         donorEmail:  email,
         donorName:   `${firstName} ${lastName}`.trim(),
         mode,
@@ -155,49 +148,6 @@ export default function DonatePage() {
             <span className="font-semibold text-zinc-700">Total today</span>
             <span className="font-bold text-lg text-primary">${effectiveAmount || "—"}</span>
           </div>
-        </div>
-      </div>
-
-      {/* Where it goes */}
-      <div className="rounded-3xl border border-zinc-100 bg-white p-7">
-        <h2 className="font-serif text-xl font-medium text-zinc-900">Where It Goes</h2>
-        <div className="mt-5 space-y-4">
-          {breakdownItems.map((item) => (
-            <div key={item.label}>
-              <div className="mb-1.5 flex items-center justify-between text-xs">
-                <span className="font-medium text-zinc-600">{item.label}</span>
-                <span className="font-semibold text-zinc-800">{item.pct}%</span>
-              </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-100">
-                <div className={`h-full rounded-full ${item.color}`} style={{ width: `${item.pct}%` }} />
-              </div>
-            </div>
-          ))}
-        </div>
-        <Link
-          href="/resources"
-          className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:opacity-75 transition-opacity"
-        >
-          View full financial report <ArrowRight className="h-3 w-3" aria-hidden />
-        </Link>
-      </div>
-
-      {/* Impact numbers */}
-      <div className="rounded-3xl bg-zinc-900 p-7 text-white">
-        <h2 className="font-serif text-xl font-medium">Our Impact</h2>
-        <div className="mt-5 grid grid-cols-2 gap-5">
-          {[
-            { icon: Utensils, stat: "12,000+", label: "meals served" },
-            { icon: Users,    stat: "3,200+",  label: "children reached" },
-            { icon: BookOpen, stat: "48",       label: "schools supported" },
-            { icon: Heart,    stat: "3",        label: "regions served" },
-          ].map(({ icon: Icon, stat, label }) => (
-            <div key={label} className="flex flex-col gap-1.5">
-              <Icon className="h-5 w-5 text-primary" aria-hidden />
-              <p className="text-2xl font-bold text-white">{stat}</p>
-              <p className="text-xs font-light text-white/60">{label}</p>
-            </div>
-          ))}
         </div>
       </div>
 
@@ -411,7 +361,7 @@ export default function DonatePage() {
 
               <div className="mb-6 rounded-2xl border border-zinc-100 bg-zinc-50 p-5">
                 <p className="text-sm text-zinc-600">
-                  Donating <span className="font-semibold text-zinc-900">${effectiveAmount} CAD</span>
+                  Donating <span className="font-semibold text-zinc-900">${effectiveAmount} USD</span>
                   {mode === "monthly" ? " per month" : " (one-time)"} as{" "}
                   <span className="font-semibold text-zinc-900">{firstName} {lastName}</span>
                 </p>

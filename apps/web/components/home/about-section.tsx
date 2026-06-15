@@ -19,7 +19,7 @@ const subsections: SubContent[] = [
     titleLine2: "for Every Child",
     body: "Bright Future for Children brings communities together through structured programs, youth sport initiatives, and life-changing opportunity. We believe every child deserves the foundation to thrive.",
     cta: { label: "Get Involved", href: "/ways-to-give" },
-    image: "/about-us.png",
+    image: "/about-one.jpeg",
     imageAlt: "Children playing soccer together in a sunny community field",
   },
   {
@@ -28,7 +28,7 @@ const subsections: SubContent[] = [
     titleLine2: "Child Can Flourish",
     body: "Our mission is to foster inclusive environments where youth can grow, learn, and lead. We build local capacity, promote health equity, and champion equal opportunity for all children.",
     cta: { label: "See Our Work", href: "/impact" },
-    image: "/mission-background.png",
+    image: "/about-two.jpeg",
     imageAlt: "Children learning together in a bright, welcoming classroom",
   },
   {
@@ -37,7 +37,7 @@ const subsections: SubContent[] = [
     titleLine2: "Community Leaders",
     body: "Our board of advocates, educators, and sport professionals leads with transparency and purpose — working hand-in-hand with families and local partners to create sustainable, lasting change.",
     cta: { label: "Meet the Team", href: "/learn-more" },
-    image: "/leadership-background.png",
+    image: "/about-three.jpeg",
     imageAlt: "Diverse community volunteers and leaders planning together",
   },
   {
@@ -46,7 +46,7 @@ const subsections: SubContent[] = [
     titleLine2: "Where It Matters Most",
     body: "We operate across diverse communities in Canada, establishing program hubs in schools, community centers, and athletic parks — ensuring every child, regardless of background, has access.",
     cta: { label: "View Our Reach", href: "/impact" },
-    image: "/about-us.png",
+    image: "/about-four.jpeg",
     imageAlt: "A thriving community space where children gather and grow",
   },
 ];

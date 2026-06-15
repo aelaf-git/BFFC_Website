@@ -42,7 +42,7 @@ const faqs = [
   {
     question: "Can I donate in a currency other than Canadian dollars?",
     answer:
-      "Currently our donation system processes payments in Canadian dollars (CAD). If you are donating from outside Canada and would like to discuss other arrangements, please reach out to us directly at Info@brightfuture4children.com.",
+      "Currently our donation system processes payments in US dollars (USD). If you would like to discuss other arrangements, please reach out to us directly at Info@brightfuture4children.com.",
   },
   {
     question: "How can I get involved beyond donating?",

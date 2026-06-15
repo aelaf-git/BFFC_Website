@@ -3,3 +3,8 @@ obj/
 .env
 .env.*
 !.env.example
+.vs/
+.vscode/
+*.user
+Dockerfile
+.dockerignore
