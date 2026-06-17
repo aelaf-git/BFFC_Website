@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { FileText, Download, ExternalLink, BookOpen, ArrowRight } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import {
+  externalResources,
+  resourceGuides,
+  resourceReports,
+} from "@/lib/resources";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -19,82 +24,11 @@ export const metadata: Metadata = {
   },
 };
 
-const reports = [
-  {
-    title: "2025 Annual Report",
-    description:
-      "A comprehensive overview of our programs, impact metrics, and financials for the 2025 fiscal year.",
-    tag: "Annual Report",
-    year: "2025",
-    href: "#",
-  },
-  {
-    title: "School Feeding Program Overview",
-    description:
-      "An in-depth look at how our school feeding programs are structured, funded, and delivered in Afar and Amhara.",
-    tag: "Program Report",
-    year: "2025",
-    href: "#",
-  },
-  {
-    title: "Financial Accountability Statement",
-    description:
-      "Full breakdown of how donor funds are allocated across programs, administration, and fundraising.",
-    tag: "Finance",
-    year: "2024",
-    href: "#",
-  },
-  {
-    title: "Child Nutrition Impact Study",
-    description:
-      "Research findings on the measurable nutritional and educational outcomes of our meal programs over 18 months.",
-    tag: "Research",
-    year: "2024",
-    href: "#",
-  },
-];
-
-const guides = [
-  {
-    icon: BookOpen,
-    title: "Donor Starter Guide",
-    description:
-      "Everything you need to know about donating, sponsoring a child, and tracking your impact with Bright Future For Children Ethiopia.",
-    href: "#",
-  },
-  {
-    icon: FileText,
-    title: "How to Claim a Tax Receipt",
-    description:
-      "Step-by-step instructions for Canadian donors on claiming charitable tax receipts for donations made to our registered charity.",
-    href: "#",
-  },
-  {
-    icon: ExternalLink,
-    title: "Volunteer & Partnership Handbook",
-    description:
-      "Learn how individuals and organisations can partner with us — from local volunteers in Ethiopia to corporate sponsors in Canada.",
-    href: "#",
-  },
-];
-
-const externalLinks = [
-  {
-    title: "UNICEF — Ethiopia Country Profile",
-    description: "In-depth data on child welfare, education, and nutrition in Ethiopia.",
-    href: "https://www.unicef.org/ethiopia",
-  },
-  {
-    title: "WFP — Ethiopia Situation Report",
-    description: "The World Food Programme's latest updates on food insecurity across Ethiopian regions.",
-    href: "https://www.wfp.org/countries/ethiopia",
-  },
-  {
-    title: "Government of Canada — Charitable Giving",
-    description: "Official guidance on charitable giving and tax benefits for Canadian donors.",
-    href: "https://www.canada.ca/en/revenue-agency/services/charities-giving.html",
-  },
-];
+const guideIcons: Record<string, LucideIcon> = {
+  "Donor Starter Guide": BookOpen,
+  "How to Claim a Tax Receipt": FileText,
+  "Volunteer & Partnership Handbook": ExternalLink,
+};
 
 export default function ResourcesPage() {
   return (
@@ -135,7 +69,7 @@ export default function ResourcesPage() {
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2">
-          {reports.map((report) => (
+          {resourceReports.map((report) => (
             <div
               key={report.title}
               className="flex flex-col rounded-3xl border border-zinc-100 bg-zinc-50 p-7"
@@ -174,21 +108,24 @@ export default function ResourcesPage() {
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-3">
-            {guides.map(({ icon: Icon, title, description, href }) => (
-              <div key={title} className="rounded-3xl bg-white p-7 shadow-sm">
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10">
-                  <Icon className="h-5 w-5 text-primary" aria-hidden />
+            {resourceGuides.map(({ title, description, href }) => {
+              const Icon = guideIcons[title] ?? BookOpen;
+              return (
+                <div key={title} className="rounded-3xl bg-white p-7 shadow-sm">
+                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10">
+                    <Icon className="h-5 w-5 text-primary" aria-hidden />
+                  </div>
+                  <h3 className="font-serif text-xl font-medium text-zinc-900">{title}</h3>
+                  <p className="mt-2 text-sm font-light leading-relaxed text-zinc-500">{description}</p>
+                  <a
+                    href={href}
+                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-opacity hover:opacity-75"
+                  >
+                    Read guide <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                  </a>
                 </div>
-                <h3 className="font-serif text-xl font-medium text-zinc-900">{title}</h3>
-                <p className="mt-2 text-sm font-light leading-relaxed text-zinc-500">{description}</p>
-                <a
-                  href={href}
-                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-opacity hover:opacity-75"
-                >
-                  Read guide <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-                </a>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
@@ -204,7 +141,7 @@ export default function ResourcesPage() {
           </p>
         </div>
         <div className="divide-y divide-zinc-100">
-          {externalLinks.map(({ title, description, href }) => (
+          {externalResources.map(({ title, description, href }) => (
             <a
               key={title}
               href={href}

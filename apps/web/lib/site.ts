@@ -40,6 +40,7 @@ export const siteConfig = {
     { path: "/ways-to-give", changeFrequency: "monthly" as const, priority: 0.85 },
     { path: "/impact", changeFrequency: "weekly" as const, priority: 0.85 },
     { path: "/stories", changeFrequency: "weekly" as const, priority: 0.8 },
+    { path: "/search", changeFrequency: "monthly" as const, priority: 0.5 },
     { path: "/stories/from-empty-plates-to-bright-futures-afar", changeFrequency: "monthly" as const, priority: 0.75 },
     { path: "/learn-more", changeFrequency: "monthly" as const, priority: 0.8 },
     {
