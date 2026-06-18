@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Send } from "lucide-react";
+import { submitContactMessage } from "@/lib/api/contact";
 
 type FormState = {
   name: string;
@@ -24,14 +25,17 @@ export function ContactForm() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("sending");
-    /* TODO: wire to backend / email service */
-    setTimeout(() => {
+
+    try {
+      await submitContactMessage(form);
       setStatus("sent");
       setForm(initialState);
-    }, 1200);
+    } catch {
+      setStatus("error");
+    }
   }
 
   const fieldClass =

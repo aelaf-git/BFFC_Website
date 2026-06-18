@@ -39,6 +39,7 @@ public static class DonationEndpoints
             HttpRequest httpRequest,
             IConfiguration config,
             IEmailService emailService,
+            IDonationPersistenceService donationPersistence,
             StripeClient stripe,
             ILogger<Program> logger) =>
         {
@@ -63,19 +64,28 @@ public static class DonationEndpoints
                 return Results.BadRequest($"Webhook error: {ex.Message}");
             }
 
+            var isNewEvent = await donationPersistence.TryMarkEventProcessedAsync(
+                stripeEvent.Id,
+                stripeEvent.Type);
+
+            if (!isNewEvent)
+            {
+                logger.LogInformation("Skipping already processed Stripe event {EventId}.", stripeEvent.Id);
+                return Results.Ok();
+            }
+
             switch (stripeEvent.Type)
             {
                 case EventTypes.PaymentIntentSucceeded:
                 {
                     var pi = stripeEvent.Data.Object as PaymentIntent;
                     logger.LogInformation(
-                        "PaymentIntent succeeded: {Id} | {Amount} {Currency} | {Email}",
-                        pi?.Id, pi?.Amount, pi?.Currency, pi?.ReceiptEmail);
+                        "PaymentIntent succeeded: {Id} | {Amount} {Currency}",
+                        pi?.Id, pi?.Amount, pi?.Currency);
 
-                    // One-time donations only — subscription first charges also succeed
-                    // but are receipted via invoice.payment_succeeded to avoid duplicates.
                     if (pi is not null && pi.Metadata.GetValueOrDefault("mode") == "one-time")
                     {
+                        await donationPersistence.PersistSucceededPaymentIntentAsync(pi);
                         var receipt = BuildReceiptFromPaymentIntent(pi);
                         await emailService.SendTaxReceiptAsync(receipt);
                     }
@@ -88,6 +98,9 @@ public static class DonationEndpoints
                     logger.LogWarning(
                         "PaymentIntent failed: {Id} | {Error}",
                         pi?.Id, pi?.LastPaymentError?.Message);
+
+                    if (pi is not null)
+                        await donationPersistence.PersistFailedPaymentIntentAsync(pi);
                     break;
                 }
 
@@ -104,11 +117,12 @@ public static class DonationEndpoints
                 {
                     var inv = stripeEvent.Data.Object as Invoice;
                     logger.LogInformation(
-                        "Invoice paid: {Id} | {Amount} | {Email}",
-                        inv?.Id, inv?.AmountPaid, inv?.CustomerEmail);
+                        "Invoice paid: {Id} | {Amount}",
+                        inv?.Id, inv?.AmountPaid);
 
                     if (inv is not null && inv.AmountPaid > 0)
                     {
+                        await donationPersistence.PersistSucceededInvoiceAsync(inv, stripe);
                         var receipt = await BuildReceiptFromInvoiceAsync(inv, stripe);
                         if (receipt is not null)
                             await emailService.SendTaxReceiptAsync(receipt);
@@ -173,7 +187,6 @@ public static class DonationEndpoints
         );
     }
 
-    /// <summary>Receipt numbers are unique and traceable back to the Stripe object.</summary>
     private static string FormatReceiptNumber(string stripeId, DateTime date) =>
         $"BFFC-{date.ToString("yyyyMMdd", CultureInfo.InvariantCulture)}-{stripeId[^8..].ToUpperInvariant()}";
 }

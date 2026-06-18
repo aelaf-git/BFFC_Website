@@ -61,30 +61,38 @@ export function SearchResultsList({
 
   if (variant === "dropdown") {
     return (
-      <ul id={listId} role="listbox" className="max-h-80 overflow-y-auto py-1">
+      <ul
+        id={listId}
+        role="listbox"
+        className="max-h-[min(20rem,50vh)] overflow-y-auto overscroll-contain p-2"
+      >
         {results.map((result, index) => (
           <li key={result.id} role="option" aria-selected={index === activeIndex}>
             <Link
               id={`${listId}-option-${index}`}
               href={result.href}
               onClick={onResultClick}
-              className={`block px-4 py-3 transition-colors ${
-                index === activeIndex ? "bg-primary/5" : "hover:bg-zinc-50"
+              className={`block rounded-xl px-3 py-3 transition-colors ${
+                index === activeIndex
+                  ? "bg-primary/10 ring-1 ring-primary/15"
+                  : "hover:bg-zinc-50"
               }`}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-start gap-2.5">
                 <span
-                  className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${categoryStyles[result.category]}`}
+                  className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${categoryStyles[result.category]}`}
                 >
                   {result.category}
                 </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium leading-snug text-zinc-900">
+                    <HighlightMatch text={result.title} query={query} />
+                  </p>
+                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed font-light text-zinc-500">
+                    {result.description}
+                  </p>
+                </div>
               </div>
-              <p className="mt-1 text-sm font-medium text-zinc-900">
-                <HighlightMatch text={result.title} query={query} />
-              </p>
-              <p className="mt-0.5 line-clamp-1 text-xs font-light text-zinc-500">
-                {result.description}
-              </p>
             </Link>
           </li>
         ))}

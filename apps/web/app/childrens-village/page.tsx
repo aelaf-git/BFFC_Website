@@ -11,10 +11,18 @@ import {
   MapPin,
   Soup,
 } from "lucide-react";
+import {
+  ChildrensVillageGallery,
+  ChildrensVillageUrgentImage,
+} from "@/components/childrens-village/childrens-village-images";
 import { ProjectVideo } from "@/components/childrens-village/project-video";
+import { LightboxScope } from "@/components/ui/lightbox-scope";
+import {
+  academyHeroImage,
+  academyLightboxImages,
+  academyVideo,
+} from "@/lib/academy-assets";
 import { siteConfig } from "@/lib/site";
-
-const ASSET_BASE = "/Bright-Future-Academy-for-Afar-Empowerment";
 
 export const metadata: Metadata = {
   title: `Bright Future Academy for Afar Empowerment | ${siteConfig.name}`,
@@ -28,7 +36,7 @@ export const metadata: Metadata = {
     url: `${siteConfig.url}/childrens-village`,
     siteName: siteConfig.name,
     type: "website",
-    images: [{ url: `${siteConfig.url}${ASSET_BASE}/img1.png` }],
+    images: [{ url: `${siteConfig.url}${academyHeroImage}` }],
   },
 };
 
@@ -55,44 +63,13 @@ const highlights = [
   },
 ];
 
-const galleryImages = [
-  {
-    src: `${ASSET_BASE}/img2.png`,
-    alt: "Students gathering at the Bright Future Academy campus in Afar",
-  },
-  {
-    src: `${ASSET_BASE}/img3.png`,
-    alt: "Children learning together at Awash Primary School",
-  },
-  {
-    src: `${ASSET_BASE}/img4.png`,
-    alt: "Dining and communal spaces planned for the children's village",
-  },
-  {
-    src: `${ASSET_BASE}/img5.png`,
-    alt: "Modern dormitory facilities for disadvantaged students in Afar",
-  },
-  {
-    src: `${ASSET_BASE}/img6.png`,
-    alt: "Recreational and study areas at the Awash campus",
-  },
-  {
-    src: `${ASSET_BASE}/img7.png`,
-    alt: "Afar children supported through Bright Future for Children programs",
-  },
-  {
-    src: `${ASSET_BASE}/img8.png`,
-    alt: "The future Bright Future Children's Village rising in Awash 7 Kilo",
-  },
-];
-
 export default function ChildrensVillagePage() {
   return (
     <div className="flex-1 bg-white">
-      {/* ── Hero ── */}
+      {/* ── Hero (no lightbox — title overlay) ── */}
       <div className="relative h-[22rem] w-full overflow-hidden bg-zinc-900 sm:h-[30rem] lg:h-[34rem]">
         <Image
-          src={`${ASSET_BASE}/img1.png`}
+          src={academyHeroImage}
           alt="Bright Future Academy for Afar Empowerment — Awash, Ethiopia"
           fill
           priority
@@ -114,152 +91,106 @@ export default function ChildrensVillagePage() {
         </div>
       </div>
 
-      {/* ── Intro ── */}
-      <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">
-        <div className="mx-auto max-w-3xl space-y-6 text-lg font-light leading-relaxed text-zinc-600">
-          <p className="text-xl font-normal text-zinc-800">
-            In the heart of Ethiopia&rsquo;s Afar region, a life-changing project is about to begin.
-          </p>
-          <p>
-            Bright Future for Children is excited to announce the construction of a modern{" "}
-            <strong className="font-semibold text-zinc-900">430-bed student dormitory</strong> on a
-            10,000 square meter campus in Awash 7 Kilo. Named Bright Future Children&rsquo;s Village,
-            this landmark project will provide a safe, nurturing home for hundreds of disadvantaged
-            students from Grade 3 to Grade 9.
-          </p>
-          <p>
-            For the entire school semester, children will live, learn, eat, and grow together in a
-            fully equipped facility that includes comfortable dormitories, dining halls, study areas,
-            recreational spaces, and all necessary amenities. No more walking long distances or
-            studying on empty stomachs — this village will become their second home, where they can
-            focus fully on their education.
-          </p>
-        </div>
-      </div>
-
-      {/* ── Video ── */}
-      <div className="container mx-auto px-6 sm:px-10 lg:px-20">
-        <div className="relative overflow-hidden rounded-3xl bg-zinc-900 shadow-[0_20px_60px_rgb(0,0,0,0.12)]">
-          <ProjectVideo
-            src={`${ASSET_BASE}/video.mp4`}
-            poster={`${ASSET_BASE}/img1.png`}
-            className="aspect-video w-full object-cover"
-          />
-        </div>
-        <p className="mx-auto mt-5 max-w-2xl text-center text-sm font-light text-zinc-400">
-          A glimpse of the future Bright Future Children&rsquo;s Village — where every child
-          deserves a chance to shine.
-        </p>
-      </div>
-
-      {/* ── The Need is Urgent ── */}
-      <div className="bg-zinc-50">
+      <LightboxScope images={academyLightboxImages}>
+        {/* ── Intro ── */}
         <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-zinc-200">
-              <Image
-                src={`${ASSET_BASE}/img3.png`}
-                alt="Children in Afar who will benefit from the new children's village"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
-            <div>
-              <h2 className="font-serif text-3xl font-medium tracking-tight text-zinc-900 sm:text-4xl">
-                The Need is Urgent
-              </h2>
-              <div className="mt-6 space-y-6 text-lg font-light leading-relaxed text-zinc-600">
-                <p>
-                  Many bright and determined children in Afar currently miss out on quality education
-                  due to distance, poverty, and lack of safe accommodation. This new Children&rsquo;s
-                  Village will remove those barriers and give them the opportunity to become the next
-                  generation of leaders.
-                </p>
-                <p>
-                  The project has the full support and backing of the Federal Democratic Republic of
-                  Ethiopia, the Afar regional state, and all other relevant agencies and ministries
-                  in the country — as well as international partners, donors, and diaspora
-                  Ethiopians.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Project Highlights ── */}
-      <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">
-        <div className="mb-14 text-center">
-          <h2 className="font-serif text-3xl font-medium tracking-tight text-zinc-900 sm:text-4xl">
-            Project Highlights
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base font-light text-zinc-500">
-            A complete, modern campus designed to let every child live, learn, and thrive.
-          </p>
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {highlights.map(({ icon: Icon, title, description }) => (
-            <div
-              key={title}
-              className="flex flex-col rounded-3xl border border-zinc-100 bg-zinc-50 p-7"
-            >
-              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white">
-                <Icon className="h-5 w-5 text-primary" aria-hidden />
-              </div>
-              <h3 className="font-serif text-xl font-medium text-zinc-900">{title}</h3>
-              <p className="mt-2 text-sm font-light leading-relaxed text-zinc-500">{description}</p>
-            </div>
-          ))}
-        </div>
-        <p className="mx-auto mt-10 max-w-3xl text-center text-base font-light leading-relaxed text-zinc-500">
-          This ambitious project will be made possible through the generous support of the
-          government, non-governmental organizations, corporate partners, and individual donors
-          like you.
-        </p>
-      </div>
-
-      {/* ── Photo gallery ── */}
-      <div className="border-t border-zinc-100 bg-white">
-        <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">
-          <div className="mb-12 text-center">
-            <h2 className="font-serif text-3xl font-medium tracking-tight text-zinc-900 sm:text-4xl">
-              On the Ground in Afar
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base font-light text-zinc-500">
-              The children, communities, and campus that this project will transform.
+          <div className="mx-auto max-w-3xl space-y-6 text-lg font-light leading-relaxed text-zinc-600">
+            <p className="text-xl font-normal text-zinc-800">
+              In the heart of Ethiopia&rsquo;s Afar region, a life-changing project is about to begin.
+            </p>
+            <p>
+              Bright Future for Children is excited to announce the construction of a modern{" "}
+              <strong className="font-semibold text-zinc-900">430-bed student dormitory</strong> on a
+              10,000 square meter campus in Awash 7 Kilo. Named Bright Future Children&rsquo;s Village,
+              this landmark project will provide a safe, nurturing home for hundreds of disadvantaged
+              students from Grade 3 to Grade 9.
+            </p>
+            <p>
+              For the entire school semester, children will live, learn, eat, and grow together in a
+              fully equipped facility that includes comfortable dormitories, dining halls, study areas,
+              recreational spaces, and all necessary amenities. No more walking long distances or
+              studying on empty stomachs — this village will become their second home, where they can
+              focus fully on their education.
             </p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-            {galleryImages.map((image, index) => (
-              <div
-                key={image.src}
-                className={`relative overflow-hidden rounded-2xl bg-zinc-100 ${
-                  index === 0 ? "sm:col-span-2 lg:col-span-2 lg:row-span-2" : ""
-                }`}
-              >
-                <div
-                  className={`relative w-full ${
-                    index === 0 ? "aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[28rem]" : "aspect-[4/3]"
-                  }`}
-                >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    className="object-cover transition-transform duration-700 hover:scale-[1.03]"
-                    sizes={
-                      index === 0
-                        ? "(max-width: 1024px) 100vw, 66vw"
-                        : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    }
-                  />
+        </div>
+
+        {/* ── Video ── */}
+        <div className="container mx-auto px-6 py-16 sm:px-10 lg:px-20">
+          <div className="relative overflow-hidden rounded-3xl bg-zinc-900 shadow-[0_20px_60px_rgb(0,0,0,0.12)]">
+            <ProjectVideo
+              src={academyVideo}
+              poster={academyHeroImage}
+              className="aspect-video w-full object-cover"
+            />
+          </div>
+          <p className="mx-auto mt-5 max-w-2xl text-center text-sm font-light text-zinc-400">
+            A glimpse of the future Bright Future Children&rsquo;s Village — where every child
+            deserves a chance to shine.
+          </p>
+        </div>
+
+        {/* ── The Need is Urgent ── */}
+        <div className="bg-zinc-50">
+          <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">
+            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+              <ChildrensVillageUrgentImage />
+              <div>
+                <h2 className="font-serif text-3xl font-medium tracking-tight text-zinc-900 sm:text-4xl">
+                  The Need is Urgent
+                </h2>
+                <div className="mt-6 space-y-6 text-lg font-light leading-relaxed text-zinc-600">
+                  <p>
+                    Many bright and determined children in Afar currently miss out on quality education
+                    due to distance, poverty, and lack of safe accommodation. This new Children&rsquo;s
+                    Village will remove those barriers and give them the opportunity to become the next
+                    generation of leaders.
+                  </p>
+                  <p>
+                    The project has the full support and backing of the Federal Democratic Republic of
+                    Ethiopia, the Afar regional state, and all other relevant agencies and ministries
+                    in the country — as well as international partners, donors, and diaspora
+                    Ethiopians.
+                  </p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Project Highlights ── */}
+        <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">
+          <div className="mb-14 text-center">
+            <h2 className="font-serif text-3xl font-medium tracking-tight text-zinc-900 sm:text-4xl">
+              Project Highlights
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base font-light text-zinc-500">
+              A complete, modern campus designed to let every child live, learn, and thrive.
+            </p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {highlights.map(({ icon: Icon, title, description }) => (
+              <div
+                key={title}
+                className="flex flex-col rounded-3xl border border-zinc-100 bg-zinc-50 p-7"
+              >
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white">
+                  <Icon className="h-5 w-5 text-primary" aria-hidden />
+                </div>
+                <h3 className="font-serif text-xl font-medium text-zinc-900">{title}</h3>
+                <p className="mt-2 text-sm font-light leading-relaxed text-zinc-500">{description}</p>
               </div>
             ))}
           </div>
+          <p className="mx-auto mt-10 max-w-3xl text-center text-base font-light leading-relaxed text-zinc-500">
+            This ambitious project will be made possible through the generous support of the
+            government, non-governmental organizations, corporate partners, and individual donors
+            like you.
+          </p>
         </div>
-      </div>
+
+        <ChildrensVillageGallery />
+      </LightboxScope>
 
       {/* ── Your Support Can Change Lives ── */}
       <div className="relative overflow-hidden bg-primary">

@@ -1,5 +1,4 @@
-const API_BASE =
-  (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000").replace(/\/$/, "");
+import { API_BASE } from "@/lib/api/client";
 
 export interface CreateIntentPayload {
   amountCents: number;

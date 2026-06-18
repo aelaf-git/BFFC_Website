@@ -1,30 +1,48 @@
 services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: bffc
+      POSTGRES_USER: bffc
+      POSTGRES_PASSWORD: devpassword
+    ports:
+      - "5433:5432"
+    volumes:
+      - bffc_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bffc -d bffc"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
   api:
     build:
       context: .
       dockerfile: Dockerfile
-      # Hot-reload dev image (dotnet watch). Production uses the `final` stage.
       target: dev
     ports:
-      # Host 5000 -> container 8080 (matches the Stripe CLI webhook forward URL)
       - "5000:8080"
-    # Loads Stripe__* / Email__* secrets from apps/api/.env (not baked into the image)
     env_file:
       - .env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      # Comma-separated list of frontend origins allowed by CORS
       - ALLOWED_ORIGINS=http://localhost:3000
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=bffc;Username=bffc;Password=devpassword;SSL Mode=Prefer
+    depends_on:
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
     develop:
       watch:
-        # Sync source changes into the container; dotnet watch recompiles them.
         - action: sync
           path: .
           target: /src
           ignore:
             - bin/
             - obj/
-        # Rebuild the image when dependencies change (need a fresh restore).
         - action: rebuild
           path: api.csproj
+
+volumes:
+  bffc_pgdata:

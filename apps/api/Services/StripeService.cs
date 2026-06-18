@@ -45,6 +45,9 @@ public class StripeService : IStripeService
             },
         };
 
+        if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
+            options.Metadata["phone_number"] = request.PhoneNumber;
+
         var service = new PaymentIntentService(_stripe);
         var intent  = await service.CreateAsync(options);
 

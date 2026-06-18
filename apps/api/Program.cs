@@ -1,8 +1,11 @@
+using Api.Data;
 using Api.Endpoints;
 using Api.Services;
 using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
 using Stripe;
 using System.Text.Json;
+using System.Threading.RateLimiting;
 
 // Load Stripe keys and other secrets from apps/api/.env (see .env.example).
 Env.TraversePath().Load();
@@ -18,8 +21,35 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
 });
 
+// ── Database ────────────────────────────────────────────────────────────────────
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException(
+        "ConnectionStrings:DefaultConnection is not configured.");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString)
+           .UseSnakeCaseNamingConvention());
+
+builder.Services.AddScoped<IDonationPersistenceService, DonationPersistenceService>();
+builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<INewsletterService, NewsletterService>();
+
+// ── Rate limiting (contact + newsletter) ──────────────────────────────────────
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    options.AddPolicy("form-submissions", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 10,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0,
+            }));
+});
+
 // ── CORS ──────────────────────────────────────────────────────────────────────
-// Allow the Next.js frontend (localhost in dev, Azure SWA / custom domain in prod).
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendPolicy", policy =>
@@ -65,17 +95,26 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 
-// In a container (e.g. Azure App Service) TLS is terminated at the edge and the
-// app only serves HTTP internally, so HTTPS redirection would loop/fail. Keep it
-// for local development only.
 var inContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
 if (!inContainer)
     app.UseHttpsRedirection();
 
 app.UseCors("FrontendPolicy");
+app.UseRateLimiter();
 
 // ── Endpoints ─────────────────────────────────────────────────────────────────
-app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
+app.MapGet("/health", async (AppDbContext db) =>
+{
+    var canConnect = await db.Database.CanConnectAsync();
+    return canConnect
+        ? Results.Ok(new { status = "healthy", database = "connected" })
+        : Results.Json(
+            new { status = "unhealthy", database = "disconnected" },
+            statusCode: StatusCodes.Status503ServiceUnavailable);
+});
+
 app.MapDonationEndpoints();
+app.MapContactEndpoints();
+app.MapNewsletterEndpoints();
 
 app.Run();
