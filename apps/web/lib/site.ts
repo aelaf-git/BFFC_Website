@@ -1,12 +1,29 @@
+/** Canonical public site URL — used for sitemap, canonical links, and structured data. */
+export const productionSiteUrl = "https://bffcglobal.org";
+
+function resolveSiteUrl(): string {
+  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+
+  if (
+    fromEnv &&
+    fromEnv !== "http://localhost:3000" &&
+    !fromEnv.includes("azurestaticapps.net")
+  ) {
+    return fromEnv;
+  }
+
+  return process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : productionSiteUrl;
+}
+
 export const siteConfig = {
   name: "Bright Future For Children Ethiopia",
   legalName: "Bright Future For Children Ethiopia",
   title: "Bright Future For Children Ethiopia",
   description:
     "Providing life-saving, nutritious meals to children aged 2–8 in war-affected regions of Ethiopia — Amhara, Afar, and Tigray. Donate, sponsor a child, or get involved to help build brighter futures.",
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-    "http://localhost:3000",
+  url: resolveSiteUrl(),
   locale: "en_US",
   language: "en",
   contact: {
@@ -16,7 +33,7 @@ export const siteConfig = {
     postalCode: "T2G 5N7",
     country: "Canada",
     charityRegistration: "726794944RR0001",
-    email: "Info@brightfuture4children.com",
+    email: "info@bffcglobal.org",
     phone: "+1 825 454 5383",
     phoneHref: "tel:+18254545383",
     phoneAlt: "+251 952 333 366",
@@ -33,20 +50,17 @@ export const siteConfig = {
     { path: "/", changeFrequency: "weekly" as const, priority: 1 },
     { path: "/childrens-village", changeFrequency: "weekly" as const, priority: 0.9 },
     { path: "/donate", changeFrequency: "monthly" as const, priority: 0.95 },
-    { path: "/sponsor-a-child", changeFrequency: "monthly" as const, priority: 0.9 },
-    { path: "/sponsor-a-child/browse", changeFrequency: "weekly" as const, priority: 0.85 },
-    { path: "/gift-catalogue", changeFrequency: "weekly" as const, priority: 0.85 },
-    { path: "/gift-catalogue/school-kit", changeFrequency: "monthly" as const, priority: 0.7 },
     { path: "/ways-to-give", changeFrequency: "monthly" as const, priority: 0.85 },
-    { path: "/impact", changeFrequency: "weekly" as const, priority: 0.85 },
     { path: "/stories", changeFrequency: "weekly" as const, priority: 0.8 },
+    { path: "/faqs", changeFrequency: "monthly" as const, priority: 0.7 },
+    { path: "/resources", changeFrequency: "monthly" as const, priority: 0.7 },
     { path: "/search", changeFrequency: "monthly" as const, priority: 0.5 },
-    { path: "/stories/from-empty-plates-to-bright-futures-afar", changeFrequency: "monthly" as const, priority: 0.75 },
-    { path: "/learn-more", changeFrequency: "monthly" as const, priority: 0.8 },
+    { path: "/legal/privacy-policy", changeFrequency: "yearly" as const, priority: 0.3 },
+    { path: "/legal/terms-of-use", changeFrequency: "yearly" as const, priority: 0.3 },
     {
-      path: "/how-we-use-donations",
-      changeFrequency: "monthly" as const,
-      priority: 0.75,
+      path: "/legal/accessibility-statement",
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
     },
   ],
 } as const;

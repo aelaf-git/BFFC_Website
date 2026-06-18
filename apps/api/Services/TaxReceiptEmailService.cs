@@ -24,7 +24,7 @@ public class TaxReceiptEmailService : IEmailService
         _logger = logger;
 
         _apiKey      = config["Email:ApiKey"];
-        _fromAddress = config["Email:FromAddress"] ?? "receipts@brightfuture4children.com";
+        _fromAddress = config["Email:FromAddress"] ?? "receipts@bffcglobal.org";
         _fromName    = config["Email:FromName"]    ?? "Bright Future For Children Ethiopia";
 
         _charity = new CharityInfo(
@@ -35,7 +35,7 @@ public class TaxReceiptEmailService : IEmailService
             Province:           config["Charity:Province"]           ?? "Alberta",
             PostalCode:         config["Charity:PostalCode"]         ?? "T2G 5N7",
             Country:            config["Charity:Country"]            ?? "Canada",
-            Email:              config["Charity:Email"]              ?? "Info@brightfuture4children.com",
+            Email:              config["Charity:Email"]              ?? "info@bffcglobal.org",
             Phone:              config["Charity:Phone"]              ?? "+1 825 454 5383"
         );
     }

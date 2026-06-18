@@ -6,7 +6,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: `Accessibility Statement | ${siteConfig.name}`,
   description:
-    "Our commitment to making brightfuture4children.com accessible to everyone, including people with disabilities, in line with WCAG 2.1 AA guidelines.",
+    `Our commitment to making ${new URL(siteConfig.url).hostname} accessible to everyone, including people with disabilities, in line with WCAG 2.1 AA guidelines.`,
   alternates: { canonical: `${siteConfig.url}/legal/accessibility-statement` },
   openGraph: {
     title: "Accessibility Statement",

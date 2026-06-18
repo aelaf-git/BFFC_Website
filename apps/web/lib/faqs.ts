@@ -1,3 +1,7 @@
+import { siteConfig } from "@/lib/site";
+
+const contactEmail = siteConfig.contact.email;
+
 export type Faq = {
   question: string;
   answer: string;
@@ -27,7 +31,7 @@ export const faqs: Faq[] = [
   {
     question: "How do I get a tax receipt?",
     answer:
-      "Canadian donors automatically receive a tax receipt by email after making a donation. If you have not received your receipt within 5 business days, please contact us at Info@brightfuture4children.com and we will resend it promptly.",
+      `Canadian donors automatically receive a tax receipt by email after making a donation. If you have not received your receipt within 5 business days, please contact us at ${contactEmail} and we will resend it promptly.`,
   },
   {
     question: "Can I sponsor a specific child?",
@@ -42,7 +46,7 @@ export const faqs: Faq[] = [
   {
     question: "Can I donate in a currency other than Canadian dollars?",
     answer:
-      "Currently our donation system processes payments in US dollars (USD). If you would like to discuss other arrangements, please reach out to us directly at Info@brightfuture4children.com.",
+      `Currently our donation system processes payments in US dollars (USD). If you would like to discuss other arrangements, please reach out to us directly at ${contactEmail}.`,
   },
   {
     question: "How can I get involved beyond donating?",
@@ -52,6 +56,6 @@ export const faqs: Faq[] = [
   {
     question: "How do I cancel or change my monthly donation?",
     answer:
-      "You can update or cancel your monthly giving at any time by contacting us at Info@brightfuture4children.com. We will process your request within 2 business days and confirm the change by email.",
+      `You can update or cancel your monthly giving at any time by contacting us at ${contactEmail}. We will process your request within 2 business days and confirm the change by email.`,
   },
 ];

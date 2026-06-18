@@ -95,7 +95,7 @@ In **Azure Portal → App Service → Configuration → Application settings**, 
 | `Email__ApiKey` | Resend API key |
 | `WEBSITES_PORT` | `8080` |
 | `DOTNET_RUNNING_IN_CONTAINER` | `true` |
-| `ALLOWED_ORIGINS` | `https://brightfuture4children.com,https://<your-swa-domain>` |
+| `ALLOWED_ORIGINS` | `https://bffcglobal.org,https://www.bffcglobal.org,https://<your-swa-domain>` |
 
 Mark the connection string as a **slot setting** if using deployment slots.
 

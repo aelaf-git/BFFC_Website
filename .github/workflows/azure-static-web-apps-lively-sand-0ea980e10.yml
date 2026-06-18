@@ -33,9 +33,8 @@ jobs:
           output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
         env:
-          # Injected into the Next.js build. Set these in
-          # GitHub → Settings → Secrets and variables → Actions.
-          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          # Baked into the Next.js build for sitemap, canonical URLs, and OG tags.
+          NEXT_PUBLIC_SITE_URL: https://bffcglobal.org
           NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
 
