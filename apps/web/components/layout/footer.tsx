@@ -119,38 +119,44 @@ export function Footer() {
           </div>
 
           {/* Contact & social */}
-          <div className="mx-auto grid max-w-4xl gap-10 sm:grid-cols-2 sm:gap-12">
+          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_auto] lg:gap-16">
             <div className="text-center sm:text-left">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
                 Contact Us
               </p>
-              <div className="mt-4 flex flex-col gap-3">
-                <a
-                  href={siteConfig.contact.phoneHref}
-                  className={contactDetailClass}
-                  aria-label={`Call us at ${siteConfig.contact.phone}`}
-                >
-                  {siteConfig.contact.phone}
-                </a>
-                <a
-                  href={siteConfig.contact.phoneAltHref}
-                  className={contactDetailClass}
-                  aria-label={`Call us at ${siteConfig.contact.phoneAlt}`}
-                >
-                  {siteConfig.contact.phoneAlt}
-                </a>
+              <div className="mt-4 flex flex-col gap-4">
+                <div className="grid gap-6 sm:grid-cols-2 sm:gap-8">
+                  {[siteConfig.contact.offices.canada, siteConfig.contact.offices.ethiopia].map(
+                    (office) => (
+                      <div key={office.label}>
+                        <p className="text-sm font-semibold text-white">{office.label}</p>
+                        <div className="mt-2 flex flex-col gap-1">
+                          {office.addressLines.map((line) => (
+                            <p key={line} className={contactDetailClass}>
+                              {line}
+                            </p>
+                          ))}
+                          {office.phones.map((phone) => (
+                            <a
+                              key={phone.href}
+                              href={phone.href}
+                              className={contactDetailClass}
+                              aria-label={`Call ${office.label} at ${phone.text}`}
+                            >
+                              {phone.text}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    ),
+                  )}
+                </div>
                 <a
                   href={`mailto:${siteConfig.contact.email}`}
                   className={contactDetailClass}
                 >
                   {siteConfig.contact.email}
                 </a>
-                <p className={contactDetailClass}>
-                  {siteConfig.contact.street}
-                  <br />
-                  {siteConfig.contact.city}, {siteConfig.contact.province}{" "}
-                  {siteConfig.contact.postalCode}, {siteConfig.contact.country}
-                </p>
               </div>
             </div>
 

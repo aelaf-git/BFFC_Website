@@ -425,10 +425,10 @@ export function CardNav({
           </div>
         </div>
 
-        {/* Right-side drawer — full width on phones, capped on larger screens */}
+        {/* Right-side drawer — full width on phones, wider on larger screens, never past viewport */}
         <div
           ref={drawerRef}
-          className={`fixed top-0 right-0 z-[100] flex h-[100dvh] w-full max-w-[min(100vw,28rem)] flex-col overflow-x-hidden overscroll-contain bg-white shadow-[-4px_0_24px_rgba(0,0,0,0.08)] ${
+          className={`fixed top-0 right-0 z-[100] flex h-[100dvh] w-full max-w-[min(100vw,36rem)] flex-col overflow-x-hidden overscroll-contain bg-white shadow-[-4px_0_24px_rgba(0,0,0,0.08)] sm:max-w-[min(100vw,40rem)] md:max-w-[min(100vw,44rem)] lg:max-w-[min(100vw,48rem)] xl:max-w-[min(100vw,52rem)] ${
             isExpanded ? "pointer-events-auto" : "pointer-events-none"
           }`}
           aria-hidden={!isExpanded}

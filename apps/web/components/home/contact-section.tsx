@@ -1,50 +1,53 @@
-import { Mail, Phone, MapPin, Building2 } from "lucide-react";
+import { Mail, MapPin, Building2 } from "lucide-react";
 import { ContactForm } from "./contact-form";
 import { siteConfig } from "@/lib/site";
 
 const { contact } = siteConfig;
 
-type ContactLine = string | { text: string; href: string };
+type ContactLine = { text: string; href?: string };
 
-const contactDetails: {
+type OfficeCard = {
   icon: typeof MapPin;
   label: string;
   lines: ContactLine[];
   href?: string;
-}[] = [
+};
+
+const officeCards: OfficeCard[] = [
   {
     icon: MapPin,
-    label: "Office address",
+    label: contact.offices.canada.label,
     lines: [
-      contact.street,
-      `${contact.city}, ${contact.province} ${contact.postalCode}`,
-      contact.country,
+      ...contact.offices.canada.addressLines.map((line) => ({ text: line })),
+      ...contact.offices.canada.phones,
     ],
-    href: `https://maps.google.com/?q=${encodeURIComponent(
-      `${contact.street}, ${contact.city}, ${contact.province} ${contact.postalCode}`,
-    )}`,
+    href: contact.offices.canada.mapHref,
   },
+  {
+    icon: MapPin,
+    label: contact.offices.ethiopia.label,
+    lines: [
+      ...contact.offices.ethiopia.addressLines.map((line) => ({ text: line })),
+      ...contact.offices.ethiopia.phones,
+    ],
+  },
+];
+
+const sharedCards: OfficeCard[] = [
   {
     icon: Mail,
     label: "Email us",
-    lines: [contact.email],
+    lines: [{ text: contact.email, href: `mailto:${contact.email}` }],
     href: `mailto:${contact.email}`,
-  },
-  {
-    icon: Phone,
-    label: "Call us",
-    lines: [
-      { text: contact.phone, href: contact.phoneHref },
-      { text: contact.phoneAlt, href: contact.phoneAltHref },
-    ],
   },
   {
     icon: Building2,
     label: "Charity no.",
-    lines: [contact.charityRegistration],
-    href: undefined,
+    lines: [{ text: contact.charityRegistration }],
   },
 ];
+
+const contactCards = [...officeCards, ...sharedCards];
 
 export function ContactSection() {
   return (
@@ -64,45 +67,49 @@ export function ContactSection() {
 
       {/* ── Two-column body ── */}
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pb-16 sm:pb-20 lg:pb-28">
-        {/*
-          items-stretch makes both columns the same height on desktop.
-          Left: cards on top, map fills remaining height (flex-1).
-          Right: heading + form, textarea fills remaining height (flex-1).
-        */}
         <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-16 xl:gap-24">
 
           {/* ── Left column: contact cards → map ── */}
           <div className="flex w-full shrink-0 flex-col gap-6 lg:w-[50%]">
 
-            {/* Contact detail cards — above the map, all equal size */}
             <ul className="grid gap-4 sm:grid-cols-2" role="list">
-              {contactDetails.map(({ icon: Icon, label, lines, href }) => (
+              {contactCards.map(({ icon: Icon, label, lines, href }) => (
                 <li key={label} className="flex">
-                  <div className="flex min-h-[8rem] flex-1 gap-3 rounded-2xl border border-zinc-100 bg-zinc-50/60 px-4 py-4 transition-shadow hover:shadow-sm">
+                  <div className="flex min-h-[9.5rem] flex-1 gap-3 rounded-2xl border border-zinc-100 bg-zinc-50/60 px-4 py-4 transition-shadow hover:shadow-sm">
                     <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10">
                       <Icon className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
                     </span>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <p className="text-[10px] font-semibold uppercase tracking-widest text-accent">
                         {label}
                       </p>
                       {lines.map((line) => {
-                        const text = typeof line === "string" ? line : line.text;
-                        const lineHref = typeof line === "string" ? href : line.href;
-                        return lineHref ? (
-                          <a
-                            key={text}
-                            href={lineHref}
-                            target={lineHref.startsWith("http") ? "_blank" : undefined}
-                            rel={lineHref.startsWith("http") ? "noopener noreferrer" : undefined}
-                            className="mt-0.5 block truncate text-sm font-medium text-zinc-700 transition-colors hover:text-accent"
-                          >
-                            {text}
-                          </a>
-                        ) : (
-                          <p key={text} className="mt-0.5 truncate text-sm font-medium text-zinc-700">
-                            {text}
-                          </p>
+                        const isPhone = line.href?.startsWith("tel:");
+                        const lineHref = line.href ?? (isPhone ? undefined : href);
+                        const content = (
+                          <span className="mt-0.5 block text-sm font-medium leading-snug text-zinc-700">
+                            {line.text}
+                          </span>
+                        );
+
+                        if (lineHref) {
+                          return (
+                            <a
+                              key={`${label}-${line.text}`}
+                              href={lineHref}
+                              target={lineHref.startsWith("http") ? "_blank" : undefined}
+                              rel={lineHref.startsWith("http") ? "noopener noreferrer" : undefined}
+                              className="mt-0.5 block transition-colors hover:text-accent [&>span]:hover:text-accent"
+                            >
+                              {content}
+                            </a>
+                          );
+                        }
+
+                        return (
+                          <div key={`${label}-${line.text}`} className="mt-0.5">
+                            {content}
+                          </div>
                         );
                       })}
                     </div>
@@ -136,7 +143,6 @@ export function ContactSection() {
               please call or email us directly.
             </p>
 
-            {/* flex-1 so the form fills the remaining column height */}
             <div className="mt-8 flex flex-1 flex-col">
               <ContactForm />
             </div>

@@ -34,10 +34,38 @@ export const siteConfig = {
     country: "Canada",
     charityRegistration: "726794944RR0001",
     email: "info@bffcglobal.org",
-    phone: "+1 825 454 5383",
-    phoneHref: "tel:+18254545383",
-    phoneAlt: "+251 952 333 366",
-    phoneAltHref: "tel:+251952333366",
+    phone: "+1 403 903 9047",
+    phoneHref: "tel:+14039039047",
+    phoneAlt: "+251 902 149 999",
+    phoneAltHref: "tel:+251902149999",
+    offices: {
+      canada: {
+        label: "Canada Office",
+        addressLines: [
+          "303-1835 10 Ave SE",
+          "Calgary, Alberta T2G 5N7",
+          "Canada",
+        ],
+        mapHref:
+          "https://maps.google.com/?q=1835+10+Ave+SE+Calgary+AB+T2G+5N7+Canada",
+        phones: [
+          { text: "+1 403 903 9047", href: "tel:+14039039047" },
+          { text: "+1 825 454 5383", href: "tel:+18254545383" },
+        ],
+      },
+      ethiopia: {
+        label: "Ethiopia Office",
+        addressLines: [
+          "Addis Ababa Country Office",
+          "Yeka Sub City Kebele 01/02",
+          "Addis Ababa, Ethiopia",
+        ],
+        phones: [
+          { text: "+251 902 149 999", href: "tel:+251902149999" },
+          { text: "+251 952 333 366", href: "tel:+251952333366" },
+        ],
+      },
+    },
     mapEmbedUrl:
       "https://maps.google.com/maps?q=1835+10+Ave+SE+Calgary+AB+T2G+5N7+Canada&output=embed&z=15",
   },
