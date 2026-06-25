@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { loadStripe, type Stripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -10,6 +9,7 @@ import {
   ArrowRight, CheckCircle2, ArrowLeft,
 } from "lucide-react";
 import { CheckoutForm } from "@/components/donate/checkout-form";
+import { PageHero } from "@/components/ui/page-hero";
 import { createPaymentIntent } from "@/lib/api/donations";
 import { siteConfig } from "@/lib/site";
 
@@ -172,29 +172,13 @@ export default function DonatePage() {
 
   return (
     <div className="flex-1 bg-white">
-      {/* Hero */}
-      <div className="relative h-64 w-full overflow-hidden bg-zinc-900 sm:h-80">
-        <Image
-          src="/whatwedo.jpeg"
-          alt="Children in Ethiopia"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Make a Difference
-          </p>
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Donate Today
-          </h1>
-          <p className="mt-4 max-w-xl text-base font-light text-white/75">
-            Every gift — large or small — feeds a hungry child and funds a brighter future.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        imageSrc="/whatwedo.jpeg"
+        imageAlt="Children in Ethiopia"
+        kicker="Make a Difference"
+        title="Donate Today"
+        subtitle="Every gift — large or small — feeds a hungry child and funds a brighter future."
+      />
 
       {/* Content */}
       <div className="container mx-auto px-6 py-16 sm:px-10 lg:px-20">
@@ -413,7 +397,7 @@ export default function DonatePage() {
               </p>
               <Link
                 href="/"
-                className="mt-8 inline-flex items-center gap-2 rounded-full bg-zinc-900 px-7 py-3 text-sm font-semibold text-white hover:bg-zinc-700 transition-colors"
+                className="mt-8 inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-semibold text-white hover:bg-accent-hover transition-colors"
               >
                 Return to home
               </Link>

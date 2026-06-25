@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { PageHero } from "@/components/ui/page-hero";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: `Privacy Policy | ${siteConfig.name}`,
   description:
-    "Learn how Bright Future For Children Ethiopia collects, uses, and protects your personal information in accordance with Canadian privacy law (PIPEDA).",
+    "Learn how Bright Future for Children collects, uses, and protects your personal information in accordance with Canadian privacy law (PIPEDA).",
   alternates: { canonical: `${siteConfig.url}/legal/privacy-policy` },
   openGraph: {
     title: "Privacy Policy",
@@ -25,30 +25,16 @@ export default function PrivacyPolicyPage() {
 
   return (
     <div className="flex-1 bg-white">
-      {/* ── Hero ── */}
-      <div className="relative h-56 w-full overflow-hidden bg-zinc-900 sm:h-64">
-        <Image
-          src="/about-one.jpeg"
-          alt=""
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 bg-black/65" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Legal
-          </p>
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl">
-            Privacy Policy
-          </h1>
-          <p className="mt-3 text-sm font-light text-white/60">
-            Last updated: {LAST_UPDATED}
-          </p>
-        </div>
-      </div>
+      <PageHero
+        imageSrc="/about-one.jpeg"
+        imageAlt=""
+        decorativeImage
+        size="compact"
+        kicker="Legal"
+        title="Privacy Policy"
+        subtitle={`Last updated: ${LAST_UPDATED}`}
+        titleClassName="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl"
+      />
 
       {/* ── Content ── */}
       <div className="container mx-auto px-6 py-16 sm:px-10 lg:px-20">
@@ -56,7 +42,7 @@ export default function PrivacyPolicyPage() {
 
           <Section title="1. Who We Are">
             <p>
-              Bright Future For Children Ethiopia (hereinafter <strong>"BFFC"</strong>, <strong>"we"</strong>,{" "}
+              Bright Future for Children (hereinafter <strong>"BFFC"</strong>, <strong>"we"</strong>,{" "}
               <strong>"our"</strong>, or <strong>"us"</strong>) is a registered Canadian charity
               (Charity Registration No.{" "}
               <span className="font-medium text-zinc-800">{contact.charityRegistration}</span>
@@ -165,7 +151,7 @@ export default function PrivacyPolicyPage() {
                 href="https://tools.google.com/dlpage/gaoptout"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline"
+                className="text-accent hover:underline"
               >
                 Google Analytics Opt-out Browser Add-on
               </a>
@@ -206,7 +192,7 @@ export default function PrivacyPolicyPage() {
             </ul>
             <p>
               To exercise any of these rights, please contact us at{" "}
-              <a href={`mailto:${contact.email}`} className="text-primary hover:underline">
+              <a href={`mailto:${contact.email}`} className="text-accent hover:underline">
                 {contact.email}
               </a>
               .
@@ -252,19 +238,19 @@ export default function PrivacyPolicyPage() {
               our data practices, please contact our Privacy Officer:
             </p>
             <address className="not-italic mt-3 rounded-2xl bg-zinc-50 p-6 text-sm leading-relaxed">
-              <strong className="text-zinc-800">Bright Future For Children Ethiopia</strong>
+              <strong className="text-zinc-800">Bright Future for Children</strong>
               <br />
               {contact.street}, {contact.city}, {contact.province} {contact.postalCode}
               <br />
               {contact.country}
               <br />
               Email:{" "}
-              <a href={`mailto:${contact.email}`} className="text-primary hover:underline">
+              <a href={`mailto:${contact.email}`} className="text-accent hover:underline">
                 {contact.email}
               </a>
               <br />
               Phone:{" "}
-              <a href={contact.phoneHref} className="text-primary hover:underline">
+              <a href={contact.phoneHref} className="text-accent hover:underline">
                 {contact.phone}
               </a>
             </address>
@@ -277,7 +263,7 @@ export default function PrivacyPolicyPage() {
                 href="https://www.priv.gc.ca"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline"
+                className="text-accent hover:underline"
               >
                 Office of the Privacy Commissioner of Canada
               </a>{" "}
@@ -325,8 +311,8 @@ function LegalNav({ current }: { current: "privacy-policy" | "terms-of-use" | "a
           href={l.href}
           className={
             l.href.endsWith(current)
-              ? "font-semibold text-primary"
-              : "text-zinc-500 hover:text-primary transition-colors"
+              ? "font-semibold text-accent"
+              : "text-zinc-500 hover:text-accent transition-colors"
           }
         >
           {l.label}

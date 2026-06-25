@@ -176,20 +176,20 @@ export function NavSearch({
 
   const inputClasses = isTransparent
     ? "border-white/20 bg-white/10 text-white placeholder:text-white/50 focus:border-white/40 focus:ring-white/20"
-    : "border-border bg-background text-foreground placeholder:text-muted focus:border-primary focus:ring-primary/20";
+    : "border-border bg-background text-foreground placeholder:text-muted focus:border-accent focus:ring-accent/20";
 
   return (
     <>
       <div
         ref={containerRef}
-        className={`relative ${fullWidth ? "w-full" : "w-40 shrink-0 sm:w-44 xl:w-52"} ${className}`}
+        className={`relative ${fullWidth ? "w-full" : "w-44 shrink-0 sm:w-48 xl:w-60"} ${className}`}
       >
         <form action="/search" method="get" role="search" onSubmit={handleSubmit}>
           <label htmlFor={inputId} className="sr-only">
             Search the site
           </label>
           <HiMagnifyingGlass
-            className={`pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transition-colors duration-300 ${
+            className={`pointer-events-none absolute top-1/2 left-3.5 h-5 w-5 -translate-y-1/2 transition-colors duration-300 ${
               isTransparent ? "text-white/60" : "text-muted"
             }`}
             aria-hidden
@@ -216,13 +216,13 @@ export function NavSearch({
             aria-activedescendant={
               showDropdown && activeIndex >= 0 ? `${listId}-option-${activeIndex}` : undefined
             }
-            className={`h-9 w-full rounded-full border py-0 pr-9 pl-9 text-sm transition-all duration-300 focus:ring-2 focus:outline-none ${inputClasses}`}
+            className={`h-11 w-full rounded-full border py-0 pr-10 pl-10 text-base transition-all duration-300 focus:ring-2 focus:outline-none ${inputClasses}`}
           />
           {query && (
             <button
               type="button"
               onClick={clearQuery}
-              className={`absolute top-1/2 right-2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full transition-colors ${
+              className={`absolute top-1/2 right-2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full transition-colors ${
                 isTransparent
                   ? "text-white/70 hover:bg-white/10 hover:text-white"
                   : "text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600"
@@ -248,7 +248,7 @@ export function NavSearch({
           {results.length > 0 ? (
             <>
               <div className="border-b border-zinc-100 px-4 py-2.5">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-400">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-600">
                   Suggestions
                 </p>
               </div>
@@ -263,7 +263,7 @@ export function NavSearch({
               <button
                 type="button"
                 onClick={() => navigateToSearch(query)}
-                className="flex w-full items-center justify-between gap-2 border-t border-zinc-100 bg-zinc-50/80 px-4 py-3 text-left text-sm font-medium text-primary transition-colors hover:bg-primary/5"
+                className="flex w-full items-center justify-between gap-2 border-t border-zinc-100 bg-accent-light/80 px-4 py-3.5 text-left text-base font-medium text-accent transition-colors hover:bg-accent/10"
               >
                 <span className="truncate">
                   See all results for &ldquo;{debouncedQuery}&rdquo;
@@ -272,7 +272,7 @@ export function NavSearch({
               </button>
             </>
           ) : (
-            <p className="px-4 py-4 text-sm font-light text-zinc-500">
+            <p className="px-4 py-4 text-base text-foreground">
               No results for &ldquo;{debouncedQuery}&rdquo;
             </p>
           )}

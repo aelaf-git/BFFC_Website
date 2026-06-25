@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { User, Calendar, ArrowRight } from "lucide-react";
+import { PageHero } from "@/components/ui/page-hero";
 import { featuredPosts } from "@/lib/blog-posts";
 import { blogGridClasses } from "@/lib/blog-grid";
 import { siteConfig } from "@/lib/site";
@@ -27,29 +28,13 @@ export default function StoriesPage() {
 
   return (
     <div className="flex-1 bg-white">
-      {/* ── Hero ── */}
-      <div className="relative h-64 w-full overflow-hidden bg-zinc-900 sm:h-80">
-        <Image
-          src="/whatwedo.jpeg"
-          alt="Children in Ethiopia"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-black/55" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            From the Field
-          </p>
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Latest Stories
-          </h1>
-          <p className="mt-4 max-w-xl text-base font-light text-white/75">
-            Real stories from the children, communities, and volunteers behind our mission.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        imageSrc="/whatwedo.jpeg"
+        imageAlt="Children in Ethiopia"
+        kicker="From the Field"
+        title="Latest Stories"
+        subtitle="Real stories from the children, communities, and volunteers behind our mission."
+      />
 
       {/* ── Posts grid ── */}
       <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">

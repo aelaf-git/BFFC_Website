@@ -79,11 +79,11 @@ export function ContactSection() {
               {contactDetails.map(({ icon: Icon, label, lines, href }) => (
                 <li key={label} className="flex">
                   <div className="flex min-h-[8rem] flex-1 gap-3 rounded-2xl border border-zinc-100 bg-zinc-50/60 px-4 py-4 transition-shadow hover:shadow-sm">
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <Icon className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10">
+                      <Icon className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
                     </span>
                     <div className="min-w-0">
-                      <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">
+                      <p className="text-[10px] font-semibold uppercase tracking-widest text-accent">
                         {label}
                       </p>
                       {lines.map((line) => {
@@ -95,7 +95,7 @@ export function ContactSection() {
                             href={lineHref}
                             target={lineHref.startsWith("http") ? "_blank" : undefined}
                             rel={lineHref.startsWith("http") ? "noopener noreferrer" : undefined}
-                            className="mt-0.5 block truncate text-sm font-medium text-zinc-700 transition-colors hover:text-primary"
+                            className="mt-0.5 block truncate text-sm font-medium text-zinc-700 transition-colors hover:text-accent"
                           >
                             {text}
                           </a>
@@ -115,7 +115,7 @@ export function ContactSection() {
             <div className="relative aspect-[4/3] lg:aspect-square rounded-3xl bg-zinc-50/50 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] sm:p-4">
               <div className="absolute inset-3 overflow-hidden rounded-2xl bg-zinc-100 sm:inset-4">
                 <iframe
-                  title="Bright Future For Children Ethiopia office location"
+                  title="Bright Future for Children office location"
                   src={contact.mapEmbedUrl}
                   style={{ border: 0, position: "absolute", inset: 0, width: "100%", height: "100%" }}
                   allowFullScreen

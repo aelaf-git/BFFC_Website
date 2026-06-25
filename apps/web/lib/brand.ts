@@ -5,7 +5,7 @@
 export const brand = {
   logo: {
     src: "/brand/logo.png",
-    alt: "Bright Future For Children Organization",
+    alt: "Bright Future for Children",
     width: 1024,
     height: 704,
   },
@@ -19,6 +19,11 @@ export const brand = {
     primary: "#f39120",
     primaryHover: "#d97d15",
     primaryLight: "#fef3e8",
-    accentBlue: "#1d4e89",
+    accent: "#1a3a6b",
+    accentHover: "#142f56",
+    accentLight: "#e8edf4",
+    accentDeep: "#0d2240",
+    /** @deprecated Use accent */
+    accentBlue: "#1a3a6b",
   },
 } as const;

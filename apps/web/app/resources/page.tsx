@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { FileText, Download, ExternalLink, BookOpen, ArrowRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { PageHero } from "@/components/ui/page-hero";
 import {
   externalResources,
   resourceGuides,
@@ -33,29 +33,13 @@ const guideIcons: Record<string, LucideIcon> = {
 export default function ResourcesPage() {
   return (
     <div className="flex-1 bg-white">
-      {/* ── Hero ── */}
-      <div className="relative h-64 w-full overflow-hidden bg-zinc-900 sm:h-80">
-        <Image
-          src="/about-one.jpeg"
-          alt="Children in a classroom"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Transparency & Learning
-          </p>
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Resources
-          </h1>
-          <p className="mt-4 max-w-xl text-base font-light text-white/75">
-            Reports, guides, and research to help you understand our work and its impact.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        imageSrc="/about-one.jpeg"
+        imageAlt="Children in a classroom"
+        kicker="Transparency & Learning"
+        title="Resources"
+        subtitle="Reports, guides, and research to help you understand our work and its impact."
+      />
 
       {/* ── Reports ── */}
       <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">

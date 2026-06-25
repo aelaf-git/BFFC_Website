@@ -26,7 +26,7 @@ export function WhatWeDoSection() {
         <article className="relative w-full">
           <div className="flex flex-col gap-8 sm:gap-10 lg:items-center lg:gap-16 xl:gap-24 lg:flex-row">
             <div className="w-full shrink-0 lg:w-[50%]">
-              <div className="relative rounded-3xl bg-zinc-50/50 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] sm:p-4">
+              <div className="relative rounded-3xl bg-accent-light/50 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.015)] transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] sm:p-4">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-zinc-100 sm:aspect-[16/10] lg:aspect-[4/3]">
                   <Image
                     src="/whatwedo.jpeg"
@@ -41,7 +41,7 @@ export function WhatWeDoSection() {
 
             <div className="flex w-full flex-col justify-center py-2 lg:w-[50%]">
               <p className="max-w-[42ch] text-base leading-[1.9] text-zinc-500 font-light sm:text-[1.05rem]">
-                At Bright Future for Children Ethiopia, we provide life-saving, nutritious,
+                At Bright Future for Children, we provide life-saving, nutritious,
                 and culturally appropriate meals for children aged 2-8 in war-ravaged regions
                 including Amhara, Afar, and Tigray. We partner with local authorities,
                 schools, and kindergartens to build local capacity and keep children in
@@ -78,7 +78,7 @@ export function WhatWeDoSection() {
                 <p className="font-normal text-zinc-700">Our work focuses on four key pillars:</p>
                 <ul className="space-y-2 pl-1 text-[0.95rem] sm:text-base">
                   <li className="flex gap-2.5">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary" aria-hidden />
+                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden />
                     Nutritious breakfast programs so children learn with energy and focus.
                   </li>
                   <li className="flex gap-2.5">
@@ -86,7 +86,7 @@ export function WhatWeDoSection() {
                     Essential educational materials that remove financial obstacles to learning.
                   </li>
                   <li className="flex gap-2.5">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary" aria-hidden />
+                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden />
                     Health and nutrition support so children grow strong physically and mentally.
                   </li>
                   <li className="flex gap-2.5">

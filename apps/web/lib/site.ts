@@ -18,9 +18,9 @@ function resolveSiteUrl(): string {
 }
 
 export const siteConfig = {
-  name: "Bright Future For Children Ethiopia",
-  legalName: "Bright Future For Children Ethiopia",
-  title: "Bright Future For Children Ethiopia",
+  name: "Bright Future for Children",
+  legalName: "Bright Future for Children",
+  title: "Bright Future for Children",
   description:
     "Providing life-saving, nutritious meals to children aged 2–8 in war-affected regions of Ethiopia — Amhara, Afar, and Tigray. Donate, sponsor a child, or get involved to help build brighter futures.",
   url: resolveSiteUrl(),
@@ -48,7 +48,8 @@ export const siteConfig = {
   },
   routes: [
     { path: "/", changeFrequency: "weekly" as const, priority: 1 },
-    { path: "/childrens-village", changeFrequency: "weekly" as const, priority: 0.9 },
+    { path: "/projects", changeFrequency: "weekly" as const, priority: 0.9 },
+    { path: "/childrens-village", changeFrequency: "weekly" as const, priority: 0.85 },
     { path: "/donate", changeFrequency: "monthly" as const, priority: 0.95 },
     { path: "/ways-to-give", changeFrequency: "monthly" as const, priority: 0.85 },
     { path: "/stories", changeFrequency: "weekly" as const, priority: 0.8 },

@@ -95,10 +95,10 @@ export function AboutSection() {
                 <div className="flex flex-col justify-center w-full lg:w-[50%] py-2">
                   {/* Title */}
                   <h3 className="font-serif font-medium tracking-tight leading-[1.1]">
-                    <span className="block text-[2rem] sm:text-[2.6rem] lg:text-[3rem] text-zinc-900">
+                    <span className="block text-[2rem] sm:text-[2.6rem] lg:text-[3rem] text-accent">
                       {s.titleLine1}
                     </span>
-                    <span className="block text-[2rem] sm:text-[2.6rem] lg:text-[3rem] text-primary">
+                    <span className="block text-[2rem] sm:text-[2.6rem] lg:text-[3rem] text-accent">
                       {s.titleLine2}
                     </span>
                   </h3>
@@ -117,7 +117,7 @@ export function AboutSection() {
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-white transition-all duration-300 group-hover:border-primary group-hover:bg-primary">
                       <ArrowRight className="h-4 w-4 text-zinc-400 transition-all duration-300 group-hover:text-white group-hover:translate-x-0.5" />
                     </div>
-                    <span className="text-sm font-medium text-zinc-600 tracking-wide transition-colors duration-200 group-hover:text-primary">
+                    <span className="text-sm font-medium text-zinc-600 tracking-wide transition-colors duration-200 group-hover:text-accent">
                       {s.cta.label}
                     </span>
                   </Link>

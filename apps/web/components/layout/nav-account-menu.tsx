@@ -34,10 +34,10 @@ export function NavAccountMenu({
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 ${
+        className={`inline-flex items-center gap-1.5 text-base font-medium transition-colors duration-300 lg:text-lg ${
           isTransparent
             ? "text-white/80 hover:text-white"
-            : "text-foreground hover:text-primary"
+            : "text-foreground hover:text-accent"
         }`}
         aria-expanded={open}
         aria-haspopup="true"
@@ -60,7 +60,7 @@ export function NavAccountMenu({
               key={link.href}
               href={link.href}
               role="menuitem"
-              className="block px-4 py-2 text-sm text-foreground transition-colors hover:bg-primary-light hover:text-primary"
+              className="block px-5 py-3 text-base text-foreground transition-colors hover:bg-accent-light hover:text-accent"
               aria-label={link.ariaLabel}
               onClick={() => setOpen(false)}
             >

@@ -13,7 +13,7 @@ import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildPageMetadata({
   description:
-    "Providing life-saving meals to children in Amhara, Afar, and Tigray — Ethiopia's most war-affected regions. Donate, sponsor a child, or get involved with Bright Future For Children Ethiopia.",
+    "Providing life-saving meals to children in Amhara, Afar, and Tigray — Ethiopia's most war-affected regions. Donate, sponsor a child, or get involved with Bright Future for Children.",
   path: "/",
   ogImage: "/hero/hero1.jpg",
 });
@@ -23,7 +23,7 @@ export default function Home() {
     <div className="flex-1" aria-label="Home">
       <HomePageJsonLd url={siteConfig.url} />
       <h1 className="sr-only">
-        Bright Future For Children Ethiopia — Providing life-saving meals to children
+        Bright Future for Children — Providing life-saving meals to children
         in Amhara, Afar, and Tigray
       </h1>
       <HeroCarousel slides={heroSlides} />

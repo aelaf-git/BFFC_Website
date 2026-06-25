@@ -21,7 +21,7 @@ const homeSections: SearchDocument[] = [
     id: "section-about",
     title: "About Us",
     description:
-      "Learn about Bright Future For Children Ethiopia — our mission, vision, and commitment to children in Afar, Amhara, and Tigray.",
+      "Learn about Bright Future for Children — our mission, vision, and commitment to children in Afar, Amhara, and Tigray.",
     href: "/#about",
     category: "Section",
     keywords: ["mission", "vision", "charity", "ethiopia"],
@@ -100,6 +100,15 @@ const pages: SearchDocument[] = [
     keywords: ["monthly", "corporate", "emergency", "partnership"],
   },
   {
+    id: "page-projects",
+    title: "Projects",
+    description:
+      "Explore Bright Future for Children projects across Ethiopia — campuses, feeding programs, and community initiatives.",
+    href: "/projects",
+    category: "Page",
+    keywords: ["projects", "afar", "campus", "dormitory", "initiatives"],
+  },
+  {
     id: "page-childrens-village",
     title: "Bright Future Academy for Afar Empowerment",
     description:
@@ -147,7 +156,7 @@ const pages: SearchDocument[] = [
   {
     id: "page-terms",
     title: "Terms of Use",
-    description: "Terms and conditions for using the Bright Future For Children website.",
+    description: "Terms and conditions for using the Bright Future for Children website.",
     href: "/legal/terms-of-use",
     category: "Page",
     keywords: ["legal", "terms"],
@@ -225,9 +234,9 @@ export const popularSearchLinks: Pick<SearchDocument, "title" | "href" | "descri
     description: "Support children with a one-time or monthly gift.",
   },
   {
-    title: "Bright Future Academy for Afar Empowerment",
-    href: "/childrens-village",
-    description: "Explore the 430-bed children's village rising in Awash.",
+    title: "Projects",
+    href: "/projects",
+    description: "Explore our active and upcoming projects across Ethiopia.",
   },
   {
     title: "Stories",

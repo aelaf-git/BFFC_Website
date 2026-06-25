@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { HeroNavSignal } from "@/components/layout/hero-nav-provider";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Page Coming Soon | Bright Future For Children Ethiopia",
+  title: `Page Coming Soon | ${siteConfig.name}`,
   description: "This page is currently under development. Return to our homepage to learn more about our mission.",
   robots: { index: false, follow: false },
 };

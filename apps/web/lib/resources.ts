@@ -36,7 +36,7 @@ export const resourceReports: ResourceReport[] = [
     href: "#",
   },
   {
-    title: "Financial Accountability Statement",
+    title: "Financial Statement",
     description:
       "Full breakdown of how donor funds are allocated across programs, administration, and fundraising.",
     tag: "Finance",
@@ -57,7 +57,7 @@ export const resourceGuides: ResourceGuide[] = [
   {
     title: "Donor Starter Guide",
     description:
-      "Everything you need to know about donating, sponsoring a child, and tracking your impact with Bright Future For Children Ethiopia.",
+      "Everything you need to know about donating, sponsoring a child, and tracking your impact with Bright Future for Children.",
     href: "#",
   },
   {

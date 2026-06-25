@@ -9,7 +9,7 @@ export type Faq = {
 
 export const faqs: Faq[] = [
   {
-    question: "What does Bright Future For Children Ethiopia do?",
+    question: "What does Bright Future for Children do?",
     answer:
       "We are a Canadian registered charity dedicated to providing one nutritious meal a day to children aged 2–8 in war-affected regions of Ethiopia — primarily Afar, Tigray, and Amhara. We also distribute school supplies to support children's education and partner with local communities to build sustainable feeding programs.",
   },
@@ -24,7 +24,7 @@ export const faqs: Faq[] = [
       "Approximately 82% of every dollar donated goes directly to program delivery — meals, school supplies, and community support. The remaining 18% covers administration (11%) and fundraising costs (7%). We publish a full financial breakdown in our annual report, available on our Resources page.",
   },
   {
-    question: "Is Bright Future For Children Ethiopia a registered charity?",
+    question: "Is Bright Future for Children a registered charity?",
     answer:
       "Yes. We are a registered Canadian charity with registration number 726794944RR0001. All donations made by Canadian residents are eligible for a charitable tax receipt.",
   },

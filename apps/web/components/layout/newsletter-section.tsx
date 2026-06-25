@@ -6,12 +6,12 @@ export function NewsletterSection() {
       className="relative w-full overflow-hidden bg-white border-t border-zinc-100"
       aria-label="Newsletter signup"
     >
-      {/* Subtle warm tint circle — top right */}
+      {/* Subtle blue tint circle — top right */}
       <div
         className="absolute -top-24 -right-24 w-96 h-96 rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, color-mix(in srgb, #f39120 8%, transparent) 0%, transparent 70%)",
+            "radial-gradient(circle, color-mix(in srgb, #1a3a6b 8%, transparent) 0%, transparent 70%)",
         }}
         aria-hidden
       />
@@ -30,7 +30,7 @@ export function NewsletterSection() {
 
           {/* Left — copy */}
           <div className="max-w-lg">
-            <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-primary mb-3">
+            <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-accent mb-3">
               Stay Connected
             </p>
             <h2 className="font-serif text-3xl sm:text-4xl font-medium leading-[1.15] tracking-tight text-zinc-900">

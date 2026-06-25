@@ -25,7 +25,7 @@ export const metadata: Metadata = rootMetadata;
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: brand.colors.primary,
+  themeColor: brand.colors.accent,
 };
 
 export default function RootLayout({
@@ -40,7 +40,7 @@ export default function RootLayout({
         <HeroNavProvider>
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:rounded-lg focus:bg-primary focus:px-5 focus:py-3 focus:text-base focus:font-semibold focus:text-white"
           >
             Skip to main content
           </a>

@@ -43,7 +43,7 @@ export function OrganizationJsonLd() {
     potentialAction: {
       "@type": "DonateAction",
       target: `${siteConfig.url}/donate`,
-      name: "Donate to Bright Future For Children Ethiopia",
+      name: `Donate to ${siteConfig.name}`,
     },
     ...(sameAs.length > 0 ? { sameAs } : {}),
   };

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { HiMagnifyingGlass } from "react-icons/hi2";
+import { PageHero } from "@/components/ui/page-hero";
 import { SearchResultsList } from "@/components/search/search-results-list";
 import { popularSearchLinks, searchIndex } from "@/lib/search-index";
 import { dedupeByHref, searchDocuments } from "@/lib/search";
@@ -33,37 +33,29 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <div className="flex-1 bg-white">
-      {/* ── Hero ── */}
-      <div className="relative h-56 w-full overflow-hidden bg-zinc-900 sm:h-72">
-        <Image
-          src="/whatwedo.jpeg"
-          alt=""
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <p className="mb-3 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+      <PageHero
+        imageSrc="/whatwedo.jpeg"
+        imageAlt=""
+        decorativeImage
+        size="medium"
+        kicker={
+          <span className="inline-flex items-center gap-2">
             <HiMagnifyingGlass className="h-3.5 w-3.5" aria-hidden />
             Site search
-          </p>
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl lg:text-6xl">
-            {query ? "Search results" : "Search the site"}
-          </h1>
-          <p className="mt-4 max-w-xl text-base font-light text-white/75">
-            {query
-              ? results.length === 0
-                ? `No results found for "${query}".`
-                : `${results.length} result${results.length === 1 ? "" : "s"} for "${query}"`
-              : "Find pages, stories, FAQs, and resources across our site."}
-          </p>
-        </div>
-      </div>
+          </span>
+        }
+        title={query ? "Search results" : "Search the site"}
+        subtitle={
+          query
+            ? results.length === 0
+              ? `No results found for "${query}".`
+              : `${results.length} result${results.length === 1 ? "" : "s"} for "${query}"`
+            : "Find pages, stories, FAQs, and resources across our site."
+        }
+      />
 
       {/* ── Search bar ── */}
-      <div className="border-b border-zinc-100 bg-zinc-50">
+      <div className="border-b border-zinc-100 bg-accent-light">
         <div className="container mx-auto px-6 py-8 sm:px-10 lg:px-20">
           <form
             action="/search"

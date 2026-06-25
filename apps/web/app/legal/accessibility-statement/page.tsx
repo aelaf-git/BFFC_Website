@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { PageHero } from "@/components/ui/page-hero";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -25,30 +25,16 @@ export default function AccessibilityStatementPage() {
 
   return (
     <div className="flex-1 bg-white">
-      {/* ── Hero ── */}
-      <div className="relative h-56 w-full overflow-hidden bg-zinc-900 sm:h-64">
-        <Image
-          src="/about-four.jpeg"
-          alt=""
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 bg-black/65" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Legal
-          </p>
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl">
-            Accessibility Statement
-          </h1>
-          <p className="mt-3 text-sm font-light text-white/60">
-            Last updated: {LAST_UPDATED}
-          </p>
-        </div>
-      </div>
+      <PageHero
+        imageSrc="/about-four.jpeg"
+        imageAlt=""
+        decorativeImage
+        size="compact"
+        kicker="Legal"
+        title="Accessibility Statement"
+        subtitle={`Last updated: ${LAST_UPDATED}`}
+        titleClassName="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl"
+      />
 
       {/* ── Content ── */}
       <div className="container mx-auto px-6 py-16 sm:px-10 lg:px-20">
@@ -56,7 +42,7 @@ export default function AccessibilityStatementPage() {
 
           <Section title="Our Commitment">
             <p>
-              Bright Future For Children Ethiopia (<strong>"BFFC"</strong>) is committed to
+              Bright Future for Children (<strong>"BFFC"</strong>) is committed to
               ensuring that our website is accessible to the widest possible audience, including
               people with disabilities. We believe that everyone deserves equal access to
               information about our mission, programs, and ways to get involved.
@@ -68,7 +54,7 @@ export default function AccessibilityStatementPage() {
                 href="https://www.w3.org/WAI/standards-guidelines/wcag/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline"
+                className="text-accent hover:underline"
               >
                 Web Content Accessibility Guidelines (WCAG) 2.1, Level AA
               </a>
@@ -172,19 +158,19 @@ export default function AccessibilityStatementPage() {
               us:
             </p>
             <address className="not-italic mt-3 rounded-2xl bg-zinc-50 p-6 text-sm leading-relaxed">
-              <strong className="text-zinc-800">Bright Future For Children Ethiopia</strong>
+              <strong className="text-zinc-800">Bright Future for Children</strong>
               <br />
               {contact.street}, {contact.city}, {contact.province} {contact.postalCode}
               <br />
               {contact.country}
               <br />
               Email:{" "}
-              <a href={`mailto:${contact.email}`} className="text-primary hover:underline">
+              <a href={`mailto:${contact.email}`} className="text-accent hover:underline">
                 {contact.email}
               </a>
               <br />
               Phone:{" "}
-              <a href={contact.phoneHref} className="text-primary hover:underline">
+              <a href={contact.phoneHref} className="text-accent hover:underline">
                 {contact.phone}
               </a>
             </address>
@@ -201,7 +187,7 @@ export default function AccessibilityStatementPage() {
                 href="https://www.canada.ca/en/canadian-heritage/services/cultural-spaces-celebrations/accessibility-canada.html"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline"
+                className="text-accent hover:underline"
               >
                 Accessibility Standards Canada
               </a>{" "}
@@ -210,7 +196,7 @@ export default function AccessibilityStatementPage() {
                 href="https://www.chrc-ccdp.gc.ca/en"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline"
+                className="text-accent hover:underline"
               >
                 Canadian Human Rights Commission
               </a>{" "}
@@ -224,7 +210,7 @@ export default function AccessibilityStatementPage() {
               <br />
               If you need any information from this site in a different format — such as large
               print, audio, or plain text — please email us at{" "}
-              <a href={`mailto:${contact.email}`} className="text-primary hover:underline">
+              <a href={`mailto:${contact.email}`} className="text-accent hover:underline">
                 {contact.email}
               </a>{" "}
               and we will do our best to accommodate your request.
@@ -271,8 +257,8 @@ function LegalNav({ current }: { current: "privacy-policy" | "terms-of-use" | "a
           href={l.href}
           className={
             l.href.endsWith(current)
-              ? "font-semibold text-primary"
-              : "text-zinc-500 hover:text-primary transition-colors"
+              ? "font-semibold text-accent"
+              : "text-zinc-500 hover:text-accent transition-colors"
           }
         >
           {l.label}

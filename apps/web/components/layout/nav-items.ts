@@ -1,5 +1,6 @@
 import type { CardNavItem, MainNavLink, NavLink } from "@/components/layout/card-nav";
 import type { SiteContact } from "@/components/layout/nav-contact-info";
+import { headerNavLinks } from "@/lib/site-nav";
 import { siteConfig } from "@/lib/site";
 
 export const siteContact: SiteContact = {
@@ -18,11 +19,7 @@ export const primaryCtas: NavLink[] = [
 ];
 
 /** Main navigation — top bar (in-page section links on the home page) */
-export const mainNavLinks: MainNavLink[] = [
-  { label: "About Us", href: "/#about", ariaLabel: "About us" },
-  { label: "What We Do", href: "/#what-we-do", ariaLabel: "What we do" },
-  { label: "Get in Touch", href: "/#get-in-touch", ariaLabel: "Get in touch" },
-];
+export const mainNavLinks: MainNavLink[] = headerNavLinks;
 
 /** Donor portal — utility row account menu */
 export const accountLinks: NavLink[] = [

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { Heart, RefreshCw, Zap, Building2, ArrowRight } from "lucide-react";
+import { PageHero } from "@/components/ui/page-hero";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -52,7 +52,7 @@ const givingOptions = [
     title: "Corporate & Legacy Giving",
     subtitle: "Make a lasting institutional impact.",
     description:
-      "Partner with us as a corporate sponsor or include Bright Future For Children Ethiopia in your estate planning. Corporate and legacy gifts fund long-term programs and infrastructure that benefit children for generations.",
+      "Partner with us as a corporate sponsor or include Bright Future for Children in your estate planning. Corporate and legacy gifts fund long-term programs and infrastructure that benefit children for generations.",
     cta: { label: "Get in touch", href: "/#get-in-touch" },
     highlight: false,
   },
@@ -70,29 +70,13 @@ const impactItems = [
 export default function WaysToGivePage() {
   return (
     <div className="flex-1 bg-white">
-      {/* ── Hero ── */}
-      <div className="relative h-64 w-full overflow-hidden bg-zinc-900 sm:h-80">
-        <Image
-          src="/hero/hero1.jpg"
-          alt="Children in Ethiopia"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Make a Difference
-          </p>
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Ways to Give
-          </h1>
-          <p className="mt-4 max-w-xl text-base font-light text-white/75">
-            Every gift — large or small — feeds a hungry child and funds a brighter future.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        imageSrc="/hero/hero1.jpg"
+        imageAlt="Children in Ethiopia"
+        kicker="Make a Difference"
+        title="Ways to Give"
+        subtitle="Every gift — large or small — feeds a hungry child and funds a brighter future."
+      />
 
       {/* ── Giving options ── */}
       <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">

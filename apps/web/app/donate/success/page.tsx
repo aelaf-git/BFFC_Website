@@ -99,7 +99,7 @@ function SuccessContent() {
       </p>
       <Link
         href="/"
-        className="mt-8 inline-flex items-center gap-2 rounded-full bg-zinc-900 px-7 py-3 text-sm font-semibold text-white hover:bg-zinc-700 transition-colors"
+        className="mt-8 inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-semibold text-white hover:bg-accent-hover transition-colors"
       >
         Return to home
       </Link>

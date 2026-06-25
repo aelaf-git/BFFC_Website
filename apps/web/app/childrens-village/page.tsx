@@ -16,6 +16,7 @@ import {
   ChildrensVillageUrgentImage,
 } from "@/components/childrens-village/childrens-village-images";
 import { ProjectVideo } from "@/components/childrens-village/project-video";
+import { PageHero } from "@/components/ui/page-hero";
 import { LightboxScope } from "@/components/ui/lightbox-scope";
 import {
   academyHeroImage,
@@ -66,30 +67,21 @@ const highlights = [
 export default function ChildrensVillagePage() {
   return (
     <div className="flex-1 bg-white">
-      {/* ── Hero (no lightbox — title overlay) ── */}
-      <div className="relative h-[22rem] w-full overflow-hidden bg-zinc-900 sm:h-[30rem] lg:h-[34rem]">
-        <Image
-          src={academyHeroImage}
-          alt="Bright Future Academy for Afar Empowerment — Awash, Ethiopia"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
-        <div className="absolute inset-0 flex flex-col items-center justify-end px-6 pb-12 text-center sm:px-10 sm:pb-16 lg:pb-20">
-          <p className="mb-4 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/65">
+      <PageHero
+        imageSrc={academyHeroImage}
+        imageAlt="Bright Future Academy for Afar Empowerment — Awash, Ethiopia"
+        title="Bright Future Academy for Afar Empowerment"
+        size="tall"
+        align="bottom"
+        kicker={
+          <span className="inline-flex items-center gap-2 tracking-[0.2em]">
             <MapPin className="h-3.5 w-3.5" aria-hidden />
             Awash 7 Kilo, Afar — Ethiopia
-          </p>
-          <h1 className="max-w-5xl font-serif text-3xl font-medium leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Bright Future Academy for Afar Empowerment
-          </h1>
-          <p className="mt-5 max-w-2xl text-lg font-light text-white/85 sm:text-xl">
-            Bright Future Children&rsquo;s Village is rising in Awash
-          </p>
-        </div>
-      </div>
+          </span>
+        }
+        subtitle="Bright Future Children's Village is rising in Awash"
+        titleClassName="max-w-5xl font-serif text-3xl font-medium leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
+      />
 
       <LightboxScope images={academyLightboxImages}>
         {/* ── Intro ── */}
@@ -99,8 +91,7 @@ export default function ChildrensVillagePage() {
               In the heart of Ethiopia&rsquo;s Afar region, a life-changing project is about to begin.
             </p>
             <p>
-              Bright Future for Children is excited to announce the construction of a modern{" "}
-              <strong className="font-semibold text-zinc-900">430-bed student dormitory</strong> on a
+              Bright Future for Children is excited to announce the construction of a modern 430-bed student dormitory on a
               10,000 square meter campus in Awash 7 Kilo. Named Bright Future Children&rsquo;s Village,
               this landmark project will provide a safe, nurturing home for hundreds of disadvantaged
               students from Grade 3 to Grade 9.

@@ -14,7 +14,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
         aria-expanded={open}
         className="flex w-full items-start justify-between gap-6 py-6 text-left"
       >
-        <span className="font-serif text-lg font-medium text-zinc-900">{question}</span>
+        <span className="font-serif text-xl font-medium text-zinc-900 sm:text-2xl">{question}</span>
         <ChevronDown
           className={`mt-0.5 h-5 w-5 shrink-0 text-zinc-400 transition-transform duration-300 ${
             open ? "rotate-180" : ""
@@ -35,7 +35,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 
 export function FaqList() {
   return (
-    <div className="divide-y divide-zinc-100 rounded-3xl border border-zinc-100 bg-zinc-50 px-8">
+    <div className="divide-y divide-zinc-100 rounded-3xl border border-zinc-100 bg-accent-light px-8">
       {faqs.map((faq) => (
         <FaqItem key={faq.question} {...faq} />
       ))}

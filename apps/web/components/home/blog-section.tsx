@@ -12,7 +12,7 @@ export function BlogSection() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Latest Stories — Bright Future For Children Ethiopia",
+    name: `Latest Stories — ${siteConfig.name}`,
     description:
       "Real stories from the ground — the children, communities, and volunteers behind our mission.",
     url: `${siteConfig.url}/stories`,
@@ -157,7 +157,7 @@ export function BlogSection() {
 
                         {/* Title */}
                         <h3
-                          className="mt-4 font-serif text-xl font-medium leading-snug tracking-tight text-zinc-900 group-hover:text-primary transition-colors duration-200"
+                          className="mt-4 font-serif text-xl font-medium leading-snug tracking-tight text-accent group-hover:text-accent-hover transition-colors duration-200"
                           itemProp="headline"
                         >
                           <Link href={post.href}>{post.title}</Link>

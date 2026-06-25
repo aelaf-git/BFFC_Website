@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { siteConfig } from "@/lib/site";
 import { FaqList } from "@/components/faqs/faq-list";
+import { PageHero } from "@/components/ui/page-hero";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: `FAQs | ${siteConfig.name}`,
@@ -23,29 +23,13 @@ export const metadata: Metadata = {
 export default function FaqsPage() {
   return (
     <div className="flex-1 bg-white">
-      {/* ── Hero ── */}
-      <div className="relative h-64 w-full overflow-hidden bg-zinc-900 sm:h-80">
-        <Image
-          src="/about-four.jpeg"
-          alt="Children at school"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Have Questions?
-          </p>
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Frequently Asked Questions
-          </h1>
-          <p className="mt-4 max-w-xl text-base font-light text-white/75">
-            Everything you need to know about our charity, your donations, and how we work.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        imageSrc="/about-four.jpeg"
+        imageAlt="Children at school"
+        kicker="Have Questions?"
+        title="Frequently Asked Questions"
+        subtitle="Everything you need to know about our charity, your donations, and how we work."
+      />
 
       {/* ── FAQ list ── */}
       <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">
@@ -56,7 +40,7 @@ export default function FaqsPage() {
             </h2>
             <p className="mt-4 text-base font-light text-zinc-500">
               {"Can't find what you're looking for? "}
-              <Link href="/#get-in-touch" className="text-primary hover:underline">
+              <Link href="/#get-in-touch" className="text-accent hover:underline">
                 Get in touch
               </Link>
               {" and we'll be happy to help."}
@@ -67,7 +51,7 @@ export default function FaqsPage() {
       </div>
 
       {/* ── CTA ── */}
-      <div className="bg-zinc-50">
+      <div className="bg-accent-light">
         <div className="container mx-auto px-6 py-16 sm:px-10 lg:px-20">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-serif text-3xl font-medium tracking-tight text-zinc-900 sm:text-4xl">

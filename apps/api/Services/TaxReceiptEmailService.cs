@@ -25,10 +25,10 @@ public class TaxReceiptEmailService : IEmailService
 
         _apiKey      = config["Email:ApiKey"];
         _fromAddress = config["Email:FromAddress"] ?? "receipts@bffcglobal.org";
-        _fromName    = config["Email:FromName"]    ?? "Bright Future For Children Ethiopia";
+        _fromName    = config["Email:FromName"]    ?? "Bright Future for Children";
 
         _charity = new CharityInfo(
-            Name:               config["Charity:Name"]               ?? "Bright Future For Children Ethiopia",
+            Name:               config["Charity:Name"]               ?? "Bright Future for Children",
             RegistrationNumber: config["Charity:RegistrationNumber"] ?? "726794944RR0001",
             Street:             config["Charity:Street"]             ?? "303-1835 10 Ave SE",
             City:               config["Charity:City"]               ?? "Calgary",

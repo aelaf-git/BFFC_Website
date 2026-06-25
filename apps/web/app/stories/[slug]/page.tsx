@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { User, Calendar } from "lucide-react";
 
 import { featuredPosts, getPostBySlug } from "@/lib/blog-posts";
+import { PageHero } from "@/components/ui/page-hero";
 import { brand } from "@/lib/brand";
 import { siteConfig } from "@/lib/site";
 
@@ -119,36 +120,27 @@ export default async function StoryPage({
         <meta itemProp="author" content={post.author} />
         <meta itemProp="url" content={canonicalUrl} />
 
-        {/* ── Hero image ─────────────────────────────────────────────────── */}
-        <div className="relative h-[55vh] min-h-[320px] w-full overflow-hidden bg-zinc-900 sm:h-[65vh]">
-          <Image
-            src={post.image}
-            alt={post.imageAlt}
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-            itemProp="image"
-          />
-          {/* Gradient: subtle at top (for nav), strong at bottom (for title) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/30" />
-
-          {/* Title block — centred at the bottom of the hero */}
-          <div className="absolute bottom-0 left-0 right-0 px-6 pb-12 sm:px-10 lg:px-20">
-            <div className="mx-auto max-w-4xl text-center">
-              <h1
-                className="font-serif text-3xl font-medium leading-tight tracking-tight text-white drop-shadow-sm sm:text-4xl lg:text-5xl xl:text-6xl"
-                itemProp="headline"
-              >
-                {post.title}
-              </h1>
-              <p className="mt-4 text-sm font-light text-white/70 sm:text-base">
-                By {post.author} &nbsp;·&nbsp;{" "}
-                <time dateTime={post.dateIso}>{post.date}</time>
-              </p>
-            </div>
+        <PageHero
+          imageSrc={post.image}
+          imageAlt={post.imageAlt}
+          title={post.title}
+          size="story"
+          align="bottom"
+          imageItemProp="image"
+        >
+          <div className="mx-auto max-w-4xl text-center">
+            <h1
+              className="font-serif text-3xl font-medium leading-tight tracking-tight text-white drop-shadow-sm sm:text-4xl lg:text-5xl xl:text-6xl"
+              itemProp="headline"
+            >
+              {post.title}
+            </h1>
+            <p className="mt-4 text-sm font-light text-white/80 sm:text-base">
+              By {post.author} &nbsp;·&nbsp;{" "}
+              <time dateTime={post.dateIso}>{post.date}</time>
+            </p>
           </div>
-        </div>
+        </PageHero>
 
         {/* ── Two-column layout: article + sidebar ───────────────────────── */}
         <div className="mx-auto max-w-6xl px-6 py-14 sm:px-10 lg:flex lg:gap-16 lg:px-16 xl:px-20">

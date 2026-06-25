@@ -6,7 +6,11 @@
   --primary: #f39120;
   --primary-hover: #d97d15;
   --primary-light: #fef3e8;
-  --muted: #525252;
+  --accent: #1a3a6b;
+  --accent-hover: #142f56;
+  --accent-light: #e8edf4;
+  --accent-deep: #0d2240;
+  --muted: #404040;
   --border: #e5e5e5;
   --hero-shade: #1a3a6b;
   --hero-shade-deep: #0d2240;
@@ -18,6 +22,10 @@
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-light: var(--primary-light);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-light: var(--accent-light);
+  --color-accent-deep: var(--accent-deep);
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-hero-shade: var(--hero-shade);
@@ -53,9 +61,10 @@
   body {
     color: var(--foreground);
     font-family: var(--font-geist-sans), system-ui, sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.01em;
-    line-height: 1.7;
+    font-size: 1.125rem;
+    font-weight: 400;
+    letter-spacing: 0.015em;
+    line-height: 1.8;
     -webkit-font-smoothing: antialiased;
     /* Off-canvas nav drawer parks off the right edge when closed; clip prevents
        a horizontal scrollbar without creating a scroll container (unlike hidden). */
@@ -64,15 +73,33 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-playfair), serif;
-    font-weight: 500;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 3px;
+  }
+
+  header a,
+  header button,
+  footer nav a,
+  main button,
+  main input,
+  main select,
+  main textarea,
+  footer button {
+    min-height: 2.75rem;
   }
 
   .text-elegant {
     font-family: var(--font-geist-sans), sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.01em;
-    line-height: 1.7;
+    font-size: 1.125rem;
+    font-weight: 400;
+    letter-spacing: 0.015em;
+    line-height: 1.8;
   }
 
   ::selection {
@@ -124,5 +151,93 @@
 
   .partners-marquee-track > *:nth-child(n + 11) {
     display: none;
+  }
+}
+
+/* Readable body text and headings for low-vision users (titles scale up; nav in components). */
+@layer utilities {
+  main p:not([class*="text-white"]),
+  footer p:not([class*="text-white"]),
+  main address,
+  footer address {
+    font-size: 1.3125rem !important;
+    line-height: 1.8 !important;
+    color: var(--foreground) !important;
+  }
+
+  main p.text-lg,
+  footer p.text-lg {
+    font-size: 1.4375rem !important;
+  }
+
+  main p.text-xl,
+  footer p.text-xl {
+    font-size: 1.625rem !important;
+  }
+
+  @media (min-width: 640px) {
+    main p.sm\:text-lg,
+    footer p.sm\:text-lg {
+      font-size: 1.4375rem !important;
+    }
+
+    main p.sm\:text-xl,
+    footer p.sm\:text-xl {
+      font-size: 1.625rem !important;
+    }
+
+    main p.sm\:text-2xl,
+    footer p.sm\:text-2xl {
+      font-size: 1.875rem !important;
+    }
+  }
+
+  main li:not([class*="text-white"]),
+  footer li:not([class*="text-white"]) {
+    font-size: 1.25rem !important;
+    line-height: 1.8 !important;
+    color: var(--foreground) !important;
+  }
+
+  @media (min-width: 640px) {
+    main li.sm\:text-base,
+    footer li.sm\:text-base {
+      font-size: 1.3125rem !important;
+    }
+
+    main li.sm\:text-lg,
+    footer li.sm\:text-lg {
+      font-size: 1.4375rem !important;
+    }
+  }
+
+  main h1:not([class*="text-white"]) {
+    font-size: clamp(2.5rem, 5vw, 4.5rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  main h2:not([class*="text-white"]) {
+    font-size: clamp(2rem, 4vw, 3.5rem) !important;
+    line-height: 1.15 !important;
+    color: var(--accent) !important;
+  }
+
+  main h3:not([class*="text-white"]) {
+    font-size: clamp(1.75rem, 3vw, 2.75rem) !important;
+    line-height: 1.2 !important;
+    color: var(--accent) !important;
+  }
+
+  main h4:not([class*="text-white"]) {
+    color: var(--accent) !important;
+  }
+
+  main h4:not([class*="text-white"]) {
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem) !important;
+  }
+
+  footer h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.25 !important;
   }
 }

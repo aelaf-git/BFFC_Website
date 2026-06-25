@@ -10,163 +10,155 @@ import {
   FaXTwitter,
   FaYoutube,
 } from "react-icons/fa6";
-import { HiEnvelope, HiIdentification, HiMapPin, HiPhone } from "react-icons/hi2";
 
-export function Footer() {
-  const socialLinks = [
-    {
-      icon: FaFacebookF,
-      href: siteConfig.social.facebook || "https://facebook.com",
-      label: "Facebook",
-    },
-    {
-      icon: FaXTwitter,
-      href: siteConfig.social.twitter || "https://twitter.com",
-      label: "X (formerly Twitter)",
-    },
-    {
-      icon: FaLinkedinIn,
-      href: siteConfig.social.linkedin || "https://linkedin.com",
-      label: "LinkedIn",
-    },
-    {
-      icon: FaInstagram,
-      href: "https://instagram.com",
-      label: "Instagram",
-    },
-    {
-      icon: FaYoutube,
-      href: "https://youtube.com",
-      label: "YouTube",
-    },
-  ];
+const primaryLinks = [
+  { href: "/#about", label: "About Us" },
+  { href: "/#what-we-do", label: "Our Work" },
+  { href: "/projects", label: "Projects" },
+  { href: "/ways-to-give", label: "Ways to Give" },
+  { href: "/shop-gifts", label: "Shop Gifts" },
+  { href: "/stories", label: "Stories" },
+  { href: "/resources", label: "Resources" },
+  { href: "/faqs", label: "FAQs" },
+] as const;
+
+const legalLinks = [
+  { href: "/legal/accessibility-statement", label: "Accessibility" },
+  { href: "/legal/privacy-policy", label: "Privacy Policy" },
+  { href: "/legal/terms-of-use", label: "Terms of Use" },
+  { href: `mailto:${siteConfig.contact.email}`, label: "Contact" },
+] as const;
+
+const socialLinks = [
+  {
+    icon: FaFacebookF,
+    href: siteConfig.social.facebook || "https://facebook.com",
+    label: "Facebook",
+  },
+  {
+    icon: FaYoutube,
+    href: "https://youtube.com",
+    label: "YouTube",
+  },
+  {
+    icon: FaXTwitter,
+    href: siteConfig.social.twitter || "https://twitter.com",
+    label: "X (formerly Twitter)",
+  },
+  {
+    icon: FaInstagram,
+    href: "https://instagram.com",
+    label: "Instagram",
+  },
+  {
+    icon: FaLinkedinIn,
+    href: siteConfig.social.linkedin || "https://linkedin.com",
+    label: "LinkedIn",
+  },
+] as const;
+
+function FooterDivider() {
+  return <div className="mx-auto h-px w-full max-w-5xl bg-white/20" aria-hidden />;
+}
+
+const contactDetailClass =
+  "text-base leading-relaxed text-white/80 transition-colors hover:text-white";
+
+function FooterLink({
+  href,
+  label,
+  className = "",
+}: {
+  href: string;
+  label: string;
+  className?: string;
+}) {
+  const isExternal = href.startsWith("mailto:") || href.startsWith("tel:");
+
+  const classes = [
+    "underline underline-offset-4 decoration-white/35 transition-colors hover:text-white hover:decoration-white",
+    className,
+  ].join(" ");
+
+  if (isExternal) {
+    return (
+      <a href={href} className={classes}>
+        {label}
+      </a>
+    );
+  }
 
   return (
-    <footer className="w-full bg-white text-zinc-600 font-sans">
-      <div className="mx-auto max-w-7xl px-6 py-14 sm:px-10 lg:px-16">
-        
-        {/* ── Main Links Grid ── */}
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-          
-          {/* Logo & Contact details - 4 columns wide */}
-          <div className="lg:col-span-4 flex flex-col gap-5">
-            <Link href="/" className="inline-flex items-center gap-3" aria-label={brand.logo.alt}>
+    <Link href={href} className={classes}>
+      {label}
+    </Link>
+  );
+}
+
+export function Footer() {
+  const year = new Date().getFullYear();
+
+  return (
+      <footer className="w-full bg-accent-deep text-white">
+        <div className="mx-auto max-w-7xl px-6 py-14 sm:px-10 sm:py-16 lg:px-16 lg:py-20">
+          {/* Brand */}
+          <div className="flex flex-col items-center text-center">
+            <Link href="/" className="inline-flex flex-col items-center gap-4" aria-label={brand.logo.alt}>
               <Image
                 src={brand.logo.src}
                 alt={brand.logo.alt}
                 width={brand.logo.width}
                 height={brand.logo.height}
-                className="h-9 w-auto object-contain object-left sm:h-11"
+                className="h-20 w-auto max-w-[min(100%,22rem)] object-contain brightness-0 invert sm:h-28 sm:max-w-[28rem] lg:h-32 lg:max-w-[32rem]"
               />
-              <span className="font-serif text-lg font-semibold tracking-tight text-foreground sm:text-xl">
-                Bright Future for Children
-              </span>
             </Link>
-            <p className="text-sm leading-relaxed text-zinc-500 max-w-xs font-light">
-              Providing life-saving meals to children in war-affected regions of Ethiopia — Amhara, Afar, and Tigray.
-            </p>
-            <div className="flex flex-col gap-3.5 text-xs text-zinc-500">
-              <a
-                href="#"
-                className="inline-flex items-start gap-2.5 hover:text-primary transition-colors text-zinc-500"
-                aria-label={`Charity Registration Number ${siteConfig.contact.charityRegistration}`}
-              >
-                <HiIdentification className="h-4 w-4 shrink-0 text-primary mt-0.5" aria-hidden />
-                <span>
-                  <strong className="text-zinc-700">CHARITY REGISTRATION:</strong>
-                  <br />
-                  {siteConfig.contact.charityRegistration}
-                </span>
-              </a>
-              <span className="inline-flex items-start gap-2.5">
-                <HiMapPin className="h-4 w-4 shrink-0 text-primary mt-0.5" aria-hidden />
-                <span>
-                  {siteConfig.contact.street}
-                  <br />
-                  {siteConfig.contact.city}, {siteConfig.contact.province} {siteConfig.contact.postalCode}, {siteConfig.contact.country}
-                </span>
-              </span>
-              <a
-                href={siteConfig.contact.phoneHref}
-                className="inline-flex items-center gap-2.5 hover:text-primary transition-colors"
-                aria-label={`Call us at ${siteConfig.contact.phone}`}
-              >
-                <HiPhone className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-                <span>{siteConfig.contact.phone}</span>
-              </a>
-              <a
-                href={siteConfig.contact.phoneAltHref}
-                className="inline-flex items-center gap-2.5 hover:text-primary transition-colors"
-                aria-label={`Call us at ${siteConfig.contact.phoneAlt}`}
-              >
-                <HiPhone className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-                <span>{siteConfig.contact.phoneAlt}</span>
-              </a>
-              <a
-                href={`mailto:${siteConfig.contact.email}`}
-                className="inline-flex items-center gap-2.5 hover:text-primary transition-colors"
-                aria-label={`Email us at ${siteConfig.contact.email}`}
-              >
-                <HiEnvelope className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-                <span className="break-all">{siteConfig.contact.email}</span>
-              </a>
-            </div>
           </div>
 
-          {/* Links columns - 8 columns wide total */}
-          <div className="lg:col-span-8 grid grid-cols-2 gap-8 sm:grid-cols-3">
-            
-            {/* Column 1: Footer Navigation */}
-            <div className="flex flex-col gap-4">
-              <h2 className="font-serif text-lg font-semibold tracking-wide text-foreground">
-                Explore
-              </h2>
-              <nav className="flex flex-col gap-2.5 text-sm" aria-label="Footer navigation">
-                <Link href="/#about" className="hover:text-primary transition-colors">
-                  About Us
-                </Link>
-                <Link href="/#what-we-do" className="hover:text-primary transition-colors">
-                  Our Work
-                </Link>
-                <Link href="/ways-to-give" className="hover:text-primary transition-colors">
-                  Ways to Give
-                </Link>
-                <Link href="/stories" className="hover:text-primary transition-colors">
-                  Stories
-                </Link>
-                <Link href="/resources" className="hover:text-primary transition-colors">
-                  Resources
-                </Link>
-                <Link href="/faqs" className="hover:text-primary transition-colors">
-                  FAQs
-                </Link>
-              </nav>
+          <div className="my-10 sm:my-12">
+            <FooterDivider />
+          </div>
+
+          {/* Contact & social */}
+          <div className="mx-auto grid max-w-4xl gap-10 sm:grid-cols-2 sm:gap-12">
+            <div className="text-center sm:text-left">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
+                Contact Us
+              </p>
+              <div className="mt-4 flex flex-col gap-3">
+                <a
+                  href={siteConfig.contact.phoneHref}
+                  className={contactDetailClass}
+                  aria-label={`Call us at ${siteConfig.contact.phone}`}
+                >
+                  {siteConfig.contact.phone}
+                </a>
+                <a
+                  href={siteConfig.contact.phoneAltHref}
+                  className={contactDetailClass}
+                  aria-label={`Call us at ${siteConfig.contact.phoneAlt}`}
+                >
+                  {siteConfig.contact.phoneAlt}
+                </a>
+                <a
+                  href={`mailto:${siteConfig.contact.email}`}
+                  className={contactDetailClass}
+                >
+                  {siteConfig.contact.email}
+                </a>
+                <p className={contactDetailClass}>
+                  {siteConfig.contact.street}
+                  <br />
+                  {siteConfig.contact.city}, {siteConfig.contact.province}{" "}
+                  {siteConfig.contact.postalCode}, {siteConfig.contact.country}
+                </p>
+              </div>
             </div>
 
-            {/* Column 2: Legal */}
-            <div className="flex flex-col gap-4">
-              <h2 className="font-serif text-lg font-semibold tracking-wide text-foreground">
-                Legal
-              </h2>
-              <nav className="flex flex-col gap-2.5 text-sm" aria-label="Legal information">
-                <Link href="/legal/privacy-policy" className="hover:text-primary transition-colors">
-                  Privacy Policy
-                </Link>
-                <Link href="/legal/terms-of-use" className="hover:text-primary transition-colors">
-                  Terms of Use
-                </Link>
-                <Link href="/legal/accessibility-statement" className="hover:text-primary transition-colors">
-                  Accessibility Statement
-                </Link>
-              </nav>
-            </div>
-
-            {/* Column 3: Connect */}
-            <div className="flex flex-col gap-4">
-              <h2 className="font-serif text-lg font-semibold tracking-wide text-foreground">
-                Connect
-              </h2>
-              <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-col items-center sm:items-end">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
+                Follow Us
+              </p>
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-3 sm:justify-end">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
                   return (
@@ -175,55 +167,78 @@ export function Footer() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-zinc-400 hover:text-primary transition-colors duration-300"
+                      className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-accent-deep transition-colors duration-300 hover:bg-primary hover:text-white"
                       aria-label={social.label}
                     >
-                      <Icon className="h-4.5 w-4.5" />
+                      <Icon className="h-4 w-4" aria-hidden />
                     </a>
                   );
                 })}
               </div>
             </div>
-
           </div>
-        </div>
 
-        {/* ── Newsletter Band (Centered with dynamic title) ── */}
-        <div className="mt-16 mb-10 border-t border-zinc-100 pt-14">
-          <div className="flex flex-col items-center text-center">
+          <div className="my-10 sm:my-12">
+            <FooterDivider />
+          </div>
 
-            {/* Heading: Guaranteed single line on desktop/tablet, wraps fluidly on mobile */}
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-zinc-900 leading-[1.15] whitespace-normal md:whitespace-nowrap">
-              Stay in the Loop. <span className="text-primary">Make a Difference.</span>
-            </h2>
+          {/* Primary navigation */}
+          <nav
+            className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-5 gap-y-3 text-center text-sm sm:gap-x-7 sm:text-base"
+            aria-label="Footer navigation"
+          >
+            {primaryLinks.map((link) => (
+              <FooterLink key={link.href} href={link.href} label={link.label} />
+            ))}
+          </nav>
 
-            <p className="mt-5 text-sm sm:text-base leading-relaxed text-zinc-400 font-light whitespace-normal md:whitespace-nowrap">
-              Stories of impact, program updates, and ways you can help —
-              delivered straight to your inbox.
+          {/* Legal links */}
+          <nav
+            className="mx-auto mt-6 flex max-w-4xl flex-wrap items-center justify-center gap-x-4 gap-y-2 text-center text-xs text-white/75 sm:mt-8 sm:gap-x-6 sm:text-sm"
+            aria-label="Legal information"
+          >
+            {legalLinks.map((link) => (
+              <FooterLink key={link.href} href={link.href} label={link.label} />
+            ))}
+          </nav>
+
+          <div className="my-10 sm:my-12">
+            <FooterDivider />
+          </div>
+
+          {/* Newsletter */}
+          <div className="mx-auto max-w-xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
+              Stay Connected
             </p>
-
-            {/* Form — constrained width, centered */}
-            <div className="mt-10 w-full max-w-lg mx-auto">
-              <NewsletterForm variant="light" />
-              <p className="mt-4 text-[0.7rem] text-zinc-400 font-light tracking-wide">
+            <h2 className="mt-3 font-serif text-2xl font-medium tracking-tight text-white sm:text-3xl">
+              Join our community
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-white/70">
+              Stories of impact, program updates, and ways you can help — delivered to your inbox.
+            </p>
+            <div className="mt-8">
+              <NewsletterForm variant="dark" />
+              <p className="mt-4 text-xs text-white/50">
                 We respect your privacy. Unsubscribe at any time.
               </p>
             </div>
+          </div>
 
+          <div className="my-10 sm:my-12">
+            <FooterDivider />
+          </div>
+
+          {/* Copyright & registration */}
+          <div className="text-center">
+            <p className="text-sm text-white/80">
+              &copy; {year} {siteConfig.name}. All rights reserved.
+            </p>
+            <p className="mt-2 text-sm text-white/70">
+              Charitable Registration Number: {siteConfig.contact.charityRegistration}
+            </p>
           </div>
         </div>
-
-        {/* Bottom Bar */}
-        <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-xs text-zinc-400">
-          <p>
-            &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
-          </p>
-          <p className="font-light">
-            Bright Future for Children is a registered Canadian charity.
-          </p>
-        </div>
-
-      </div>
-    </footer>
+      </footer>
   );
 }

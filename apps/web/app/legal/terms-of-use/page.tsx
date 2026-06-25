@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { PageHero } from "@/components/ui/page-hero";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: `Terms of Use | ${siteConfig.name}`,
   description:
-    "Read the Terms of Use governing your access to and use of the Bright Future For Children Ethiopia website and services.",
+    "Read the Terms of Use governing your access to and use of the Bright Future for Children website and services.",
   alternates: { canonical: `${siteConfig.url}/legal/terms-of-use` },
   openGraph: {
     title: "Terms of Use",
@@ -25,30 +25,16 @@ export default function TermsOfUsePage() {
 
   return (
     <div className="flex-1 bg-white">
-      {/* ── Hero ── */}
-      <div className="relative h-56 w-full overflow-hidden bg-zinc-900 sm:h-64">
-        <Image
-          src="/whatwedo.jpeg"
-          alt=""
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 bg-black/65" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Legal
-          </p>
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl">
-            Terms of Use
-          </h1>
-          <p className="mt-3 text-sm font-light text-white/60">
-            Last updated: {LAST_UPDATED}
-          </p>
-        </div>
-      </div>
+      <PageHero
+        imageSrc="/whatwedo.jpeg"
+        imageAlt=""
+        decorativeImage
+        size="compact"
+        kicker="Legal"
+        title="Terms of Use"
+        subtitle={`Last updated: ${LAST_UPDATED}`}
+        titleClassName="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl"
+      />
 
       {/* ── Content ── */}
       <div className="container mx-auto px-6 py-16 sm:px-10 lg:px-20">
@@ -57,7 +43,7 @@ export default function TermsOfUsePage() {
           <Section title="1. Acceptance of Terms">
             <p>
               By accessing or using the website located at{" "}
-              <a href={siteConfig.url} className="text-primary hover:underline">
+              <a href={siteConfig.url} className="text-accent hover:underline">
                 {siteConfig.url}
               </a>{" "}
               (the <strong>"Site"</strong>), you agree to be bound by these Terms of Use (
@@ -72,9 +58,9 @@ export default function TermsOfUsePage() {
             </p>
           </Section>
 
-          <Section title="2. About Bright Future For Children Ethiopia">
+          <Section title="2. About Bright Future for Children">
             <p>
-              Bright Future For Children Ethiopia (<strong>"BFFC"</strong>,{" "}
+              Bright Future for Children (<strong>"BFFC"</strong>,{" "}
               <strong>"we"</strong>, <strong>"our"</strong>, or <strong>"us"</strong>) is a
               registered Canadian charity (Charity Registration No.{" "}
               <span className="font-medium text-zinc-800">{contact.charityRegistration}</span>),
@@ -137,7 +123,7 @@ export default function TermsOfUsePage() {
             <p>
               All donations are <strong>non-refundable</strong> except in cases of processing
               errors. If you believe an error has occurred, please contact us within 30 days at{" "}
-              <a href={`mailto:${contact.email}`} className="text-primary hover:underline">
+              <a href={`mailto:${contact.email}`} className="text-accent hover:underline">
                 {contact.email}
               </a>
               .
@@ -215,19 +201,19 @@ export default function TermsOfUsePage() {
               Questions about these Terms should be directed to:
             </p>
             <address className="not-italic mt-3 rounded-2xl bg-zinc-50 p-6 text-sm leading-relaxed">
-              <strong className="text-zinc-800">Bright Future For Children Ethiopia</strong>
+              <strong className="text-zinc-800">Bright Future for Children</strong>
               <br />
               {contact.street}, {contact.city}, {contact.province} {contact.postalCode}
               <br />
               {contact.country}
               <br />
               Email:{" "}
-              <a href={`mailto:${contact.email}`} className="text-primary hover:underline">
+              <a href={`mailto:${contact.email}`} className="text-accent hover:underline">
                 {contact.email}
               </a>
               <br />
               Phone:{" "}
-              <a href={contact.phoneHref} className="text-primary hover:underline">
+              <a href={contact.phoneHref} className="text-accent hover:underline">
                 {contact.phone}
               </a>
             </address>
@@ -273,8 +259,8 @@ function LegalNav({ current }: { current: "privacy-policy" | "terms-of-use" | "a
           href={l.href}
           className={
             l.href.endsWith(current)
-              ? "font-semibold text-primary"
-              : "text-zinc-500 hover:text-primary transition-colors"
+              ? "font-semibold text-accent"
+              : "text-zinc-500 hover:text-accent transition-colors"
           }
         >
           {l.label}

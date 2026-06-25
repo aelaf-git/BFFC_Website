@@ -70,8 +70,7 @@ export function ChildrensVillageSection() {
           <div className="space-y-6 text-base leading-[1.9] text-zinc-500 font-light sm:text-[1.05rem]">
             <p>
               In the heart of Ethiopia&rsquo;s Afar region, a life-changing project is about to begin.
-              Bright Future for Children is building a modern{" "}
-              <strong className="font-semibold text-zinc-700">430-bed student dormitory</strong> on a
+              Bright Future for Children is building a modern 430-bed student dormitory on a
               10,000 square meter campus — a safe, nurturing home for hundreds of disadvantaged
               students from Grade 3 to Grade 9.
             </p>
@@ -100,9 +99,9 @@ export function ChildrensVillageSection() {
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-10 sm:pt-16">
         <div className="grid gap-6 sm:grid-cols-3 lg:gap-8">
           {highlights.map(({ icon: Icon, title, body }) => (
-            <div key={title} className="rounded-3xl border border-zinc-100 bg-zinc-50 p-7">
+            <div key={title} className="rounded-3xl border border-zinc-100 bg-accent-light p-7">
               <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white">
-                <Icon className="h-5 w-5 text-primary" aria-hidden />
+                <Icon className="h-5 w-5 text-accent" aria-hidden />
               </div>
               <h3 className="font-serif text-xl font-medium text-zinc-900">{title}</h3>
               <p className="mt-2 text-sm font-light leading-relaxed text-zinc-500">{body}</p>

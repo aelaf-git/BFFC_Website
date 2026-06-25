@@ -39,7 +39,7 @@ export function ContactForm() {
   }
 
   const fieldClass =
-    "h-11 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 text-sm text-zinc-800 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20";
+    "h-11 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 text-sm text-zinc-800 placeholder-zinc-400 outline-none transition-all focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20";
 
   return (
     <form onSubmit={handleSubmit} noValidate aria-label="Send us a message" className="flex h-full flex-col">
@@ -111,7 +111,7 @@ export function ContactForm() {
           placeholder="How can we help you?"
           value={form.message}
           onChange={handleChange}
-          className="min-h-[120px] flex-1 w-full resize-none rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-800 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
+          className="min-h-[120px] flex-1 w-full resize-none rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-800 placeholder-zinc-400 outline-none transition-all focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20"
         />
       </div>
 

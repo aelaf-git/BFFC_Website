@@ -84,7 +84,7 @@ public class StripeService : IStripeService
             Recurring   = new PriceRecurringOptions { Interval = "month" },
             ProductData = new PriceProductDataOptions
             {
-                Name = "Monthly Donation — Bright Future For Children Ethiopia",
+                Name = "Monthly Donation — Bright Future for Children",
             },
         });
 
