@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Heart, RefreshCw, Zap, Building2, ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
+import { btnInverted, btnPrimary, btnPrimarySm } from "@/lib/button-styles";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -133,11 +134,7 @@ export default function WaysToGivePage() {
               </p>
               <Link
                 href={cta.href}
-                className={`mt-6 inline-flex items-center gap-2 self-start rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
-                  highlight
-                    ? "bg-white text-primary hover:bg-white/90"
-                    : "bg-primary text-white hover:bg-primary/90"
-                }`}
+                className={`mt-6 self-start ${highlight ? btnInverted : btnPrimarySm}`}
               >
                 {cta.label} <ArrowRight className="h-3.5 w-3.5" aria-hidden />
               </Link>
@@ -193,7 +190,7 @@ export default function WaysToGivePage() {
           </div>
           <Link
             href="/#get-in-touch"
-            className="mt-10 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-primary/90"
+            className={btnPrimary}
           >
             Have a question? Contact us <ArrowRight className="h-3.5 w-3.5" aria-hidden />
           </Link>

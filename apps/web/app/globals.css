@@ -83,10 +83,15 @@
     outline-offset: 3px;
   }
 
-  header a,
+  .drawer-nav-link {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  header a:not(.drawer-nav-link),
   header button,
   footer nav a,
-  main button,
+  main button:not(.carousel-dot),
   main input,
   main select,
   main textarea,

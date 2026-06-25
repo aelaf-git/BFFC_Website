@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
 import { Heart, RefreshCw } from "lucide-react";
+import { btnAccent, btnPrimary } from "@/lib/button-styles";
 import { siteConfig } from "@/lib/site";
 
 /**
@@ -66,7 +67,7 @@ function SuccessContent() {
         </p>
         <Link
           href="/donate"
-          className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-white hover:bg-primary/90 transition-colors"
+          className={`mt-8 ${btnPrimary}`}
         >
           Try again
         </Link>
@@ -99,7 +100,7 @@ function SuccessContent() {
       </p>
       <Link
         href="/"
-        className="mt-8 inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-semibold text-white hover:bg-accent-hover transition-colors"
+        className={`mt-8 ${btnAccent}`}
       >
         Return to home
       </Link>

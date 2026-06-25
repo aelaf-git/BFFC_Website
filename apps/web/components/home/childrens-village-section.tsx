@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BedDouble, GraduationCap, Soup } from "lucide-react";
+import { btnPrimary } from "@/lib/button-styles";
 
 const stats = [
   { value: "430", label: "Beds for Grades 3–9" },
@@ -114,7 +115,7 @@ export function ChildrensVillageSection() {
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-8 pb-14 text-center sm:pt-12 sm:pb-20 lg:pb-24">
         <Link
           href="/childrens-village"
-          className="group inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-primary-hover"
+          className={`group ${btnPrimary}`}
         >
           See the full project
           <ArrowRight

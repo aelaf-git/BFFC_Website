@@ -18,6 +18,7 @@ import {
 import { ProjectVideo } from "@/components/childrens-village/project-video";
 import { PageHero } from "@/components/ui/page-hero";
 import { LightboxScope } from "@/components/ui/lightbox-scope";
+import { btnPrimaryLgMd, btnSecondaryLg } from "@/lib/button-styles";
 import {
   academyHeroImage,
   academyLightboxImages,
@@ -220,7 +221,7 @@ export default function ChildrensVillagePage() {
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/donate"
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-primary-hover sm:w-auto"
+              className={`group w-full sm:w-auto ${btnPrimaryLgMd}`}
             >
               <Heart className="h-4 w-4" aria-hidden />
               Donate
@@ -231,7 +232,7 @@ export default function ChildrensVillagePage() {
             </Link>
             <Link
               href="/#get-in-touch"
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-full border border-zinc-200 bg-white px-8 py-3.5 text-sm font-semibold text-zinc-700 transition-all duration-200 hover:border-primary/40 hover:text-primary sm:w-auto"
+              className={`group w-full sm:w-auto ${btnSecondaryLg}`}
             >
               <Mail className="h-4 w-4" aria-hidden />
               Contact Us

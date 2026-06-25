@@ -18,6 +18,31 @@ export const headerNavLinks: MainNavLink[] = [
   { label: "Get in Touch", href: "/#get-in-touch", ariaLabel: "Get in touch" },
 ];
 
+/** Shown in the hamburger below xl, where the header bar links are hidden */
+export const drawerMobileHeaderNavLinks: SiteNavItem[] = [
+  {
+    key: "about",
+    label: "About Us",
+    href: "/#about",
+    ariaLabel: "About us",
+    sectionId: "about",
+  },
+  {
+    key: "what-we-do",
+    label: "What We Do",
+    href: "/#what-we-do",
+    ariaLabel: "What we do",
+    sectionId: "what-we-do",
+  },
+  {
+    key: "get-in-touch",
+    label: "Get in Touch",
+    href: "/#get-in-touch",
+    ariaLabel: "Get in touch",
+    sectionId: "get-in-touch",
+  },
+];
+
 export const drawerNavLinks: SiteNavItem[] = [
   {
     key: "projects",

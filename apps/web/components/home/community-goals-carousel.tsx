@@ -80,9 +80,9 @@ function GoalCard({ goal }: { goal: (typeof communityGoals)[number] }) {
           {goal.points.map((point) => (
             <li
               key={point}
-              className="flex gap-2.5 text-sm leading-relaxed text-zinc-500 font-light sm:text-[0.95rem]"
+              className="flex items-start gap-2.5 text-sm leading-relaxed text-zinc-500 font-light sm:text-[0.95rem]"
             >
-              <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-zinc-300" aria-hidden />
+              <span className="mt-2 size-2 shrink-0 rounded-full bg-zinc-300" aria-hidden />
               {point}
             </li>
           ))}
@@ -139,7 +139,7 @@ export function CommunityGoalsCarousel() {
         </button>
       </div>
 
-      <div className="mt-6 flex justify-center gap-1.5">
+      <div className="mt-6 flex justify-center gap-2">
         {communityGoals.map((goal, index) => (
           <button
             key={goal.title}
@@ -147,8 +147,8 @@ export function CommunityGoalsCarousel() {
             onClick={() => goTo(index)}
             aria-label={`Go to ${goal.title}`}
             aria-current={index === activeIndex ? "true" : undefined}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              index === activeIndex ? "w-5 bg-primary" : "w-1.5 bg-zinc-300"
+            className={`carousel-dot h-2.5 w-2.5 shrink-0 rounded-full p-0 transition-colors duration-300 ${
+              index === activeIndex ? "bg-primary" : "bg-zinc-300"
             }`}
           />
         ))}

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { FaqList } from "@/components/faqs/faq-list";
 import { PageHero } from "@/components/ui/page-hero";
+import { btnPrimary, btnSecondary } from "@/lib/button-styles";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -63,13 +64,13 @@ export default function FaqsPage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/#get-in-touch"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-primary/90"
+                className={btnPrimary}
               >
                 Contact us <ArrowRight className="h-3.5 w-3.5" aria-hidden />
               </Link>
               <Link
                 href="/ways-to-give"
-                className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-7 py-3 text-sm font-semibold text-zinc-700 transition-all hover:border-zinc-300"
+                className={btnSecondary}
               >
                 Ways to give
               </Link>

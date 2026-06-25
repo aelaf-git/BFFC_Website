@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CommunityGoalsCarousel } from "@/components/home/community-goals-carousel";
+import { btnPrimarySm } from "@/lib/button-styles";
 
 const visionTargets = [
   "Reach 30,000+ children with integrated support.",
@@ -77,20 +78,20 @@ export function WhatWeDoSection() {
                 </p>
                 <p className="font-normal text-zinc-700">Our work focuses on four key pillars:</p>
                 <ul className="space-y-2 pl-1 text-[0.95rem] sm:text-base">
-                  <li className="flex gap-2.5">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden />
+                  <li className="flex items-start gap-2.5">
+                    <span className="mt-2 size-2 shrink-0 rounded-full bg-accent" aria-hidden />
                     Nutritious breakfast programs so children learn with energy and focus.
                   </li>
-                  <li className="flex gap-2.5">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary" aria-hidden />
+                  <li className="flex items-start gap-2.5">
+                    <span className="mt-2 size-2 shrink-0 rounded-full bg-primary" aria-hidden />
                     Essential educational materials that remove financial obstacles to learning.
                   </li>
-                  <li className="flex gap-2.5">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden />
+                  <li className="flex items-start gap-2.5">
+                    <span className="mt-2 size-2 shrink-0 rounded-full bg-accent" aria-hidden />
                     Health and nutrition support so children grow strong physically and mentally.
                   </li>
-                  <li className="flex gap-2.5">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary" aria-hidden />
+                  <li className="flex items-start gap-2.5">
+                    <span className="mt-2 size-2 shrink-0 rounded-full bg-primary" aria-hidden />
                     Fighting stigma and building hope so every child is valued and encouraged to attend school.
                   </li>
                 </ul>
@@ -133,7 +134,7 @@ export function WhatWeDoSection() {
           <div className="mt-8 flex flex-wrap justify-center gap-3 sm:mt-10">
             <Link
               href="/donate"
-              className="inline-flex items-center gap-3 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
+              className={btnPrimarySm}
             >
               Donate
             </Link>

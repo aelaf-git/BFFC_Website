@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { RefreshCw, Heart, Lock } from "lucide-react";
+import { btnPrimaryLg } from "@/lib/button-styles";
 
 interface CheckoutFormProps {
   amountDollars: number;
@@ -77,7 +78,7 @@ export function CheckoutForm({ amountDollars, mode, onSuccess }: CheckoutFormPro
       <button
         type="submit"
         disabled={!stripe || !elements || isLoading}
-        className="inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-primary px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+        className={`w-full ${btnPrimaryLg}`}
       >
         {isLoading ? (
           <>

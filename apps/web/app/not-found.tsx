@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { HeroNavSignal } from "@/components/layout/hero-nav-provider";
+import { btnOnDark, btnPrimary } from "@/lib/button-styles";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -75,7 +76,7 @@ export default function NotFound() {
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:bg-primary/90 hover:shadow-primary/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className={`${btnPrimary} shadow-lg hover:shadow-primary/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +92,7 @@ export default function NotFound() {
 
           <Link
             href="/#get-in-touch"
-            className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className={`${btnOnDark} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white`}
           >
             Contact Us
           </Link>

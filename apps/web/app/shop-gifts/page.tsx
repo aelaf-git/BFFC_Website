@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { HeroNavSignal } from "@/components/layout/hero-nav-provider";
+import { btnOnDark, btnPrimary } from "@/lib/button-styles";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -51,13 +52,13 @@ export default function ShopGiftsPage() {
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/donate"
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:bg-primary-hover"
+            className={btnPrimary}
           >
             Donate Now
           </Link>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20"
+            className={btnOnDark}
           >
             Back to Homepage
           </Link>

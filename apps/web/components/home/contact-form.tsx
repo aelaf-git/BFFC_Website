@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Send } from "lucide-react";
 import { submitContactMessage } from "@/lib/api/contact";
+import { btnPrimary } from "@/lib/button-styles";
 
 type FormState = {
   name: string;
@@ -119,7 +120,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status === "sending" || status === "sent"}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+          className={btnPrimary}
         >
           {status === "sending" ? (
             <>

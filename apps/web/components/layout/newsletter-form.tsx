@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { subscribeNewsletter } from "@/lib/api/newsletter";
+import { btnPrimary } from "@/lib/button-styles";
 
 interface NewsletterFormProps {
   variant?: "dark" | "light";
@@ -56,7 +57,7 @@ export function NewsletterForm({ variant = "light" }: NewsletterFormProps) {
           disabled={status === "submitting"}
           className={[
             "flex-1 h-13 px-5 py-3.5 text-sm font-light tracking-wide outline-none transition-all duration-200",
-            "sm:rounded-l-[2px] sm:rounded-r-none rounded-[2px]",
+            "sm:rounded-l-none sm:rounded-r-none rounded-none",
             isLight
               ? "bg-zinc-50 border border-zinc-200 text-zinc-900 placeholder-zinc-400 focus:border-primary/60 focus:bg-white"
               : "bg-white/[0.08] border border-white/[0.15] text-white placeholder-white/40 focus:border-primary/60 focus:bg-white/10",
@@ -65,14 +66,7 @@ export function NewsletterForm({ variant = "light" }: NewsletterFormProps) {
         <button
           type="submit"
           disabled={status === "submitting" || status === "success"}
-          className="
-            h-13 px-8 py-3.5 shrink-0 w-full sm:w-auto
-            bg-primary hover:bg-primary-hover
-            text-white text-xs font-bold uppercase tracking-[0.2em]
-            transition-colors duration-200
-            sm:rounded-l-none sm:rounded-r-[2px] rounded-[2px]
-            disabled:cursor-not-allowed disabled:opacity-70
-          "
+          className={`h-13 shrink-0 w-full px-8 py-3.5 text-xs font-bold uppercase tracking-[0.2em] sm:w-auto ${btnPrimary}`}
         >
           {status === "submitting" ? "Subscribing…" : status === "success" ? "Subscribed" : "Subscribe"}
         </button>

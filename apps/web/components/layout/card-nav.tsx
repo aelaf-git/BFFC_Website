@@ -15,7 +15,7 @@ import { NavSearch } from "@/components/layout/nav-search";
 import { useHeroNav } from "@/components/layout/hero-nav-provider";
 import { useActiveNavKey } from "@/hooks/use-active-nav";
 import { drawerNavLinkClass, headerNavLinkClass } from "@/lib/nav-link-styles";
-import { activeNavTargets, drawerNavLinks, navKeyFromHref } from "@/lib/site-nav";
+import { activeNavTargets, drawerMobileHeaderNavLinks, drawerNavLinks, navKeyFromHref } from "@/lib/site-nav";
 
 export type NavLink = {
   label: string;
@@ -455,20 +455,39 @@ export function CardNav({
             <NavSearch fullWidth placeholder="Search the site…" />
           </div>
 
-          {/* Nav links — large serif */}
-          <nav className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto overflow-x-hidden" aria-label="Site navigation">
+          {/* Nav links — scrollable when content exceeds drawer height */}
+          <nav
+            className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden overscroll-contain sm:gap-5"
+            aria-label="Site navigation"
+          >
+            {drawerMobileHeaderNavLinks.map((link) => {
+              const isActive = link.key === activeKey;
+              return (
+                <div key={link.href} className="flex w-full shrink-0 items-stretch">
+                  <Link
+                    href={link.href}
+                    onClick={toggleMenu}
+                    className={`${drawerNavLinkClass(isActive)} xl:hidden`}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    {link.label}
+                  </Link>
+                </div>
+              );
+            })}
             {drawerNavLinks.map((link) => {
               const isActive = link.key === activeKey;
               return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={toggleMenu}
-                  className={drawerNavLinkClass(isActive)}
-                  aria-current={isActive ? "page" : undefined}
-                >
-                  {link.label}
-                </Link>
+                <div key={link.href} className="flex w-full shrink-0 items-stretch">
+                  <Link
+                    href={link.href}
+                    onClick={toggleMenu}
+                    className={drawerNavLinkClass(isActive)}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    {link.label}
+                  </Link>
+                </div>
               );
             })}
           </nav>

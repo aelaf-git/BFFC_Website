@@ -11,6 +11,7 @@ import {
 import { CheckoutForm } from "@/components/donate/checkout-form";
 import { PageHero } from "@/components/ui/page-hero";
 import { createPaymentIntent } from "@/lib/api/donations";
+import { btnAccent, btnPrimaryLg } from "@/lib/button-styles";
 import { siteConfig } from "@/lib/site";
 
 // ── Static data ────────────────────────────────────────────────────────────────
@@ -188,11 +189,11 @@ export default function DonatePage() {
           {step === "form" && (
             <div>
               {/* Mode toggle */}
-              <div className="mb-8 inline-flex rounded-full border border-zinc-200 bg-zinc-50 p-1">
+              <div className="mb-8 inline-flex rounded-none border border-zinc-200 bg-zinc-50 p-1">
                 <button
                   type="button"
                   onClick={() => handleModeChange("one-time")}
-                  className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                  className={`inline-flex items-center gap-2 rounded-none px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
                     mode === "one-time" ? "bg-primary text-white shadow-sm" : "text-zinc-500 hover:text-zinc-800"
                   }`}
                 >
@@ -201,7 +202,7 @@ export default function DonatePage() {
                 <button
                   type="button"
                   onClick={() => handleModeChange("monthly")}
-                  className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                  className={`inline-flex items-center gap-2 rounded-none px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
                     mode === "monthly" ? "bg-primary text-white shadow-sm" : "text-zinc-500 hover:text-zinc-800"
                   }`}
                 >
@@ -216,7 +217,7 @@ export default function DonatePage() {
                     key={amt}
                     type="button"
                     onClick={() => { setSelected(amt); setCustom(""); }}
-                    className={`rounded-2xl border py-4 text-sm font-semibold transition-all duration-200 ${
+                    className={`rounded-none border py-4 text-sm font-semibold transition-all duration-200 ${
                       selected === amt && !custom
                         ? "border-primary bg-primary text-white shadow-md"
                         : "border-zinc-200 bg-white text-zinc-700 hover:border-primary hover:text-primary"
@@ -317,7 +318,7 @@ export default function DonatePage() {
                   type="button"
                   onClick={handleContinue}
                   disabled={isCreatingIntent}
-                  className="inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-primary px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+                  className={`w-full ${btnPrimaryLg}`}
                 >
                   {isCreatingIntent ? (
                     <><RefreshCw className="h-4 w-4 animate-spin" aria-hidden /> Preparing payment…</>
@@ -397,7 +398,7 @@ export default function DonatePage() {
               </p>
               <Link
                 href="/"
-                className="mt-8 inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-semibold text-white hover:bg-accent-hover transition-colors"
+                className={btnAccent}
               >
                 Return to home
               </Link>
