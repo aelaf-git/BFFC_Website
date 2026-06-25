@@ -14,7 +14,10 @@ import { createPaymentIntent } from "@/lib/api/donations";
 import { btnAccent, btnPrimaryLg } from "@/lib/button-styles";
 import { siteConfig } from "@/lib/site";
 
-// ── Static data ────────────────────────────────────────────────────────────────
+const donateLabelClass =
+  "mb-2 block text-sm font-semibold uppercase tracking-wide text-zinc-600 sm:text-base";
+const donateFieldClass =
+  "w-full rounded-xl border-2 border-zinc-200 bg-white px-5 py-4 text-base text-zinc-900 placeholder:text-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 sm:text-lg sm:py-4";
 
 const ONE_TIME_AMOUNTS = [10, 25, 50, 100, 250, 500];
 const MONTHLY_AMOUNTS  = [10, 20, 35, 50, 100, 200];
@@ -132,7 +135,7 @@ export default function DonatePage() {
           <div className="flex items-center justify-between">
             <span className="text-zinc-500">Amount</span>
             <span className="font-semibold text-zinc-800">
-              ${effectiveAmount || "—"}{mode === "monthly" ? " / mo" : ""}
+              ${effectiveAmount || "0"}{mode === "monthly" ? " / mo" : ""}
             </span>
           </div>
           <div className="flex items-center justify-between">
@@ -143,11 +146,11 @@ export default function DonatePage() {
           </div>
           <div className="flex items-center justify-between">
             <span className="text-zinc-500">Tax receipt</span>
-            <span className="font-semibold text-zinc-800">Yes — by email</span>
+            <span className="font-semibold text-zinc-800">Yes, by email</span>
           </div>
           <div className="border-t border-zinc-200 pt-3 flex items-center justify-between">
             <span className="font-semibold text-zinc-700">Total today</span>
-            <span className="font-bold text-lg text-primary">${effectiveAmount || "—"}</span>
+            <span className="font-bold text-lg text-primary">${effectiveAmount || "0"}</span>
           </div>
         </div>
       </div>
@@ -178,49 +181,51 @@ export default function DonatePage() {
         imageAlt="Children in Ethiopia"
         kicker="Make a Difference"
         title="Donate Today"
-        subtitle="Every gift — large or small — feeds a hungry child and funds a brighter future."
+        subtitle="Every gift, whether large or small, feeds a hungry child and funds a brighter future."
       />
 
       {/* Content */}
       <div className="container mx-auto px-6 py-16 sm:px-10 lg:px-20">
-        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1fr_380px]">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-14">
 
           {/* ── STEP 1: Donor form ── */}
           {step === "form" && (
-            <div>
+            <div className="rounded-3xl border-2 border-zinc-100 bg-zinc-50 p-6 sm:p-8 lg:p-10">
               {/* Mode toggle */}
-              <div className="mb-8 inline-flex rounded-none border border-zinc-200 bg-zinc-50 p-1">
+              <div className="mb-10 inline-flex w-full max-w-md rounded-none border-2 border-zinc-200 bg-white p-1.5 sm:w-auto">
                 <button
                   type="button"
                   onClick={() => handleModeChange("one-time")}
-                  className={`inline-flex items-center gap-2 rounded-none px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
-                    mode === "one-time" ? "bg-primary text-white shadow-sm" : "text-zinc-500 hover:text-zinc-800"
+                  className={`inline-flex flex-1 items-center justify-center gap-2 rounded-none px-6 py-3.5 text-base font-semibold transition-all duration-200 sm:flex-none sm:px-8 ${
+                    mode === "one-time" ? "bg-primary text-white shadow-sm" : "text-zinc-600 hover:text-zinc-900"
                   }`}
                 >
-                  <Heart className="h-3.5 w-3.5" aria-hidden /> Give Once
+                  <Heart className="h-4 w-4" aria-hidden /> Give Once
                 </button>
                 <button
                   type="button"
                   onClick={() => handleModeChange("monthly")}
-                  className={`inline-flex items-center gap-2 rounded-none px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
-                    mode === "monthly" ? "bg-primary text-white shadow-sm" : "text-zinc-500 hover:text-zinc-800"
+                  className={`inline-flex flex-1 items-center justify-center gap-2 rounded-none px-6 py-3.5 text-base font-semibold transition-all duration-200 sm:flex-none sm:px-8 ${
+                    mode === "monthly" ? "bg-primary text-white shadow-sm" : "text-zinc-600 hover:text-zinc-900"
                   }`}
                 >
-                  <RefreshCw className="h-3.5 w-3.5" aria-hidden /> Give Monthly
+                  <RefreshCw className="h-4 w-4" aria-hidden /> Give Monthly
                 </button>
               </div>
 
+              <h2 className="font-serif text-2xl font-medium text-zinc-900 sm:text-3xl">Choose an amount</h2>
+
               {/* Amount grid */}
-              <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
+              <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {amounts.map((amt) => (
                   <button
                     key={amt}
                     type="button"
                     onClick={() => { setSelected(amt); setCustom(""); }}
-                    className={`rounded-none border py-4 text-sm font-semibold transition-all duration-200 ${
+                    className={`min-h-[3.75rem] rounded-none border-2 py-4 text-base font-semibold transition-all duration-200 sm:text-lg ${
                       selected === amt && !custom
                         ? "border-primary bg-primary text-white shadow-md"
-                        : "border-zinc-200 bg-white text-zinc-700 hover:border-primary hover:text-primary"
+                        : "border-zinc-200 bg-white text-zinc-800 hover:border-primary hover:text-primary"
                     }`}
                   >
                     ${amt}
@@ -229,12 +234,12 @@ export default function DonatePage() {
               </div>
 
               {/* Custom amount */}
-              <div className="mt-4">
-                <label htmlFor="custom-amount" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-500">
+              <div className="mt-6">
+                <label htmlFor="custom-amount" className={donateLabelClass}>
                   Or enter a custom amount
                 </label>
                 <div className="relative">
-                  <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-medium text-zinc-400">$</span>
+                  <span className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-lg font-medium text-zinc-400">$</span>
                   <input
                     id="custom-amount"
                     type="number"
@@ -243,16 +248,16 @@ export default function DonatePage() {
                     value={custom}
                     onChange={(e) => { setCustom(e.target.value); setSelected(0); }}
                     placeholder="Other amount"
-                    className="w-full rounded-2xl border border-zinc-200 py-3.5 pl-8 pr-4 text-sm text-zinc-800 placeholder:text-zinc-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    className={`${donateFieldClass} pl-10`}
                   />
                 </div>
               </div>
 
               {/* Impact callout */}
               {impactText && (
-                <div className="mt-5 flex items-start gap-3 rounded-2xl border border-primary/15 bg-primary/5 px-5 py-4">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
-                  <p className="text-sm text-zinc-700">
+                <div className="mt-6 flex items-start gap-3 rounded-2xl border-2 border-primary/20 bg-primary/5 px-5 py-5 sm:px-6">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
+                  <p className="text-base leading-relaxed text-zinc-700 sm:text-lg">
                     <span className="font-semibold text-zinc-900">${effectiveAmount}</span>
                     {mode === "monthly" ? " per month " : " "}
                     {impactText}.
@@ -261,64 +266,64 @@ export default function DonatePage() {
               )}
 
               {/* Donor details */}
-              <div className="mt-8 space-y-4">
-                <h2 className="font-serif text-xl font-medium text-zinc-900">Your Details</h2>
-                <div className="grid gap-4 sm:grid-cols-2">
+              <div className="mt-10 space-y-5">
+                <h2 className="font-serif text-2xl font-medium text-zinc-900 sm:text-3xl">Your Details</h2>
+                <div className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="first-name" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-500">First Name</label>
+                    <label htmlFor="first-name" className={donateLabelClass}>First Name</label>
                     <input
                       id="first-name" type="text" autoComplete="given-name"
                       placeholder="Aisha" value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="w-full rounded-2xl border border-zinc-200 px-4 py-3 text-sm text-zinc-800 placeholder:text-zinc-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      className={donateFieldClass}
                     />
                   </div>
                   <div>
-                    <label htmlFor="last-name" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-500">Last Name</label>
+                    <label htmlFor="last-name" className={donateLabelClass}>Last Name</label>
                     <input
                       id="last-name" type="text" autoComplete="family-name"
                       placeholder="Johnson" value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className="w-full rounded-2xl border border-zinc-200 px-4 py-3 text-sm text-zinc-800 placeholder:text-zinc-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      className={donateFieldClass}
                     />
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="email" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-500">Email Address</label>
+                  <label htmlFor="email" className={donateLabelClass}>Email Address</label>
                   <input
                     id="email" type="email" autoComplete="email"
                     placeholder="you@example.com" value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-2xl border border-zinc-200 px-4 py-3 text-sm text-zinc-800 placeholder:text-zinc-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    className={donateFieldClass}
                   />
                 </div>
                 <div>
-                  <label htmlFor="phone" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-500">
+                  <label htmlFor="phone" className={donateLabelClass}>
                     Phone <span className="normal-case font-normal text-zinc-400">(optional)</span>
                   </label>
                   <input
                     id="phone" type="tel" autoComplete="tel"
                     placeholder="+1 (555) 000-0000" value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full rounded-2xl border border-zinc-200 px-4 py-3 text-sm text-zinc-800 placeholder:text-zinc-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    className={donateFieldClass}
                   />
                 </div>
               </div>
 
               {/* Error */}
               {intentError && (
-                <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 px-5 py-3 text-sm text-red-700">
+                <div className="mt-6 rounded-2xl border-2 border-red-200 bg-red-50 px-5 py-4 text-base text-red-700">
                   {intentError}
                 </div>
               )}
 
               {/* CTA */}
-              <div className="mt-8">
+              <div className="mt-10">
                 <button
                   type="button"
                   onClick={handleContinue}
                   disabled={isCreatingIntent}
-                  className={`w-full ${btnPrimaryLg}`}
+                  className={`w-full ${btnPrimaryLg} !py-5 !text-lg`}
                 >
                   {isCreatingIntent ? (
                     <><RefreshCw className="h-4 w-4 animate-spin" aria-hidden /> Preparing payment…</>
@@ -326,7 +331,7 @@ export default function DonatePage() {
                     <>Continue to payment <ArrowRight className="h-4 w-4" aria-hidden /></>
                   )}
                 </button>
-                <p className="mt-3 text-center text-xs font-light text-zinc-400">
+                <p className="mt-4 text-center text-sm text-zinc-500 sm:text-base">
                   You will review your card details on the next step.
                 </p>
               </div>
@@ -335,17 +340,17 @@ export default function DonatePage() {
 
           {/* ── STEP 2: Stripe payment ── */}
           {step === "payment" && stripePromise && clientSecret && (
-            <div>
+            <div className="rounded-3xl border-2 border-zinc-100 bg-zinc-50 p-6 sm:p-8 lg:p-10">
               <button
                 type="button"
                 onClick={() => setStep("form")}
-                className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors"
+                className="mb-8 inline-flex items-center gap-2 text-base font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
               >
-                <ArrowLeft className="h-4 w-4" aria-hidden /> Back
+                <ArrowLeft className="h-5 w-5" aria-hidden /> Back
               </button>
 
-              <div className="mb-6 rounded-2xl border border-zinc-100 bg-zinc-50 p-5">
-                <p className="text-sm text-zinc-600">
+              <div className="mb-8 rounded-2xl border-2 border-zinc-100 bg-white p-6">
+                <p className="text-base text-zinc-700 sm:text-lg">
                   Donating <span className="font-semibold text-zinc-900">${effectiveAmount} USD</span>
                   {mode === "monthly" ? " per month" : " (one-time)"} as{" "}
                   <span className="font-semibold text-zinc-900">{firstName} {lastName}</span>
@@ -359,10 +364,12 @@ export default function DonatePage() {
                   appearance: {
                     theme: "stripe",
                     variables: {
-                      colorPrimary: "#e05b2c",
+                      colorPrimary: "#f39120",
                       colorBackground: "#ffffff",
-                      borderRadius: "16px",
+                      borderRadius: "12px",
                       fontFamily: "'Inter', system-ui, sans-serif",
+                      fontSizeBase: "18px",
+                      spacingUnit: "5px",
                     },
                   },
                 }}

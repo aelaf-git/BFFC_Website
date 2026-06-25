@@ -21,7 +21,7 @@ const communityGoals = [
     title: "Educational Supplies & Learning Support",
     goal: "Remove financial barriers so every child can fully participate in school.",
     points: [
-      "Distribute learning kits — notebooks, pens, textbooks, and backpacks — to 30,000 children each year.",
+      "Distribute learning kits, including notebooks, pens, textbooks, and backpacks, to 30,000 children each year.",
       "Support teacher resources and basic infrastructure in partner primary schools.",
       "Build local supply chains so materials reach children reliably and sustainably.",
     ],
@@ -43,7 +43,7 @@ const communityGoals = [
   },
   {
     title: "Fighting Stigma & Building Community Hope",
-    goal: "Help every child feel that education is valued and within reach — regardless of background.",
+    goal: "Help every child feel that education is valued and within reach, regardless of background.",
     points: [
       "Hold community dialogues, parent workshops, and success story campaigns with local role models.",
       "Promote inclusive education and address stigma around poverty and school attendance.",

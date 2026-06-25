@@ -30,7 +30,7 @@ export function ChildrensVillageGallery() {
             The Campus Vision
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base font-light text-zinc-500">
-            Architectural renderings of the modern 10,000 sqm campus — dormitories, classrooms,
+            Architectural renderings of the modern 10,000 sqm campus, including dormitories, classrooms,
             dining halls, sports facilities, and gardens. Click any image to view fullscreen.
           </p>
         </div>

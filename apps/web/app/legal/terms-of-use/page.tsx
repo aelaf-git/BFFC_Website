@@ -132,8 +132,8 @@ export default function TermsOfUsePage() {
 
           <Section title="5. Intellectual Property">
             <p>
-              All content on the Site — including text, photographs, graphics, logos, video, and
-              audio — is the property of BFFC or its licensors and is protected by Canadian and
+              All content on the Site, including text, photographs, graphics, logos, video, and
+              audio, is the property of BFFC or its licensors and is protected by Canadian and
               international copyright and trademark laws.
             </p>
             <p>

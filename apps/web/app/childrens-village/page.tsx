@@ -29,12 +29,12 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: `Bright Future Academy for Afar Empowerment | ${siteConfig.name}`,
   description:
-    "A modern 430-bed student dormitory on a 10,000 sqm campus in Awash 7 Kilo, Afar — Bright Future Children's Village will provide a safe, nurturing home for disadvantaged students from Grade 3 to Grade 9.",
+    "A modern 430-bed student dormitory on a 10,000 sqm campus in Awash 7 Kilo, Afar. Bright Future Children's Village will provide a safe, nurturing home for disadvantaged students from Grade 3 to Grade 9.",
   alternates: { canonical: `${siteConfig.url}/childrens-village` },
   openGraph: {
     title: "Bright Future Academy for Afar Empowerment",
     description:
-      "Bright Future Children's Village is rising in Awash — a landmark campus where children live, learn, eat, and grow together.",
+      "Bright Future Children's Village is rising in Awash, a landmark campus where children live, learn, eat, and grow together.",
     url: `${siteConfig.url}/childrens-village`,
     siteName: siteConfig.name,
     type: "website",
@@ -70,14 +70,14 @@ export default function ChildrensVillagePage() {
     <div className="flex-1 bg-white">
       <PageHero
         imageSrc={academyHeroImage}
-        imageAlt="Bright Future Academy for Afar Empowerment — Awash, Ethiopia"
+        imageAlt="Bright Future Academy for Afar Empowerment, Awash, Ethiopia"
         title="Bright Future Academy for Afar Empowerment"
         size="tall"
         align="bottom"
         kicker={
           <span className="inline-flex items-center gap-2 tracking-[0.2em]">
             <MapPin className="h-3.5 w-3.5" aria-hidden />
-            Awash 7 Kilo, Afar — Ethiopia
+            Awash 7 Kilo, Afar, Ethiopia
           </span>
         }
         subtitle="Bright Future Children's Village is rising in Awash"
@@ -101,7 +101,7 @@ export default function ChildrensVillagePage() {
               For the entire school semester, children will live, learn, eat, and grow together in a
               fully equipped facility that includes comfortable dormitories, dining halls, study areas,
               recreational spaces, and all necessary amenities. No more walking long distances or
-              studying on empty stomachs — this village will become their second home, where they can
+              studying on empty stomachs. This village will become their second home, where they can
               focus fully on their education.
             </p>
           </div>
@@ -117,7 +117,7 @@ export default function ChildrensVillagePage() {
             />
           </div>
           <p className="mx-auto mt-5 max-w-2xl text-center text-sm font-light text-zinc-400">
-            A glimpse of the future Bright Future Children&rsquo;s Village — where every child
+            A glimpse of the future Bright Future Children&rsquo;s Village, where every child
             deserves a chance to shine.
           </p>
         </div>
@@ -141,7 +141,7 @@ export default function ChildrensVillagePage() {
                   <p>
                     The project has the full support and backing of the Federal Democratic Republic of
                     Ethiopia, the Afar regional state, and all other relevant agencies and ministries
-                    in the country — as well as international partners, donors, and diaspora
+                    in the country, as well as international partners, donors, and diaspora
                     Ethiopians.
                   </p>
                 </div>
@@ -193,7 +193,7 @@ export default function ChildrensVillagePage() {
             </h2>
             <div className="mt-6 space-y-6 text-lg font-light leading-relaxed text-white/85">
               <p>
-                Every donation — big or small — brings us closer to completing this dream. Whether
+                Every donation, whether big or small, brings us closer to completing this dream. Whether
                 you contribute toward construction, furnishing rooms, sponsoring a child&rsquo;s yearly
                 stay, or providing educational materials, your support will directly impact hundreds
                 of children and their families for years to come.
@@ -201,7 +201,7 @@ export default function ChildrensVillagePage() {
               <p>
                 Together, we can turn the desert sands of Afar into a beacon of hope and opportunity.
                 Be part of this transformation. Join us in building Bright Future Children&rsquo;s
-                Village — where every child deserves a chance to shine.
+                Village, where every child deserves a chance to shine.
               </p>
             </div>
           </div>

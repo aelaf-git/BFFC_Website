@@ -11,7 +11,7 @@ export const faqs: Faq[] = [
   {
     question: "What does Bright Future for Children do?",
     answer:
-      "We are a Canadian registered charity dedicated to providing one nutritious meal a day to children aged 2–8 in war-affected regions of Ethiopia — primarily Afar, Tigray, and Amhara. We also distribute school supplies to support children's education and partner with local communities to build sustainable feeding programs.",
+      "We are a Canadian registered charity dedicated to providing one nutritious meal a day to children aged 2–8 in war-affected regions of Ethiopia, primarily Afar, Tigray, and Amhara. We also distribute school supplies to support children's education and partner with local communities to build sustainable feeding programs.",
   },
   {
     question: "Where exactly do you operate in Ethiopia?",
@@ -21,7 +21,7 @@ export const faqs: Faq[] = [
   {
     question: "How is my donation used?",
     answer:
-      "Approximately 82% of every dollar donated goes directly to program delivery — meals, school supplies, and community support. The remaining 18% covers administration (11%) and fundraising costs (7%). We publish a full financial breakdown in our annual report, available on our Resources page.",
+      "Approximately 82% of every dollar donated goes directly to program delivery: meals, school supplies, and community support. The remaining 18% covers administration (11%) and fundraising costs (7%). We publish a full financial breakdown in our annual report, available on our Resources page.",
   },
   {
     question: "Is Bright Future for Children a registered charity?",
@@ -41,7 +41,7 @@ export const faqs: Faq[] = [
   {
     question: "How do I know my donation reaches the children?",
     answer:
-      "We work directly with on-the-ground partners, local schools, and community authorities in Ethiopia. We conduct regular site visits, collect attendance and nutrition data, and publish detailed impact reports. Your donation is never pooled with general operating funds — it goes straight to the programs it is designated for.",
+      "We work directly with on-the-ground partners, local schools, and community authorities in Ethiopia. We conduct regular site visits, collect attendance and nutrition data, and publish detailed impact reports. Your donation is never pooled with general operating funds; it goes straight to the programs it is designated for.",
   },
   {
     question: "Can I donate in a currency other than Canadian dollars?",

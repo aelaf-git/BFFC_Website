@@ -22,7 +22,7 @@ export const siteConfig = {
   legalName: "Bright Future for Children",
   title: "Bright Future for Children",
   description:
-    "Providing life-saving, nutritious meals to children aged 2–8 in war-affected regions of Ethiopia — Amhara, Afar, and Tigray. Donate, sponsor a child, or get involved to help build brighter futures.",
+    "Providing life-saving, nutritious meals to children aged 2–8 in war-affected regions of Ethiopia, including Amhara, Afar, and Tigray. Donate, sponsor a child, or get involved to help build brighter futures.",
   url: resolveSiteUrl(),
   locale: "en_US",
   language: "en",
@@ -52,6 +52,7 @@ export const siteConfig = {
     { path: "/childrens-village", changeFrequency: "weekly" as const, priority: 0.85 },
     { path: "/donate", changeFrequency: "monthly" as const, priority: 0.95 },
     { path: "/ways-to-give", changeFrequency: "monthly" as const, priority: 0.85 },
+    { path: "/ways-to-give/in-kind", changeFrequency: "monthly" as const, priority: 0.8 },
     { path: "/stories", changeFrequency: "weekly" as const, priority: 0.8 },
     { path: "/faqs", changeFrequency: "monthly" as const, priority: 0.7 },
     { path: "/resources", changeFrequency: "monthly" as const, priority: 0.7 },

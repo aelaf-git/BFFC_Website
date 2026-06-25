@@ -9,6 +9,8 @@ export const btnPrimarySm = `${btnBase} bg-primary px-5 py-2.5 text-sm text-whit
 
 export const btnPrimaryLg = `${btnBase} bg-primary px-8 py-4 text-base text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60`;
 
+export const btnPrimaryXl = `${btnBase} bg-primary px-10 py-5 text-lg text-white hover:bg-primary-hover`;
+
 export const btnPrimaryLgMd = `${btnBase} bg-primary px-8 py-3.5 text-sm text-white hover:bg-primary-hover`;
 
 export const btnSecondary = `${btnBase} border border-zinc-200 bg-white px-7 py-3 text-sm text-zinc-700 hover:border-primary/40 hover:text-primary`;

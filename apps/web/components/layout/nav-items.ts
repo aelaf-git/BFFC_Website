@@ -123,13 +123,13 @@ export const dropdownNavItems: CardNavItem[] = [
       },
       {
         label: "Monthly giving",
-        href: "/ways-to-give#monthly",
+        href: "/donate",
         ariaLabel: "Monthly giving",
       },
       {
-        label: "Emergency relief & campaigns",
-        href: "/ways-to-give#emergency",
-        ariaLabel: "Emergency relief and current campaigns",
+        label: "Give in kind",
+        href: "/ways-to-give/in-kind",
+        ariaLabel: "Offer an in-kind donation",
       },
       {
         label: "How we use donations",

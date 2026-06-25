@@ -33,6 +33,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IDonationPersistenceService, DonationPersistenceService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<INewsletterService, NewsletterService>();
+builder.Services.AddScoped<IInKindDonationService, InKindDonationService>();
 
 // ── Rate limiting (contact + newsletter) ──────────────────────────────────────
 builder.Services.AddRateLimiter(options =>
@@ -116,5 +117,6 @@ app.MapGet("/health", async (AppDbContext db) =>
 app.MapDonationEndpoints();
 app.MapContactEndpoints();
 app.MapNewsletterEndpoints();
+app.MapInKindDonationEndpoints();
 
 app.Run();

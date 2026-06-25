@@ -10,7 +10,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: `Projects | ${siteConfig.name}`,
   description:
-    "Explore Bright Future for Children projects across Ethiopia — campuses, feeding programs, and community initiatives building brighter futures.",
+    "Explore Bright Future for Children projects across Ethiopia: campuses, feeding programs, and community initiatives building brighter futures.",
   alternates: { canonical: `${siteConfig.url}/projects` },
   openGraph: {
     title: "Projects",

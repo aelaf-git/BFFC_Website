@@ -94,7 +94,7 @@ export function HomePageJsonLd({ url }: HomePageJsonLdProps) {
     name: siteConfig.title,
     url,
     description:
-      "Providing life-saving meals to children in Amhara, Afar, and Tigray — Ethiopia's most war-affected regions. Donate, sponsor a child, or get involved.",
+      "Providing life-saving meals to children in Amhara, Afar, and Tigray, Ethiopia's most war-affected regions. Donate, sponsor a child, or get involved.",
     inLanguage: siteConfig.language,
     isPartOf: { "@type": "WebSite", url: siteConfig.url },
     publisher: { "@type": "NGO", name: siteConfig.name },

@@ -1,71 +1,54 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Heart, RefreshCw, Zap, Building2, ArrowRight } from "lucide-react";
+import { ArrowRight, Banknote, Package } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
-import { btnInverted, btnPrimary, btnPrimarySm } from "@/lib/button-styles";
+import { btnPrimary } from "@/lib/button-styles";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: `Ways to Give | ${siteConfig.name}`,
   description:
-    "Every gift — large or small — helps feed a hungry child and fund a brighter future. Explore one-time giving, monthly support, emergency relief, and corporate partnerships.",
+    "Support Bright Future for Children with a cash donation or an in-kind gift of supplies, food, clothing, and equipment.",
   alternates: { canonical: `${siteConfig.url}/ways-to-give` },
   openGraph: {
     title: "Ways to Give",
     description:
-      "One-time donations, monthly giving, emergency relief, and corporate partnerships — find the right way to support children in Ethiopia.",
+      "Choose to give by cash or in kind. Every gift helps feed, educate, and support children across Ethiopia.",
     url: `${siteConfig.url}/ways-to-give`,
     siteName: siteConfig.name,
     type: "website",
   },
 };
 
-const givingOptions = [
+const givingPaths = [
   {
-    icon: Heart,
-    title: "One-Time Donation",
-    subtitle: "Give what you can, when you can.",
+    icon: Banknote,
+    title: "Give by Cash",
+    subtitle: "Monetary donations",
     description:
-      "A single donation of any size goes directly toward providing nutritious meals and school supplies for children in Afar, Tigray, and Amhara. Even $10 can feed a child for a week.",
-    cta: { label: "Donate now", href: "/donate" },
-    highlight: true,
+      "Make a secure one-time or monthly gift online. Your contribution goes directly toward school meals, supplies, health support, and community programs for children in Ethiopia.",
+    examples: [
+      "One-time or monthly giving",
+      "Secure card payment via Stripe",
+      "Tax receipt for eligible Canadian donors",
+    ],
+    cta: { label: "Donate with money", href: "/donate" },
+    primary: true,
   },
   {
-    icon: RefreshCw,
-    title: "Monthly Giving",
-    subtitle: "Steady support creates lasting change.",
+    icon: Package,
+    title: "Give in Kind",
+    subtitle: "Goods and supplies",
     description:
-      "Become a monthly donor and provide children with the consistency they need to thrive. Monthly gifts allow us to plan meals, purchase supplies in bulk, and expand our reach to new communities.",
-    cta: { label: "Become a monthly donor", href: "/donate?type=monthly" },
-    highlight: false,
+      "Donate school supplies, food, clothing, equipment, or other goods. Tell us what you would like to give and our team will coordinate collection, drop-off, or shipping.",
+    examples: [
+      "School supplies and learning kits",
+      "Food, clothing, and hygiene items",
+      "Equipment, furniture, and other goods",
+    ],
+    cta: { label: "Offer an in-kind gift", href: "/ways-to-give/in-kind" },
+    primary: false,
   },
-  {
-    icon: Zap,
-    title: "Emergency Relief",
-    subtitle: "Act when communities need it most.",
-    description:
-      "Conflict, drought, and displacement can strike without warning. Your emergency donation allows us to respond quickly — delivering food, water, and support to the most vulnerable children within days.",
-    cta: { label: "Support emergency relief", href: "/donate?type=emergency" },
-    highlight: false,
-  },
-  {
-    icon: Building2,
-    title: "Corporate & Legacy Giving",
-    subtitle: "Make a lasting institutional impact.",
-    description:
-      "Partner with us as a corporate sponsor or include Bright Future for Children in your estate planning. Corporate and legacy gifts fund long-term programs and infrastructure that benefit children for generations.",
-    cta: { label: "Get in touch", href: "/#get-in-touch" },
-    highlight: false,
-  },
-];
-
-const impactItems = [
-  { amount: "$10", label: "feeds one child for a week" },
-  { amount: "$25", label: "provides a full month of breakfasts" },
-  { amount: "$60", label: "covers a school supply kit" },
-  { amount: "$120", label: "funds a month of meals for one child" },
-  { amount: "$500", label: "sponsors a child for a full semester" },
-  { amount: "$1,000", label: "supports an entire classroom for a month" },
 ];
 
 export default function WaysToGivePage() {
@@ -74,126 +57,80 @@ export default function WaysToGivePage() {
       <PageHero
         imageSrc="/hero/hero1.jpg"
         imageAlt="Children in Ethiopia"
-        kicker="Make a Difference"
+        kicker="Support Our Mission"
         title="Ways to Give"
-        subtitle="Every gift — large or small — feeds a hungry child and funds a brighter future."
+        subtitle="There are two ways to support our work: give by cash or give in kind. Choose the path that fits you best."
       />
 
-      {/* ── Giving options ── */}
       <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">
-        <div className="mb-16 text-center">
+        <div className="mb-14 text-center">
           <h2 className="font-serif text-4xl font-medium tracking-tight text-zinc-900 sm:text-5xl">
-            Choose How You Give
+            How Would You Like to Give?
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base font-light leading-relaxed text-zinc-500">
-            Whether you give once, give monthly, or give in a moment of crisis — every form of generosity
-            is honoured and every dollar reaches the children who need it most.
+            Whether you contribute financially or donate goods, your generosity helps children access
+            nutrition, education, and opportunity.
           </p>
         </div>
 
-        <div className="grid gap-8 sm:grid-cols-2">
-          {givingOptions.map(({ icon: Icon, title, subtitle, description, cta, highlight }) => (
-            <div
+        <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-2 lg:gap-10">
+          {givingPaths.map(({ icon: Icon, title, subtitle, description, examples, cta, primary }) => (
+            <article
               key={title}
-              className={`flex flex-col rounded-3xl p-8 ${
-                highlight
-                  ? "bg-primary text-white"
-                  : "border border-zinc-100 bg-zinc-50"
+              className={`flex flex-col rounded-3xl border p-8 sm:p-10 ${
+                primary
+                  ? "border-primary/30 bg-primary-light shadow-sm"
+                  : "border-zinc-100 bg-zinc-50"
               }`}
             >
-              <div
-                className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl ${
-                  highlight ? "bg-white/15" : "bg-white"
-                }`}
-              >
-                <Icon
-                  className={`h-5 w-5 ${highlight ? "text-white" : "text-primary"}`}
-                  aria-hidden
-                />
+              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-sm">
+                <Icon className="h-7 w-7 text-primary" aria-hidden />
               </div>
-              <p
-                className={`mb-1 text-[10px] font-semibold uppercase tracking-[0.15em] ${
-                  highlight ? "text-white/60" : "text-zinc-400"
-                }`}
-              >
+
+              <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-500">
                 {subtitle}
               </p>
-              <h3
-                className={`font-serif text-2xl font-medium ${
-                  highlight ? "text-white" : "text-zinc-900"
-                }`}
-              >
+              <h3 className="mt-1 font-serif text-3xl font-medium text-zinc-900">
                 {title}
               </h3>
-              <p
-                className={`mt-3 flex-1 text-sm leading-relaxed font-light ${
-                  highlight ? "text-white/80" : "text-zinc-500"
-                }`}
-              >
+              <p className="mt-4 flex-1 text-base font-normal leading-relaxed text-zinc-600">
                 {description}
               </p>
-              <Link
-                href={cta.href}
-                className={`mt-6 self-start ${highlight ? btnInverted : btnPrimarySm}`}
-              >
-                {cta.label} <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+
+              <ul className="mt-6 space-y-2.5 text-sm font-normal text-zinc-600">
+                {examples.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5">
+                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <Link href={cta.href} className={`mt-8 self-start ${btnPrimary}`}>
+                {cta.label}
+                <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
-            </div>
+            </article>
           ))}
         </div>
       </div>
 
-      {/* ── Impact numbers ── */}
       <div className="bg-zinc-50">
-        <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">
-          <div className="mb-12 text-center">
-            <h2 className="font-serif text-4xl font-medium tracking-tight text-zinc-900 sm:text-5xl">
-              Your Gift in Action
+        <div className="container mx-auto px-6 py-16 sm:px-10 lg:px-20">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="font-serif text-3xl font-medium tracking-tight text-zinc-900 sm:text-4xl">
+              Every Gift Makes a Difference
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base font-light text-zinc-500">
-              See exactly how your donation translates into real meals, supplies, and opportunity.
+            <p className="mt-4 text-base font-light leading-relaxed text-zinc-500">
+              As a registered Canadian charity (No. {siteConfig.contact.charityRegistration}), we put
+              your support to work through meals, school supplies, health programs, and community
+              partnerships across Ethiopia.
             </p>
+            <Link href="/#get-in-touch" className={`mt-8 inline-flex ${btnPrimary}`}>
+              Questions? Contact us
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
           </div>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
-            {impactItems.map(({ amount, label }) => (
-              <div key={amount} className="rounded-2xl bg-white p-6 text-center shadow-sm">
-                <p className="font-serif text-3xl font-medium text-primary sm:text-4xl">{amount}</p>
-                <p className="mt-2 text-sm font-light text-zinc-500">{label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ── How we use donations ── */}
-      <div className="container mx-auto px-6 py-20 sm:px-10 lg:px-20">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="font-serif text-4xl font-medium tracking-tight text-zinc-900 sm:text-5xl">
-            How We Use Your Donations
-          </h2>
-          <p className="mt-5 text-base font-light leading-relaxed text-zinc-500">
-            As a registered Canadian charity (No. {siteConfig.contact.charityRegistration}), we are committed to
-            full financial transparency. The vast majority of every dollar donated goes directly to
-            program delivery — meals, supplies, and community support in Ethiopia.
-          </p>
-          <div className="mt-10 grid grid-cols-3 gap-6">
-            {[
-              { pct: "82%", label: "Program delivery" },
-              { pct: "11%", label: "Administration" },
-              { pct: "7%", label: "Fundraising" },
-            ].map(({ pct, label }) => (
-              <div key={label} className="rounded-2xl border border-zinc-100 p-6">
-                <p className="font-serif text-4xl font-medium text-primary">{pct}</p>
-                <p className="mt-1 text-sm font-light text-zinc-500">{label}</p>
-              </div>
-            ))}
-          </div>
-          <Link
-            href="/#get-in-touch"
-            className={btnPrimary}
-          >
-            Have a question? Contact us <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-          </Link>
         </div>
       </div>
     </div>

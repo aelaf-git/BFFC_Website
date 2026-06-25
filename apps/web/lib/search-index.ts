@@ -21,7 +21,7 @@ const homeSections: SearchDocument[] = [
     id: "section-about",
     title: "About Us",
     description:
-      "Learn about Bright Future for Children — our mission, vision, and commitment to children in Afar, Amhara, and Tigray.",
+      "Learn about Bright Future for Children, our mission, vision, and commitment to children in Afar, Amhara, and Tigray.",
     href: "/#about",
     category: "Section",
     keywords: ["mission", "vision", "charity", "ethiopia"],
@@ -39,7 +39,7 @@ const homeSections: SearchDocument[] = [
     id: "section-childrens-village",
     title: "Bright Future Academy for Afar Empowerment",
     description:
-      "A modern 430-bed student village rising in Awash — a safe campus for disadvantaged students from Grade 3 to Grade 9.",
+      "A modern 430-bed student village rising in Awash, a safe campus for disadvantaged students from Grade 3 to Grade 9.",
     href: "/childrens-village",
     category: "Section",
     keywords: ["afar", "awash", "dormitory", "campus", "children's village"],
@@ -65,7 +65,7 @@ const homeSections: SearchDocument[] = [
     id: "section-contact",
     title: "Get in Touch",
     description:
-      "Contact our team in Calgary or Ethiopia — questions about donations, partnerships, or volunteering.",
+      "Contact our team in Calgary or Ethiopia with questions about donations, partnerships, or volunteering.",
     href: "/#get-in-touch",
     category: "Section",
     keywords: ["contact", "email", "phone", "calgary"],
@@ -94,16 +94,25 @@ const pages: SearchDocument[] = [
     id: "page-ways-to-give",
     title: "Ways to Give",
     description:
-      "One-time donations, monthly giving, emergency relief, and corporate partnerships.",
+      "Give by cash or in kind. Donate money online or offer supplies, food, clothing, and equipment.",
     href: "/ways-to-give",
     category: "Page",
-    keywords: ["monthly", "corporate", "emergency", "partnership"],
+    keywords: ["cash", "in-kind", "supplies", "goods", "donation"],
+  },
+  {
+    id: "page-ways-to-give-in-kind",
+    title: "Give in Kind",
+    description:
+      "Offer school supplies, food, clothing, equipment, and other in-kind gifts to support children in Ethiopia.",
+    href: "/ways-to-give/in-kind",
+    category: "Page",
+    keywords: ["in-kind", "supplies", "goods", "donation", "equipment"],
   },
   {
     id: "page-projects",
     title: "Projects",
     description:
-      "Explore Bright Future for Children projects across Ethiopia — campuses, feeding programs, and community initiatives.",
+      "Explore Bright Future for Children projects across Ethiopia: campuses, feeding programs, and community initiatives.",
     href: "/projects",
     category: "Page",
     keywords: ["projects", "afar", "campus", "dormitory", "initiatives"],
@@ -112,7 +121,7 @@ const pages: SearchDocument[] = [
     id: "page-childrens-village",
     title: "Bright Future Academy for Afar Empowerment",
     description:
-      "430-bed student dormitory on a 10,000 sqm campus in Awash 7 Kilo — a safe home for Grades 3–9.",
+      "430-bed student dormitory on a 10,000 sqm campus in Awash 7 Kilo, a safe home for Grades 3–9.",
     href: "/childrens-village",
     category: "Page",
     keywords: ["afar", "awash", "village", "dormitory", "campus", "empowerment"],

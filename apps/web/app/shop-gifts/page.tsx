@@ -29,7 +29,7 @@ export default function ShopGiftsPage() {
         <div className="absolute inset-0 bg-black/60" aria-hidden="true" />
       </div>
 
-      <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center px-6 py-24 text-center sm:py-32">
+      <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center px-6 pb-24 pt-[calc(var(--header-height)+4rem)] text-center sm:pb-32 sm:pt-[calc(var(--header-height)+5rem)]">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
           Shop Gifts
         </p>
@@ -44,7 +44,7 @@ export default function ShopGiftsPage() {
         </p>
 
         <p className="mt-3 text-sm font-light text-white/50">
-          Thank you for your patience — great things take time.
+          Thank you for your patience. Great things take time.
         </p>
 
         <div className="my-10 h-px w-16 bg-white/20" aria-hidden="true" />

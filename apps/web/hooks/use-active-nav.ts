@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import type { SiteNavItem } from "@/lib/site-nav";
+import { HEADER_ROW_HEIGHT } from "@/lib/header";
 
-const HEADER_OFFSET = 76;
+const HEADER_OFFSET = HEADER_ROW_HEIGHT;
 const SCROLL_ANCHOR_OFFSET = 24;
 
 type SectionBounds = {

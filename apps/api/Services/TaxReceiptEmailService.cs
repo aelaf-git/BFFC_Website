@@ -51,7 +51,7 @@ public class TaxReceiptEmailService : IEmailService
         }
 
         var amount = FormatAmount(receipt.AmountCents, receipt.Currency);
-        var subject = $"Your official tax receipt — {_charity.Name}";
+        var subject = $"Your official tax receipt from {_charity.Name}";
 
         var payload = new
         {

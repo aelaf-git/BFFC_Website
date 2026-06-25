@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BedDouble, GraduationCap, Soup } from "lucide-react";
-import { btnPrimary } from "@/lib/button-styles";
+import { btnPrimaryLg } from "@/lib/button-styles";
 
 const stats = [
   { value: "430", label: "Beds for Grades 3–9" },
@@ -14,7 +14,7 @@ const highlights = [
   {
     icon: BedDouble,
     title: "A safe place to live",
-    body: "Comfortable dormitories, dining halls, study areas, and recreational spaces — a true second home.",
+    body: "Comfortable dormitories, dining halls, study areas, and recreational spaces, a true second home.",
   },
   {
     icon: Soup,
@@ -33,12 +33,12 @@ export function ChildrensVillageSection() {
     <section className="w-full bg-white" aria-label="Bright Future Academy for Afar Empowerment">
       {/* ── Section heading (matches the rest of the landing page) ── */}
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-14 pb-8 text-center sm:pt-20 sm:pb-12 lg:pt-24 lg:pb-16">
-        <span id="childrens-village" aria-hidden="true" className="block scroll-mt-20" />
+        <span id="childrens-village" aria-hidden="true" className="scroll-anchor-offset block" />
         <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
           Bright Future Academy for Afar Empowerment
         </h2>
         <p className="mt-5 mx-auto max-w-2xl text-base sm:text-lg leading-relaxed text-zinc-400 font-light">
-          Building Bright Future Children&rsquo;s Village — a modern student campus rising from the
+          Building Bright Future Children&rsquo;s Village, a modern student campus rising from the
           desert sands of Afar, where every child deserves a chance to shine.
         </p>
       </div>
@@ -72,13 +72,12 @@ export function ChildrensVillageSection() {
             <p>
               In the heart of Ethiopia&rsquo;s Afar region, a life-changing project is about to begin.
               Bright Future for Children is building a modern 430-bed student dormitory on a
-              10,000 square meter campus — a safe, nurturing home for hundreds of disadvantaged
+              10,000 square meter campus, a safe, nurturing home for hundreds of disadvantaged
               students from Grade 3 to Grade 9.
             </p>
             <p>
               Many bright and determined children in Afar miss out on quality education due to
-              distance, poverty, and lack of safe accommodation. This village removes those barriers
-              — with full backing from the Federal Government of Ethiopia, the Afar regional state,
+              distance, poverty, and lack of safe accommodation.               This village removes those barriers, with full backing from the Federal Government of Ethiopia, the Afar regional state,
               and international partners, donors, and diaspora Ethiopians.
             </p>
           </div>
@@ -115,11 +114,11 @@ export function ChildrensVillageSection() {
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-8 pb-14 text-center sm:pt-12 sm:pb-20 lg:pb-24">
         <Link
           href="/childrens-village"
-          className={`group ${btnPrimary}`}
+          className={`group ${btnPrimaryLg}`}
         >
           See the full project
           <ArrowRight
-            className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
+            className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 sm:h-5 sm:w-5"
             aria-hidden
           />
         </Link>

@@ -215,7 +215,7 @@ export function Footer() {
               Join our community
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-white/70">
-              Stories of impact, program updates, and ways you can help — delivered to your inbox.
+              Stories of impact, program updates, and ways you can help, delivered to your inbox.
             </p>
             <div className="mt-8">
               <NewsletterForm variant="dark" />

@@ -17,11 +17,11 @@ export const projects: Project[] = [
   {
     slug: "afar-empowerment",
     title: "Bright Future Academy for Afar Empowerment",
-    location: "Awash 7 Kilo, Afar — Ethiopia",
+    location: "Awash 7 Kilo, Afar, Ethiopia",
     excerpt:
-      "A modern 430-bed student dormitory on a 10,000 sqm campus — a safe, nurturing home for disadvantaged students from Grade 3 to Grade 9.",
+      "A modern 430-bed student dormitory on a 10,000 sqm campus, a safe, nurturing home for disadvantaged students from Grade 3 to Grade 9.",
     image: academyHeroImage,
-    imageAlt: "Bright Future Academy for Afar Empowerment — Awash, Ethiopia",
+    imageAlt: "Bright Future Academy for Afar Empowerment, Awash, Ethiopia",
     href: "/childrens-village",
     status: "In development",
     highlights: ["430 beds", "10,000 sqm campus", "Grades 3–9"],

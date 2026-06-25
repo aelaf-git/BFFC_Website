@@ -2,11 +2,11 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 
 const sizeClasses = {
-  default: "h-64 sm:h-80",
-  compact: "h-56 sm:h-64",
-  medium: "h-56 sm:h-72",
-  tall: "h-[22rem] sm:h-[30rem] lg:h-[34rem]",
-  story: "h-[55vh] min-h-[320px] sm:h-[65vh]",
+  default: "h-[calc(16rem+var(--header-height))] sm:h-[calc(20rem+var(--header-height))]",
+  compact: "h-[calc(14rem+var(--header-height))] sm:h-[calc(16rem+var(--header-height))]",
+  medium: "h-[calc(14rem+var(--header-height))] sm:h-[calc(18rem+var(--header-height))]",
+  tall: "h-[calc(22rem+var(--header-height))] sm:h-[calc(30rem+var(--header-height))] lg:h-[calc(34rem+var(--header-height))]",
+  story: "h-[calc(55vh+var(--header-height))] min-h-[calc(320px+var(--header-height))] sm:h-[calc(65vh+var(--header-height))]",
 } as const;
 
 type PageHeroSize = keyof typeof sizeClasses;
@@ -84,7 +84,7 @@ export function PageHero({
         aria-hidden="true"
       />
       <div
-        className={`absolute inset-0 flex flex-col px-6 text-center ${
+        className={`absolute inset-0 flex flex-col px-6 text-center pt-[var(--header-height)] ${
           align === "bottom"
             ? "items-center justify-end pb-12 sm:px-10 sm:pb-16 lg:pb-20"
             : "items-center justify-center"

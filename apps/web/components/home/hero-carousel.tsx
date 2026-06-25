@@ -116,7 +116,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
             <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
           </div>
 
-          <div className="container relative z-10 mx-auto flex h-full items-center px-6 sm:px-10 lg:px-16">
+          <div className="container relative z-10 mx-auto flex h-full items-center px-6 pt-[var(--header-height)] sm:px-10 lg:px-16">
             <div className="max-w-4xl">
               <h2 className="font-serif text-5xl font-medium leading-[1.1] text-white sm:text-6xl lg:text-8xl">
                 {slide.title}
@@ -129,13 +129,13 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
               <div className="mt-12">
                 <Link
                   href={slide.cta.href}
-                  className="group flex items-center gap-4 text-white no-underline transition-opacity hover:opacity-80"
+                  className="group flex items-center gap-5 text-white no-underline transition-opacity hover:opacity-80 sm:gap-6"
                   aria-label={slide.cta.ariaLabel}
                 >
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-white/40 transition-all group-hover:border-white group-hover:bg-white/10">
-                    <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1" />
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-white/40 transition-all group-hover:border-white group-hover:bg-white/10 sm:h-24 sm:w-24">
+                    <ArrowRight className="h-7 w-7 transition-transform group-hover:translate-x-1 sm:h-8 sm:w-8" />
                   </div>
-                  <span className="text-lg font-bold tracking-wide uppercase">
+                  <span className="text-xl font-bold tracking-wide uppercase sm:text-2xl lg:text-3xl">
                     {slide.cta.label}
                   </span>
                 </Link>

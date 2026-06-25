@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CommunityGoalsCarousel } from "@/components/home/community-goals-carousel";
-import { btnPrimarySm } from "@/lib/button-styles";
+import { btnPrimaryXl } from "@/lib/button-styles";
 
 const visionTargets = [
   "Reach 30,000+ children with integrated support.",
@@ -14,7 +14,7 @@ export function WhatWeDoSection() {
   return (
     <section className="bg-white" aria-label="What we do">
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-14 pb-8 text-center sm:pt-20 sm:pb-12 lg:pt-24 lg:pb-16">
-        <span id="what-we-do" aria-hidden="true" className="block scroll-mt-20" />
+        <span id="what-we-do" aria-hidden="true" className="scroll-anchor-offset block" />
         <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
           What We Do
         </h2>
@@ -98,7 +98,7 @@ export function WhatWeDoSection() {
                 <p>
                   Inspired by school feeding models from the UK and USA and local Ethiopian
                   initiatives, we adapt our approach across Afar, Oromia, Southern, Amhara, and
-                  Tigray — combining immediate relief with long-term empowerment.
+                  Tigray, combining immediate relief with long-term empowerment.
                 </p>
                 <p>
                   Since 2023, we have supported over 7,632 children and their families. Working
@@ -134,7 +134,7 @@ export function WhatWeDoSection() {
           <div className="mt-8 flex flex-wrap justify-center gap-3 sm:mt-10">
             <Link
               href="/donate"
-              className={btnPrimarySm}
+              className={btnPrimaryXl}
             >
               Donate
             </Link>

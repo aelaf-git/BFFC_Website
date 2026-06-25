@@ -36,7 +36,7 @@ public class StripeService : IStripeService
                 Enabled = true,
             },
             ReceiptEmail = request.DonorEmail,
-            Description  = $"One-time donation — BFFC",
+            Description  = $"One-time donation to BFFC",
             Metadata     = new Dictionary<string, string>
             {
                 ["donor_name"]  = request.DonorName,
@@ -84,7 +84,7 @@ public class StripeService : IStripeService
             Recurring   = new PriceRecurringOptions { Interval = "month" },
             ProductData = new PriceProductDataOptions
             {
-                Name = "Monthly Donation — Bright Future for Children",
+                Name = "Monthly Donation to Bright Future for Children",
             },
         });
 

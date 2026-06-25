@@ -69,25 +69,25 @@ export const resourceGuides: ResourceGuide[] = [
   {
     title: "Volunteer & Partnership Handbook",
     description:
-      "Learn how individuals and organisations can partner with us — from local volunteers in Ethiopia to corporate sponsors in Canada.",
+      "Learn how individuals and organisations can partner with us, from local volunteers in Ethiopia to corporate sponsors in Canada.",
     href: "#",
   },
 ];
 
 export const externalResources: ExternalResource[] = [
   {
-    title: "UNICEF — Ethiopia Country Profile",
+    title: "UNICEF: Ethiopia Country Profile",
     description: "In-depth data on child welfare, education, and nutrition in Ethiopia.",
     href: "https://www.unicef.org/ethiopia",
   },
   {
-    title: "WFP — Ethiopia Situation Report",
+    title: "WFP: Ethiopia Situation Report",
     description:
       "The World Food Programme's latest updates on food insecurity across Ethiopian regions.",
     href: "https://www.wfp.org/countries/ethiopia",
   },
   {
-    title: "Government of Canada — Charitable Giving",
+    title: "Government of Canada: Charitable Giving",
     description: "Official guidance on charitable giving and tax benefits for Canadian donors.",
     href: "https://www.canada.ca/en/revenue-agency/services/charities-giving.html",
   },

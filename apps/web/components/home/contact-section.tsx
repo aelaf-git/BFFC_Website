@@ -52,7 +52,7 @@ export function ContactSection() {
 
       {/* ── Heading ── */}
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-14 pb-8 text-center sm:pt-20 sm:pb-12 lg:pt-24 lg:pb-16">
-        <span id="get-in-touch" aria-hidden="true" className="block scroll-mt-20" />
+        <span id="get-in-touch" aria-hidden="true" className="scroll-anchor-offset block" />
         <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
           Get in Touch
         </h2>

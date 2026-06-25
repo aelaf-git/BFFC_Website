@@ -41,7 +41,7 @@ export function NewsletterSection() {
             </h2>
             <p className="mt-4 text-[0.9rem] leading-relaxed text-zinc-500 font-light max-w-sm">
               Subscribe to receive stories of impact, program updates, and ways
-              you can make a difference — delivered straight to your inbox.
+              you can make a difference, delivered straight to your inbox.
             </p>
           </div>
 

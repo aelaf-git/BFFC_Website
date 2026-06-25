@@ -16,7 +16,7 @@ export const heroSlides: HeroSlide[] = [
     video: "/Bright-Future-Academy-for-Afar-Empowerment/video.mp4",
     title: "Bright Future Academy for Afar Empowerment",
     subtitle:
-      "A modern 430-bed student village is rising in Awash — a safe, nurturing campus where disadvantaged children from Grade 3 to Grade 9 can live, learn, and grow.",
+      "A modern 430-bed student village is rising in Awash, a safe, nurturing campus where disadvantaged children from Grade 3 to Grade 9 can live, learn, and grow.",
     cta: {
       label: "See the full project",
       href: "/childrens-village",

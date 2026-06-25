@@ -208,8 +208,8 @@ export default function AccessibilityStatementPage() {
             <p>
               <strong className="text-zinc-900">Need content in another format?</strong>
               <br />
-              If you need any information from this site in a different format — such as large
-              print, audio, or plain text — please email us at{" "}
+              If you need any information from this site in a different format, such as large
+              print, audio, or plain text, please email us at{" "}
               <a href={`mailto:${contact.email}`} className="text-accent hover:underline">
                 {contact.email}
               </a>{" "}

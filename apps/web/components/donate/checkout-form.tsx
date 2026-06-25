@@ -61,16 +61,18 @@ export function CheckoutForm({ amountDollars, mode, onSuccess }: CheckoutFormPro
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <PaymentElement
-        options={{
-          layout: "tabs",
-          wallets: { applePay: "auto", googlePay: "auto" },
-        }}
-      />
+    <form onSubmit={handleSubmit} className="space-y-8">
+      <div className="min-h-[220px] rounded-2xl border-2 border-zinc-100 bg-white p-5 sm:p-6">
+        <PaymentElement
+          options={{
+            layout: "tabs",
+            wallets: { applePay: "auto", googlePay: "auto" },
+          }}
+        />
+      </div>
 
       {errorMessage && (
-        <div className="rounded-2xl bg-red-50 border border-red-200 px-5 py-3 text-sm text-red-700">
+        <div className="rounded-2xl border-2 border-red-200 bg-red-50 px-5 py-4 text-base text-red-700">
           {errorMessage}
         </div>
       )}
@@ -78,7 +80,7 @@ export function CheckoutForm({ amountDollars, mode, onSuccess }: CheckoutFormPro
       <button
         type="submit"
         disabled={!stripe || !elements || isLoading}
-        className={`w-full ${btnPrimaryLg}`}
+        className={`w-full ${btnPrimaryLg} !py-5 !text-lg`}
       >
         {isLoading ? (
           <>
@@ -98,8 +100,8 @@ export function CheckoutForm({ amountDollars, mode, onSuccess }: CheckoutFormPro
         )}
       </button>
 
-      <p className="flex items-center justify-center gap-1.5 text-xs font-light text-zinc-400">
-        <Lock className="h-3 w-3" aria-hidden />
+      <p className="flex items-center justify-center gap-2 text-sm text-zinc-500 sm:text-base">
+        <Lock className="h-4 w-4 shrink-0" aria-hidden />
         Secured by Stripe · 256-bit SSL · Official tax receipt by email
       </p>
     </form>

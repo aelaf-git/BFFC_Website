@@ -16,6 +16,7 @@ import { useHeroNav } from "@/components/layout/hero-nav-provider";
 import { useActiveNavKey } from "@/hooks/use-active-nav";
 import { drawerNavLinkClass, headerNavLinkClass } from "@/lib/nav-link-styles";
 import { activeNavTargets, drawerMobileHeaderNavLinks, drawerNavLinks, navKeyFromHref } from "@/lib/site-nav";
+import { HEADER_ROW_HEIGHT } from "@/lib/header";
 
 export type NavLink = {
   label: string;
@@ -52,7 +53,7 @@ export type CardNavProps = {
   ease?: string;
 };
 
-const MAIN_ROW_HEIGHT = 76;
+const MAIN_ROW_HEIGHT = HEADER_ROW_HEIGHT;
 
 function InternalLink({
   href,

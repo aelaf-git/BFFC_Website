@@ -16,6 +16,8 @@ public class AppDbContext : DbContext
 
     public DbSet<NewsletterSubscription> NewsletterSubscriptions => Set<NewsletterSubscription>();
 
+    public DbSet<InKindDonation> InKindDonations => Set<InKindDonation>();
+
     public DbSet<ProcessedStripeEvent> ProcessedStripeEvents => Set<ProcessedStripeEvent>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

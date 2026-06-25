@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { btnPrimary } from "@/lib/button-styles";
 
 type SubContent = {
   id: string;
@@ -35,7 +36,7 @@ const subsections: SubContent[] = [
     id: "leadership",
     titleLine1: "Guided by Committed",
     titleLine2: "Community Leaders",
-    body: "Our board of advocates, educators, and sport professionals leads with transparency and purpose — working hand-in-hand with families and local partners to create sustainable, lasting change.",
+    body: "Our board of advocates, educators, and sport professionals leads with transparency and purpose, working hand-in-hand with families and local partners to create sustainable, lasting change.",
     cta: { label: "Meet the Team", href: "/learn-more" },
     image: "/about-three.jpeg",
     imageAlt: "Diverse community volunteers and leaders planning together",
@@ -44,7 +45,7 @@ const subsections: SubContent[] = [
     id: "where-we-work",
     titleLine1: "Support Delivered",
     titleLine2: "Where It Matters Most",
-    body: "We operate across diverse communities in Canada, establishing program hubs in schools, community centers, and athletic parks — ensuring every child, regardless of background, has access.",
+    body: "We operate across diverse communities in Canada, establishing program hubs in schools, community centers, and athletic parks, ensuring every child, regardless of background, has access.",
     cta: { label: "View Our Reach", href: "/impact" },
     image: "/about-four.jpeg",
     imageAlt: "A thriving community space where children gather and grow",
@@ -57,7 +58,7 @@ export function AboutSection() {
 
       {/* ── Section Heading ── */}
       <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-14 pb-8 text-center sm:pt-20 sm:pb-12 lg:pt-24 lg:pb-16">
-        <span id="about" aria-hidden="true" className="block scroll-mt-20" />
+        <span id="about" aria-hidden="true" className="scroll-anchor-offset block" />
         <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-zinc-900">
           About Us
         </h2>
@@ -111,15 +112,14 @@ export function AboutSection() {
                   {/* CTA */}
                   <Link
                     href={s.cta.href}
-                    className="group mt-10 inline-flex items-center gap-4 self-start"
+                    className={`group mt-10 self-start ${btnPrimary}`}
                     aria-label={s.cta.label}
                   >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-white transition-all duration-300 group-hover:border-primary group-hover:bg-primary">
-                      <ArrowRight className="h-4 w-4 text-zinc-400 transition-all duration-300 group-hover:text-white group-hover:translate-x-0.5" />
-                    </div>
-                    <span className="text-sm font-medium text-zinc-600 tracking-wide transition-colors duration-200 group-hover:text-accent">
-                      {s.cta.label}
-                    </span>
+                    {s.cta.label}
+                    <ArrowRight
+                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 sm:h-5 sm:w-5"
+                      aria-hidden
+                    />
                   </Link>
                 </div>
 

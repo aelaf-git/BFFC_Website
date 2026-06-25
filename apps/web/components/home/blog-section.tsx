@@ -12,9 +12,9 @@ export function BlogSection() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: `Latest Stories — ${siteConfig.name}`,
+    name: `Latest Stories | ${siteConfig.name}`,
     description:
-      "Real stories from the ground — the children, communities, and volunteers behind our mission.",
+      "Real stories from the ground: the children, communities, and volunteers behind our mission.",
     url: `${siteConfig.url}/stories`,
     itemListElement: featuredPosts.map((post, i) => ({
       "@type": "ListItem",
@@ -89,12 +89,12 @@ export function BlogSection() {
 
         {/* ── Heading ── */}
         <div className="container mx-auto px-6 sm:px-10 lg:px-20 pt-14 pb-8 text-center sm:pt-20 sm:pb-12 lg:pt-24 lg:pb-16">
-          <span id="stories" aria-hidden="true" className="block scroll-mt-20" />
+          <span id="stories" aria-hidden="true" className="scroll-anchor-offset block" />
           <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-white">
             Latest Stories
           </h2>
           <p className="mt-5 mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-white/80 font-light">
-            Real stories from the ground — the children, communities, and
+            Real stories from the ground: the children, communities, and
             volunteers behind our mission.
           </p>
         </div>

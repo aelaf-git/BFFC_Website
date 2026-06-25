@@ -33,7 +33,7 @@ export default function NotFound() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center px-6 py-24 text-center sm:py-32">
+      <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center px-6 pb-24 pt-[calc(var(--header-height)+4rem)] text-center sm:pb-32 sm:pt-[calc(var(--header-height)+5rem)]">
 
         {/* Icon */}
         <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/20 backdrop-blur-sm">
@@ -66,7 +66,7 @@ export default function NotFound() {
         </p>
 
         <p className="mt-3 text-sm font-light text-white/50">
-          Thank you for your patience — great things take time.
+          Thank you for your patience. Great things take time.
         </p>
 
         {/* Divider */}
