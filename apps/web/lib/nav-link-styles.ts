@@ -15,7 +15,7 @@ export function headerNavLinkClass(isActive: boolean, isTransparent: boolean) {
 
 export function drawerNavLinkClass(isActive: boolean) {
   const base =
-    "flex w-full min-w-0 items-center break-words rounded-xl border border-transparent px-5 py-5 font-serif text-2xl font-medium sm:py-6 sm:text-3xl transition-colors duration-200";
+    "flex w-full min-w-0 items-center break-words rounded-none border-y border-transparent px-4 py-5 font-serif text-2xl font-medium sm:px-8 sm:py-6 sm:text-3xl transition-colors duration-200";
 
   if (isActive) {
     return `${base} bg-primary text-white hover:bg-primary-hover`;

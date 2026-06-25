@@ -456,7 +456,7 @@ export function CardNav({
           </div>
 
           {/* Nav links — large serif */}
-          <nav className="flex w-full min-h-0 flex-1 flex-col gap-2 overflow-y-auto overflow-x-hidden px-4 sm:px-8" aria-label="Site navigation">
+          <nav className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto overflow-x-hidden" aria-label="Site navigation">
             {drawerNavLinks.map((link) => {
               const isActive = link.key === activeKey;
               return (
