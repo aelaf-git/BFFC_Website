@@ -83,7 +83,7 @@ export function NewsletterForm({ variant = "light" }: NewsletterFormProps) {
               ? "text-red-500"
               : isLight
                 ? "text-emerald-600"
-                : "text-emerald-300"
+                : "text-white"
           }`}
           role="status"
         >
