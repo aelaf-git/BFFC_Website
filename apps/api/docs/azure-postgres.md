@@ -108,16 +108,77 @@ Mark the connection string as a **slot setting** if using deployment slots.
 
 ## 6. Apply migrations
 
-From your machine (with firewall rule in place):
+You have **two migrations** in the repo:
+
+1. `20260617180330_InitialCreate` — contact, donations, newsletter, stripe events
+2. `20260625170230_AddInKindDonations` — in-kind donation form
+
+### Option A — Automatic on deploy (private Postgres)
+
+If your server uses **Private access**, Azure Portal **Query editor is not available**, and your laptop cannot reach the database directly.
+
+The API applies pending EF Core migrations automatically when the container starts (`Program.cs`, when `DOTNET_RUNNING_IN_CONTAINER=true`).
+
+After changing migrations, rebuild and push the image, then restart **bffc-api**:
 
 ```bash
 cd apps/api
-export ConnectionStrings__DefaultConnection="Host=..."
-dotnet tool restore
-dotnet ef database update
+
+az acr build \
+  --registry apiimage \
+  --image bffc-api:latest \
+  --file Dockerfile \
+  --target final \
+  .
+
+az webapp restart --resource-group bffc-api-group --name bffc-api
 ```
 
-Or let CI apply migrations via the GitHub Actions workflow (see `.github/workflows/azure-api.yml`).
+Check logs for `Database migrations applied.`:
+
+```bash
+az webapp log tail --resource-group bffc-api-group --name bffc-api
+```
+
+### Option B — Azure Portal Query editor
+
+Only available on servers created with **Public access**. If you see no Query editor, use Option A or Option C.
+
+1. **Portal → bffc-api-server → Query editor**
+2. Sign in as `xzgwloocqa` with your password
+3. Select database **`bffc-api-database`**
+4. Open `Data/Migrations/FullSchema.idempotent.sql` from this repo, paste, and **Run**
+
+### Option C — From your laptop (CLI)
+
+Requires **public access** on the server (or VPN into the VNet) and your IP in the firewall.
+
+Install the EF tool globally (fixes `dotnet ef` not found on some setups):
+
+```bash
+dotnet tool install --global dotnet-ef --version 10.0.9
+export PATH="$PATH:$HOME/.dotnet/tools"
+```
+
+Reset and apply:
+
+```bash
+cd apps/api
+
+export ConnectionStrings__DefaultConnection="Host=bffc-api-server.postgres.database.azure.com;Port=5432;Database=bffc-api-database;Username=xzgwloocqa;Password=YOUR_PASSWORD;SSL Mode=Require;Trust Server Certificate=true"
+
+dotnet tool restore
+
+# Start fresh (drops all tables)
+dotnet-ef database drop --force
+
+# Apply all migrations
+dotnet-ef database update
+```
+
+Use **`dotnet-ef`** (hyphen), not `dotnet ef`, if the local tool shim fails.
+
+CI builds the container image and restarts **bffc-api**; migrations still run on container startup (see `.github/workflows/azure-api.yml`).
 
 ## 7. Backups and monitoring
 
@@ -127,13 +188,32 @@ Or let CI apply migrations via the GitHub Actions workflow (see `.github/workflo
 
 ## 8. GitHub Actions secrets
 
-Add these in **GitHub → Settings → Secrets and variables → Actions**:
+Add this in **GitHub → Settings → Secrets and variables → Actions**:
 
 | Secret | Purpose |
 |--------|---------|
-| `DATABASE_CONNECTION_STRING` | EF Core `dotnet ef database update` in CI |
-| `AZURE_API_PUBLISH_PROFILE` | App Service deploy |
-| `AZURE_API_APP_NAME` | App Service name (optional, if using Azure login deploy) |
+| `AZURE_CREDENTIALS` | Service principal JSON for `azure/login` (ACR build + App Service restart) |
+
+Create the service principal (Cloud Shell or a working `az` CLI):
+
+```bash
+az ad sp create-for-rbac \
+  --name "github-bffc-api-deploy" \
+  --role contributor \
+  --scopes /subscriptions/<SUBSCRIPTION_ID>/resourceGroups/bffc-api-group \
+  --json-auth
+```
+
+Grant **AcrPush** on the container registry (it lives in `bffc-api_group`):
+
+```bash
+az role assignment create \
+  --assignee <APP_ID_FROM_JSON> \
+  --role AcrPush \
+  --scope /subscriptions/<SUBSCRIPTION_ID>/resourceGroups/bffc-api_group/providers/Microsoft.ContainerRegistry/registries/apiimage
+```
+
+Paste the full JSON output into the `AZURE_CREDENTIALS` secret. The workflow builds `bffc-api:latest` in ACR and restarts the web app; EF migrations apply when the new container starts.
 
 ## Verify
 

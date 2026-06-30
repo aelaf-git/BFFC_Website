@@ -15,6 +15,12 @@ on:
       - ".github/workflows/azure-api.yml"
   workflow_dispatch:
 
+env:
+  AZURE_WEBAPP_NAME: bffc-api
+  AZURE_WEBAPP_RESOURCE_GROUP: bffc-api-group
+  ACR_NAME: apiimage
+  IMAGE_NAME: bffc-api
+
 defaults:
   run:
     working-directory: apps/api
@@ -32,18 +38,18 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
-      - name: Restore tools
-        run: dotnet tool restore
-
       - name: Restore
         run: dotnet restore
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-  migrate:
+      - name: Verify container image builds
+        run: docker build --target final -t "${{ env.IMAGE_NAME }}:ci" .
+
+  deploy:
     runs-on: ubuntu-latest
-    name: Apply database migrations
+    name: Build image and deploy
     needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment: production
@@ -51,40 +57,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - name: Log in to Azure
+        uses: azure/login@v2
         with:
-          dotnet-version: "10.0.x"
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Restore tools
-        run: dotnet tool restore
+      - name: Build and push image to ACR
+        run: |
+          az acr build \
+            --registry "${{ env.ACR_NAME }}" \
+            --image "${{ env.IMAGE_NAME }}:latest" \
+            --image "${{ env.IMAGE_NAME }}:${{ github.sha }}" \
+            --file Dockerfile \
+            --target final \
+            .
 
-      - name: Apply EF Core migrations
-        env:
-          ConnectionStrings__DefaultConnection: ${{ secrets.DATABASE_CONNECTION_STRING }}
-        run: dotnet ef database update --connection "$ConnectionStrings__DefaultConnection"
-
-  deploy:
-    runs-on: ubuntu-latest
-    name: Deploy to Azure App Service
-    needs: migrate
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    environment: production
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "10.0.x"
-
-      - name: Publish
-        run: dotnet publish -c Release -o ./publish
-
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: ${{ secrets.AZURE_API_APP_NAME }}
-          publish-profile: ${{ secrets.AZURE_API_PUBLISH_PROFILE }}
-          package: ./publish
+      - name: Restart App Service
+        run: |
+          az webapp restart \
+            --resource-group "${{ env.AZURE_WEBAPP_RESOURCE_GROUP }}" \
+            --name "${{ env.AZURE_WEBAPP_NAME }}"

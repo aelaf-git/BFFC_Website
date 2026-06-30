@@ -90,13 +90,26 @@ builder.Services.AddSingleton<IStripeService, StripeService>();
 // ── Email (tax receipts via Resend) ───────────────────────────────────────────
 builder.Services.AddHttpClient<IEmailService, TaxReceiptEmailService>();
 
+var inContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
+
 var app = builder.Build();
+
+// Apply pending migrations on container startup (Azure App Service + private Postgres).
+// Local `dotnet run` still uses manual `dotnet-ef database update`.
+if (inContainer)
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    logger.LogInformation("Applying database migrations…");
+    await db.Database.MigrateAsync();
+    logger.LogInformation("Database migrations applied.");
+}
 
 // ── Middleware pipeline ───────────────────────────────────────────────────────
 if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 
-var inContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
 if (!inContainer)
     app.UseHttpsRedirection();
 
@@ -112,6 +125,28 @@ app.MapGet("/health", async (AppDbContext db) =>
         : Results.Json(
             new { status = "unhealthy", database = "disconnected" },
             statusCode: StatusCodes.Status503ServiceUnavailable);
+});
+
+app.MapGet("/health/migrations", async (AppDbContext db) =>
+{
+    if (!await db.Database.CanConnectAsync())
+    {
+        return Results.Json(
+            new { status = "unhealthy", database = "disconnected" },
+            statusCode: StatusCodes.Status503ServiceUnavailable);
+    }
+
+    var applied = await db.Database.GetAppliedMigrationsAsync();
+    var pending = await db.Database.GetPendingMigrationsAsync();
+
+    return Results.Ok(new
+    {
+        status = "healthy",
+        database = "connected",
+        applied = applied.ToArray(),
+        pending = pending.ToArray(),
+        schemaUpToDate = !pending.Any(),
+    });
 });
 
 app.MapDonationEndpoints();

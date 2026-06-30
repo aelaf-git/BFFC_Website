@@ -25,9 +25,13 @@ export function NewsletterForm({ variant = "light" }: NewsletterFormProps) {
       setStatus("success");
       setFeedback(response.message);
       setEmail("");
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setFeedback("Unable to subscribe right now. Please try again later.");
+      setFeedback(
+        err instanceof Error
+          ? err.message
+          : "Unable to subscribe right now. Please try again later.",
+      );
     }
   }
 
