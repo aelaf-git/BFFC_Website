@@ -19,6 +19,7 @@ env:
   AZURE_WEBAPP_NAME: bffc-api
   AZURE_WEBAPP_RESOURCE_GROUP: bffc-api-group
   ACR_NAME: apiimage
+  ACR_RESOURCE_GROUP: bffc-api_group
   IMAGE_NAME: bffc-api
 
 defaults:
@@ -66,6 +67,7 @@ jobs:
         run: |
           az acr build \
             --registry "${{ env.ACR_NAME }}" \
+            --resource-group "${{ env.ACR_RESOURCE_GROUP }}" \
             --image "${{ env.IMAGE_NAME }}:latest" \
             --image "${{ env.IMAGE_NAME }}:${{ github.sha }}" \
             --file Dockerfile \

@@ -204,7 +204,16 @@ az ad sp create-for-rbac \
   --json-auth
 ```
 
-Grant **AcrPush** on the container registry (it lives in `bffc-api_group`):
+Grant access to the container registry resource group (`bffc-api_group` — note the **underscore**, different from `bffc-api-group`):
+
+```bash
+az role assignment create \
+  --assignee <APP_ID_FROM_JSON> \
+  --role Contributor \
+  --scope /subscriptions/<SUBSCRIPTION_ID>/resourceGroups/bffc-api_group
+```
+
+Or grant **AcrPush** on the registry only:
 
 ```bash
 az role assignment create \
