@@ -11,7 +11,7 @@ type HeroCarouselProps = {
 };
 
 export function HeroCarousel({ slides }: HeroCarouselProps) {
-  const displaySlides = slides.slice(0, 3);
+  const displaySlides = slides.filter((slide) => !slide.hidden).slice(0, 3);
   const isAutoScrolling = useRef(false);
   const snapTimeout = useRef<NodeJS.Timeout | null>(null);
   const touchStartY = useRef<number | null>(null);
