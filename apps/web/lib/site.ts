@@ -7,7 +7,7 @@ function resolveSiteUrl(): string {
   if (
     fromEnv &&
     fromEnv !== "http://localhost:3000" &&
-    !fromEnv.includes("azurestaticapps.net")
+    !fromEnv.includes("onrender.com")
   ) {
     return fromEnv;
   }

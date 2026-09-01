@@ -94,7 +94,7 @@ var inContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINE
 
 var app = builder.Build();
 
-// Apply pending migrations on container startup (Azure App Service + private Postgres).
+// Apply pending migrations on container startup (Render Docker + managed Postgres).
 // Local `dotnet run` still uses manual `dotnet-ef database update`.
 if (inContainer)
 {

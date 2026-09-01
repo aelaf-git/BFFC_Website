@@ -1,0 +1,61 @@
+# Render Blueprint — deploy all services from the Render dashboard:
+# New → Blueprint → connect this repo.
+#
+# After first deploy, set secret env vars in the dashboard (Stripe, Resend).
+# For custom domains: add api.bffcglobal.org on bffc-api and bffcglobal.org on bffc-web,
+# then update NEXT_PUBLIC_API_URL and ALLOWED_ORIGINS and redeploy the web service.
+
+databases:
+  - name: bffc-db
+    plan: starter
+    databaseName: bffc
+    user: bffc
+
+services:
+  - type: web
+    name: bffc-api
+    runtime: docker
+    rootDir: apps/api
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: DOTNET_RUNNING_IN_CONTAINER
+        value: "true"
+      - key: ConnectionStrings__DefaultConnection
+        fromDatabase:
+          name: bffc-db
+          property: connectionString
+      - key: ALLOWED_ORIGINS
+        value: https://bffcglobal.org,https://www.bffcglobal.org
+      - key: Stripe__SecretKey
+        sync: false
+      - key: Stripe__PublishableKey
+        sync: false
+      - key: Stripe__WebhookSecret
+        sync: false
+      - key: Email__ApiKey
+        sync: false
+      - key: Email__FromAddress
+        value: receipts@bffcglobal.org
+      - key: Email__FromName
+        value: Bright Future for Children
+
+  - type: web
+    name: bffc-web
+    runtime: node
+    rootDir: apps/web
+    plan: starter
+    buildCommand: npm ci && npm run build && npm run build:standalone
+    startCommand: node .next/standalone/server.js
+    envVars:
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://bffcglobal.org
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          name: bffc-api
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+        sync: false

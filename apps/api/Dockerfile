@@ -31,7 +31,7 @@ ENTRYPOINT ["dotnet", "watch", "run", "--non-interactive", "--no-launch-profile"
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
-# Azure App Service routes to the port in WEBSITES_PORT (set it to 8080).
+# Render routes to port 8080 (configure in the service settings).
 # Kestrel listens on 8080 for all interfaces inside the container.
 ENV ASPNETCORE_URLS=http://+:8080 \
     DOTNET_RUNNING_IN_CONTAINER=true

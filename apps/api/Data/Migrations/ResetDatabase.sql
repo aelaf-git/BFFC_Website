@@ -1,5 +1,5 @@
 -- Drops all BFFC API tables and migration history so you can start fresh.
--- Run in Azure Portal Query editor on database: bffc-api-database
+-- Run in Render Postgres shell or any psql client connected to bffc-db
 -- WARNING: deletes all data in these tables.
 
 DROP TABLE IF EXISTS in_kind_donations CASCADE;

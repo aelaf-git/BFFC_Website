@@ -2,50 +2,26 @@
 
 BFFC uses **EF Core code-first migrations** with PostgreSQL. All schema changes live in `Data/Migrations/`.
 
-## How production works (Docker on Azure)
+## How production works (Render)
 
-The API container **applies pending migrations automatically on startup** when `DOTNET_RUNNING_IN_CONTAINER=true` (set in App Service).
+The API container **applies pending migrations automatically on startup** when `DOTNET_RUNNING_IN_CONTAINER=true` (set in `render.yaml`).
 
 ```
 Container starts → reads connection string → MigrateAsync() → app listens on :8080
 ```
 
-You do **not** run `dotnet ef database update` against Azure Postgres from your laptop (private DB blocks that anyway).
+You do **not** run `dotnet ef database update` against production from your laptop.
 
 ### Deploy a schema change
 
 1. Create migration locally (see below)
-2. Rebuild and push the image:
-
-   ```bash
-   cd apps/api
-
-   az acr build \
-     --registry apiimage \
-     --image bffc-api:latest \
-     --file Dockerfile \
-     --target final \
-     .
-   ```
-
-3. Restart the app:
-
-   ```bash
-   az webapp restart --resource-group bffc-api-group --name bffc-api
-   ```
-
-4. Confirm in logs:
-
-   ```bash
-   az webapp log tail --resource-group bffc-api-group --name bffc-api
-   ```
-
-   Look for: `Applying database migrations…` then `Database migrations applied.`
+2. Push to `main` — Render auto-redeploys the API
+3. Check deploy logs for: `Applying database migrations…` then `Database migrations applied.`
 
 ### Verify migrations in production
 
 ```bash
-curl https://bffc-api-cfhhhaabhug2ccf7.canadacentral-01.azurewebsites.net/health/migrations
+curl https://<your-api-host>/health/migrations
 ```
 
 Expected:
@@ -62,16 +38,16 @@ Expected:
 Or test a write endpoint (proves tables exist):
 
 ```bash
-curl -X POST "https://bffc-api-cfhhhaabhug2ccf7.canadacentral-01.azurewebsites.net/api/newsletter/subscribe" \
+curl -X POST "https://<your-api-host>/api/newsletter/subscribe" \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","source":"verify"}'
 ```
 
 ### Start with an empty database
 
-1. Create a new database on `bffc-api-server` (or use a new empty one)
-2. Update `ConnectionStrings__DefaultConnection` on **bffc-api** (database name in the string)
-3. Restart the app — migrations run on startup and create all tables
+1. Create a new Render Postgres instance (or use the one from `render.yaml`)
+2. Link it to **bffc-api** via `ConnectionStrings__DefaultConnection`
+3. Redeploy — migrations run on startup and create all tables
 
 No manual SQL required.
 
@@ -137,8 +113,8 @@ dotnet-ef migrations script --idempotent -o Data/Migrations/FullSchema.idempoten
 1. **Never** edit a migration already applied in production.
 2. **Forward-only** — add a new migration to fix schema mistakes.
 3. One logical change per migration when practical.
-4. Production schema changes ship via **new Docker image + restart**, not manual SQL.
+4. Production schema changes ship via **git push to main** (Render redeploy), not manual SQL.
 
-## Azure Postgres setup
+## Render Postgres setup
 
-See [azure-postgres.md](./azure-postgres.md).
+See [render-postgres.md](./render-postgres.md).
