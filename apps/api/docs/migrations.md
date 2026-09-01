@@ -43,6 +43,16 @@ curl -X POST "https://<your-api-host>/api/newsletter/subscribe" \
   -d '{"email":"test@example.com","source":"verify"}'
 ```
 
+### View newsletter subscriptions in the database
+
+```sql
+SELECT email, status, source, subscribed_at, created_at
+FROM newsletter_subscriptions
+ORDER BY subscribed_at DESC;
+```
+
+Run in Render → **bffc-db** → **Connect** (shell or external client).
+
 ### Start with an empty database
 
 1. Create a new Render Postgres instance (or use the one from `render.yaml`)

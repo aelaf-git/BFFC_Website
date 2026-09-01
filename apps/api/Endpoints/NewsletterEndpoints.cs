@@ -22,7 +22,7 @@ public static class NewsletterEndpoints
             }
             catch (ValidationException ex)
             {
-                return Results.BadRequest(ex.Message);
+                return Results.BadRequest(new { message = ex.Message });
             }
             catch (Exception ex)
             {

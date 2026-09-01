@@ -1,6 +1,35 @@
-@api_HostAddress = http://localhost:5191
+@api_HostAddress = http://localhost:5000
 
-GET {{api_HostAddress}}/weatherforecast/
+### Health
+GET {{api_HostAddress}}/health
 Accept: application/json
 
 ###
+
+GET {{api_HostAddress}}/health/migrations
+Accept: application/json
+
+###
+
+### Newsletter subscribe
+POST {{api_HostAddress}}/api/newsletter/subscribe
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "source": "footer"
+}
+
+###
+
+### Contact form
+POST {{api_HostAddress}}/api/contact
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "subject": "General enquiry",
+  "message": "Hello from api.http"
+}
+

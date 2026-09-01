@@ -9,8 +9,8 @@ export async function parseApiError(res: Response): Promise<string> {
   if (!text) return `API error ${res.status}`;
 
   try {
-    const json = JSON.parse(text) as { title?: string; detail?: string };
-    return json.detail ?? json.title ?? text;
+    const json = JSON.parse(text) as { title?: string; detail?: string; message?: string };
+    return json.message ?? json.detail ?? json.title ?? text;
   } catch {
     if (text.includes("<!DOCTYPE html") || text.includes("<html")) {
       return `The site could not reach the API (got HTML instead of JSON). Check NEXT_PUBLIC_API_URL is set to your API URL when the frontend is built.`;
