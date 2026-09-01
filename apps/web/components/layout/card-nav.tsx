@@ -77,7 +77,14 @@ function InternalLink({
     );
   }
   return (
-    <a href={href} className={className} aria-label={ariaLabel} aria-current={ariaCurrent}>
+    <a
+      href={href}
+      className={className}
+      aria-label={ariaLabel}
+      aria-current={ariaCurrent}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       {children}
     </a>
   );

@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Net.Mail;
 using Api.Data;
 using Api.Entities;
 using Api.Models;
@@ -24,11 +23,15 @@ public class NewsletterService : INewsletterService
         SubscribeNewsletterRequest request,
         CancellationToken ct = default)
     {
-        if (string.IsNullOrWhiteSpace(request.Email) || !IsValidEmail(request.Email))
+        if (string.IsNullOrWhiteSpace(request.Email) || !InputSanitizer.IsValidEmail(request.Email.Trim()))
             throw new ValidationException("A valid email address is required.");
 
         var normalizedEmail = request.Email.Trim().ToLowerInvariant();
+        InputSanitizer.MaxLength(normalizedEmail, 320, "Email");
+
         var source = string.IsNullOrWhiteSpace(request.Source) ? "footer" : request.Source.Trim();
+        InputSanitizer.RejectNewlines(source, "Source");
+        InputSanitizer.MaxLength(source, 50, "Source");
         var now = DateTimeOffset.UtcNow;
 
         var existing = await _db.NewsletterSubscriptions
@@ -39,8 +42,8 @@ public class NewsletterService : INewsletterService
             if (existing.Status == NewsletterStatus.Active)
             {
                 return new SubscribeNewsletterResponse(
-                    "You are already subscribed to our newsletter.",
-                    AlreadySubscribed: true);
+                    "Thank you for subscribing to our newsletter.",
+                    AlreadySubscribed: false);
             }
 
             existing.Status = NewsletterStatus.Active;
@@ -50,7 +53,7 @@ public class NewsletterService : INewsletterService
             await _db.SaveChangesAsync(ct);
 
             return new SubscribeNewsletterResponse(
-                "Welcome back! You have been re-subscribed to our newsletter.",
+                "Thank you for subscribing to our newsletter.",
                 AlreadySubscribed: false);
         }
 
@@ -69,18 +72,5 @@ public class NewsletterService : INewsletterService
         return new SubscribeNewsletterResponse(
             "Thank you for subscribing to our newsletter.",
             AlreadySubscribed: false);
-    }
-
-    private static bool IsValidEmail(string email)
-    {
-        try
-        {
-            _ = new MailAddress(email);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
     }
 }

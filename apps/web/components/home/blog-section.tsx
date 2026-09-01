@@ -5,6 +5,7 @@ import { brand } from "@/lib/brand";
 import { blogGridClasses } from "@/lib/blog-grid";
 import { featuredPosts } from "@/lib/blog-posts";
 import { siteConfig } from "@/lib/site";
+import { safeJsonLd } from "@/lib/seo/json-ld";
 
 export function BlogSection() {
   const postCount = featuredPosts.length;
@@ -61,7 +62,7 @@ export function BlogSection() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
 
       {/*

@@ -101,10 +101,10 @@ export default function DonatePage() {
       );
       return;
     }
-    if (effectiveAmount < 1) {
+    if (!Number.isFinite(effectiveAmount) || effectiveAmount < 1 || effectiveAmount > 10000) {
       showError(
         "Invalid amount",
-        "Please enter a valid donation amount.",
+        "Please enter a donation amount between $1 and $10,000.",
       );
       return;
     }
@@ -254,6 +254,7 @@ export default function DonatePage() {
                     id="custom-amount"
                     type="number"
                     min="1"
+                    max="10000"
                     step="1"
                     value={custom}
                     onChange={(e) => { setCustom(e.target.value); setSelected(0); }}
@@ -285,6 +286,7 @@ export default function DonatePage() {
                       id="first-name" type="text" autoComplete="given-name"
                       placeholder="Aisha" value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
+                      maxLength={100}
                       className={donateFieldClass}
                     />
                   </div>
@@ -294,6 +296,7 @@ export default function DonatePage() {
                       id="last-name" type="text" autoComplete="family-name"
                       placeholder="Johnson" value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
+                      maxLength={100}
                       className={donateFieldClass}
                     />
                   </div>
@@ -304,6 +307,7 @@ export default function DonatePage() {
                     id="email" type="email" autoComplete="email"
                     placeholder="you@example.com" value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    maxLength={320}
                     className={donateFieldClass}
                   />
                 </div>
@@ -315,6 +319,7 @@ export default function DonatePage() {
                     id="phone" type="tel" autoComplete="tel"
                     placeholder="+1 (555) 000-0000" value={phone}
                     onChange={(e) => setPhone(e.target.value)}
+                    maxLength={30}
                     className={donateFieldClass}
                   />
                 </div>

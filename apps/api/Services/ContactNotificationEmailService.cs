@@ -40,7 +40,7 @@ public class ContactNotificationEmailService : IContactNotificationEmailService
             return;
         }
 
-        var subject = $"New contact form message: {message.Subject}";
+        var subject = $"New contact form message: {InputSanitizer.StripNewlines(message.Subject)}";
         var payload = new
         {
             from = $"{_fromName} <{_fromAddress}>",

@@ -17,8 +17,13 @@ import { siteConfig } from "@/lib/site";
  */
 function SuccessContent() {
   const params        = useSearchParams();
-  const amount        = params.get("amount") ?? "?";
-  const mode          = params.get("mode") ?? "one-time";
+  const rawAmount     = params.get("amount");
+  const amountValue   = rawAmount && /^\d+(\.\d{1,2})?$/.test(rawAmount) ? Number(rawAmount) : NaN;
+  const amount        =
+    Number.isFinite(amountValue) && amountValue >= 1 && amountValue <= 10000
+      ? String(amountValue)
+      : null;
+  const mode          = params.get("mode") === "monthly" ? "monthly" : "one-time";
   const redirectStatus = params.get("redirect_status");
   const clientSecret  = params.get("payment_intent_client_secret");
   const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? "";
@@ -89,8 +94,12 @@ function SuccessContent() {
           : <>
               Your{" "}
               {mode === "monthly"
-                ? `$${amount}/month donation has been set up`
-                : `$${amount} donation was received`}
+                ? amount
+                  ? `$${amount}/month donation has been set up`
+                  : "monthly donation has been set up"
+                : amount
+                  ? `$${amount} donation was received`
+                  : "donation was received"}
               . An official tax receipt is on its way to your inbox.
             </>
         }

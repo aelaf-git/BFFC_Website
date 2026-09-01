@@ -11,9 +11,17 @@ type SearchPageProps = {
   searchParams: Promise<{ q?: string }>;
 };
 
+function sanitizeSearchQuery(q: string | undefined): string {
+  return (q ?? "")
+    .replace(/[\u0000-\u001F\u007F]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 60);
+}
+
 export async function generateMetadata({ searchParams }: SearchPageProps): Promise<Metadata> {
   const { q } = await searchParams;
-  const query = q?.trim() ?? "";
+  const query = sanitizeSearchQuery(q);
 
   return {
     title: query ? `Search results for "${query}"` : "Search",

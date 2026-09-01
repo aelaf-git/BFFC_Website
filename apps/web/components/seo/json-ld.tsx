@@ -1,5 +1,6 @@
 import { brand } from "@/lib/brand";
 import { siteConfig } from "@/lib/site";
+import { safeJsonLd } from "@/lib/seo/json-ld";
 
 export function OrganizationJsonLd() {
   const sameAs = [
@@ -75,11 +76,11 @@ export function OrganizationJsonLd() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(organization) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(website) }}
       />
     </>
   );
@@ -114,7 +115,7 @@ export function HomePageJsonLd({ url }: HomePageJsonLdProps) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(webPage) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(webPage) }}
     />
   );
 }

@@ -8,6 +8,7 @@ import { featuredPosts, getPostBySlug } from "@/lib/blog-posts";
 import { PageHero } from "@/components/ui/page-hero";
 import { brand } from "@/lib/brand";
 import { siteConfig } from "@/lib/site";
+import { safeJsonLd } from "@/lib/seo/json-ld";
 
 /* ─── Static generation ───────────────────────────────────────────────────── */
 
@@ -107,7 +108,7 @@ export default async function StoryPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
 
       <article

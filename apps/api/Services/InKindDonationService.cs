@@ -1,9 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using System.Net.Mail;
 using Api.Data;
 using Api.Entities;
 using Api.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services;
 
@@ -70,11 +68,17 @@ public class InKindDonationService : IInKindDonationService
 
     private static void ValidateRequest(SubmitInKindDonationRequest request)
     {
-        if (string.IsNullOrWhiteSpace(request.Name))
-            throw new ValidationException("Name is required.");
+        var name = InputSanitizer.Require(request.Name, "Name");
+        InputSanitizer.MaxLength(name, 200, "Name");
 
-        if (string.IsNullOrWhiteSpace(request.Email) || !IsValidEmail(request.Email))
+        if (string.IsNullOrWhiteSpace(request.Email) || !InputSanitizer.IsValidEmail(request.Email.Trim()))
             throw new ValidationException("A valid email address is required.");
+        InputSanitizer.MaxLength(request.Email.Trim(), 320, "Email");
+
+        InputSanitizer.Optional(request.Phone, 30, "Phone");
+        InputSanitizer.Optional(request.Organization, 200, "Organization");
+        InputSanitizer.Optional(request.City, 120, "City");
+        InputSanitizer.Optional(request.EstimatedQuantity, 200, "Estimated quantity");
 
         if (string.IsNullOrWhiteSpace(request.Category) || !AllowedCategories.Contains(request.Category))
             throw new ValidationException("Please select a donation category.");
@@ -82,13 +86,13 @@ public class InKindDonationService : IInKindDonationService
         if (string.IsNullOrWhiteSpace(request.ItemDescription))
             throw new ValidationException("Please describe what you would like to donate.");
 
-        if (request.ItemDescription.Length > 2000)
+        if (request.ItemDescription.Trim().Length > 2000)
             throw new ValidationException("Item description must be 2000 characters or fewer.");
 
         if (string.IsNullOrWhiteSpace(request.DeliveryMethod) || !AllowedDeliveryMethods.Contains(request.DeliveryMethod))
             throw new ValidationException("Please select how you plan to deliver the donation.");
 
-        if (!string.IsNullOrWhiteSpace(request.Notes) && request.Notes.Length > 2000)
+        if (!string.IsNullOrWhiteSpace(request.Notes) && request.Notes.Trim().Length > 2000)
             throw new ValidationException("Additional notes must be 2000 characters or fewer.");
     }
 
@@ -96,18 +100,5 @@ public class InKindDonationService : IInKindDonationService
     {
         if (string.IsNullOrWhiteSpace(value)) return null;
         return value.Trim();
-    }
-
-    private static bool IsValidEmail(string email)
-    {
-        try
-        {
-            _ = new MailAddress(email);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
     }
 }

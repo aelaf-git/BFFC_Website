@@ -9,6 +9,8 @@ namespace Api.Services;
 
 public interface IDonationPersistenceService
 {
+    Task<bool> IsEventProcessedAsync(string stripeEventId, CancellationToken ct = default);
+
     Task<bool> TryMarkEventProcessedAsync(string stripeEventId, string eventType, CancellationToken ct = default);
 
     Task PersistSucceededPaymentIntentAsync(PaymentIntent pi, CancellationToken ct = default);
@@ -23,6 +25,9 @@ public class DonationPersistenceService : IDonationPersistenceService
     private readonly AppDbContext _db;
 
     public DonationPersistenceService(AppDbContext db) => _db = db;
+
+    public Task<bool> IsEventProcessedAsync(string stripeEventId, CancellationToken ct = default) =>
+        _db.ProcessedStripeEvents.AnyAsync(e => e.StripeEventId == stripeEventId, ct);
 
     public async Task<bool> TryMarkEventProcessedAsync(
         string stripeEventId,

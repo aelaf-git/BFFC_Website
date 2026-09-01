@@ -110,6 +110,7 @@ export function InKindDonationForm() {
               placeholder="Your name"
               value={form.name}
               onChange={handleChange}
+              maxLength={200}
               className={fieldClass}
             />
           </div>
@@ -127,6 +128,7 @@ export function InKindDonationForm() {
               placeholder="you@example.com"
               value={form.email}
               onChange={handleChange}
+              maxLength={320}
               className={fieldClass}
             />
           </div>
@@ -145,6 +147,7 @@ export function InKindDonationForm() {
               placeholder="+1 (555) 000-0000"
               value={form.phone}
               onChange={handleChange}
+              maxLength={30}
               className={fieldClass}
             />
           </div>
@@ -160,6 +163,7 @@ export function InKindDonationForm() {
               placeholder="Company, school, or group (optional)"
               value={form.organization}
               onChange={handleChange}
+              maxLength={200}
               className={fieldClass}
             />
           </div>
@@ -219,6 +223,7 @@ export function InKindDonationForm() {
             placeholder="Describe the items, condition, and any relevant details…"
             value={form.itemDescription}
             onChange={handleChange}
+            maxLength={2000}
             className={`min-h-[140px] ${textareaClass}`}
           />
         </div>
@@ -235,6 +240,7 @@ export function InKindDonationForm() {
               placeholder="e.g. 50 backpacks, approx. $500 value"
               value={form.estimatedQuantity}
               onChange={handleChange}
+              maxLength={200}
               className={fieldClass}
             />
           </div>
@@ -250,6 +256,7 @@ export function InKindDonationForm() {
               placeholder="Calgary, Addis Ababa, etc."
               value={form.city}
               onChange={handleChange}
+              maxLength={120}
               className={fieldClass}
             />
           </div>
@@ -265,6 +272,7 @@ export function InKindDonationForm() {
             placeholder="Preferred contact times, delivery dates, or other details…"
             value={form.notes}
             onChange={handleChange}
+            maxLength={2000}
             className={`min-h-[120px] ${textareaClass}`}
           />
         </div>

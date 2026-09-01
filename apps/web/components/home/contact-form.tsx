@@ -79,6 +79,7 @@ export function ContactForm() {
               placeholder="Your name"
               value={form.name}
               onChange={handleChange}
+              maxLength={200}
               className={fieldClass}
             />
           </div>
@@ -96,6 +97,7 @@ export function ContactForm() {
               placeholder="you@example.com"
               value={form.email}
               onChange={handleChange}
+              maxLength={320}
               className={fieldClass}
             />
           </div>
@@ -133,6 +135,7 @@ export function ContactForm() {
             placeholder="How can we help you?"
             value={form.message}
             onChange={handleChange}
+            maxLength={5000}
             className="min-h-[120px] flex-1 w-full resize-none rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-800 placeholder-zinc-400 outline-none transition-all focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20"
           />
         </div>

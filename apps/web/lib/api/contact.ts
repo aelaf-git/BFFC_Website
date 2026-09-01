@@ -23,7 +23,7 @@ const SUBJECT_LABELS: Record<string, string> = {
 
 export function formatContactSubject(value: string): string {
   if (!value.trim()) return "General enquiry";
-  return SUBJECT_LABELS[value] ?? value;
+  return SUBJECT_LABELS[value] ?? "General enquiry";
 }
 
 export async function submitContactMessage(

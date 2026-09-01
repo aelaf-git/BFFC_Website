@@ -1,4 +1,4 @@
-import { API_BASE } from "@/lib/api/client";
+import { API_BASE, parseApiError } from "@/lib/api/client";
 
 export interface CreateIntentPayload {
   amountCents: number;
@@ -42,8 +42,7 @@ export async function createPaymentIntent(
   }
 
   if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || `API error ${res.status}`);
+    throw new Error(await parseApiError(res));
   }
 
   return res.json() as Promise<CreateIntentResponse>;

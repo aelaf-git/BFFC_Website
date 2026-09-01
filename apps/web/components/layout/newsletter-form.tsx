@@ -68,6 +68,7 @@ export function NewsletterForm({ variant = "light" }: NewsletterFormProps) {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Your email address"
             autoComplete="email"
+            maxLength={320}
             disabled={status === "submitting"}
             className={[
               "flex-1 h-13 px-5 py-3.5 text-sm font-light tracking-wide outline-none transition-all duration-200",

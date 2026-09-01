@@ -22,18 +22,26 @@ public static class DonationEndpoints
 
         group.MapPost("/create-intent", async (
             CreatePaymentIntentRequest request,
-            IStripeService stripeService) =>
+            IStripeService stripeService,
+            ILogger<Program> logger) =>
         {
-            if (request.AmountCents < 100)
-                return Results.BadRequest("Minimum donation is $1.00.");
+            var validationError = ValidateCreateIntent(request);
+            if (validationError is not null)
+                return Results.BadRequest(new { message = validationError });
 
-            if (string.IsNullOrWhiteSpace(request.DonorEmail))
-                return Results.BadRequest("Donor email is required.");
-
-            var response = await stripeService.CreatePaymentIntentAsync(request);
-            return Results.Ok(response);
+            try
+            {
+                var response = await stripeService.CreatePaymentIntentAsync(request);
+                return Results.Ok(response);
+            }
+            catch (StripeException ex)
+            {
+                logger.LogError(ex, "Stripe error creating payment intent.");
+                return Results.Problem("Unable to start payment. Please try again.");
+            }
         })
-        .WithName("CreatePaymentIntent");
+        .WithName("CreatePaymentIntent")
+        .RequireRateLimiting("donation-intents");
 
         group.MapPost("/webhook", async (
             HttpRequest httpRequest,
@@ -61,14 +69,10 @@ public static class DonationEndpoints
             catch (StripeException ex)
             {
                 logger.LogWarning(ex, "Stripe webhook signature verification failed.");
-                return Results.BadRequest($"Webhook error: {ex.Message}");
+                return Results.BadRequest("Invalid webhook signature.");
             }
 
-            var isNewEvent = await donationPersistence.TryMarkEventProcessedAsync(
-                stripeEvent.Id,
-                stripeEvent.Type);
-
-            if (!isNewEvent)
+            if (await donationPersistence.IsEventProcessedAsync(stripeEvent.Id))
             {
                 logger.LogInformation("Skipping already processed Stripe event {EventId}.", stripeEvent.Id);
                 return Results.Ok();
@@ -131,12 +135,51 @@ public static class DonationEndpoints
                 }
             }
 
+            await donationPersistence.TryMarkEventProcessedAsync(
+                stripeEvent.Id,
+                stripeEvent.Type);
+
             return Results.Ok();
         })
         .WithName("StripeWebhook")
         .DisableAntiforgery();
 
         return app;
+    }
+
+    private static string? ValidateCreateIntent(CreatePaymentIntentRequest request)
+    {
+        if (request.AmountCents is < 100 or > 1_000_000)
+            return "Donation amount must be between $1 and $10,000.";
+
+        if (!string.Equals(request.Currency, "usd", StringComparison.OrdinalIgnoreCase))
+            return "Only USD donations are accepted.";
+
+        if (request.Mode is not ("one-time" or "monthly"))
+            return "Invalid donation mode.";
+
+        if (string.IsNullOrWhiteSpace(request.DonorEmail) || !InputSanitizer.IsValidEmail(request.DonorEmail.Trim()))
+            return "A valid donor email is required.";
+
+        if (string.IsNullOrWhiteSpace(request.DonorName))
+            return "Donor name is required.";
+
+        var name = request.DonorName.Trim();
+        if (name.Contains('\r') || name.Contains('\n'))
+            return "Donor name contains invalid characters.";
+        if (name.Length > 200)
+            return "Donor name is too long.";
+
+        if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
+        {
+            var phone = request.PhoneNumber.Trim();
+            if (phone.Contains('\r') || phone.Contains('\n'))
+                return "Phone number contains invalid characters.";
+            if (phone.Length > 30)
+                return "Phone number is too long.";
+        }
+
+        return null;
     }
 
     private static TaxReceiptInfo BuildReceiptFromPaymentIntent(PaymentIntent pi)

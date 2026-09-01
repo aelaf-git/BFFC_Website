@@ -1,9 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using System.Net.Mail;
 using Api.Data;
 using Api.Entities;
 using Api.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services;
 
@@ -65,32 +63,20 @@ public class ContactService : IContactService
 
     private static void ValidateContactRequest(SubmitContactRequest request)
     {
-        if (string.IsNullOrWhiteSpace(request.Name))
-            throw new ValidationException("Name is required.");
+        var name = InputSanitizer.Require(request.Name, "Name");
+        InputSanitizer.MaxLength(name, 200, "Name");
 
-        if (string.IsNullOrWhiteSpace(request.Email) || !IsValidEmail(request.Email))
+        if (string.IsNullOrWhiteSpace(request.Email) || !InputSanitizer.IsValidEmail(request.Email.Trim()))
             throw new ValidationException("A valid email address is required.");
+        InputSanitizer.MaxLength(request.Email.Trim(), 320, "Email");
 
-        if (string.IsNullOrWhiteSpace(request.Subject))
-            throw new ValidationException("Subject is required.");
+        var subject = InputSanitizer.Require(request.Subject, "Subject");
+        InputSanitizer.MaxLength(subject, 300, "Subject");
 
         if (string.IsNullOrWhiteSpace(request.Message))
             throw new ValidationException("Message is required.");
 
-        if (request.Message.Length > 5000)
+        if (request.Message.Trim().Length > 5000)
             throw new ValidationException("Message must be 5000 characters or fewer.");
-    }
-
-    private static bool IsValidEmail(string email)
-    {
-        try
-        {
-            _ = new MailAddress(email);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
     }
 }

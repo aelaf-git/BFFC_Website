@@ -12,6 +12,11 @@ Env.TraversePath().Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 256 * 1024;
+});
+
 // ── OpenAPI ───────────────────────────────────────────────────────────────────
 builder.Services.AddOpenApi();
 
@@ -35,7 +40,7 @@ builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<INewsletterService, NewsletterService>();
 builder.Services.AddScoped<IInKindDonationService, InKindDonationService>();
 
-// ── Rate limiting (contact + newsletter) ──────────────────────────────────────
+// ── Rate limiting (forms + donation intents) ──────────────────────────────────
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -45,6 +50,15 @@ builder.Services.AddRateLimiter(options =>
             factory: _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = 10,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0,
+            }));
+    options.AddPolicy("donation-intents", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 5,
                 Window = TimeSpan.FromMinutes(1),
                 QueueLimit = 0,
             }));
@@ -83,6 +97,9 @@ builder.Services.AddSingleton(sp =>
     var config = sp.GetRequiredService<IConfiguration>();
     var secretKey = config["Stripe:SecretKey"]
         ?? throw new InvalidOperationException("Stripe:SecretKey is not configured.");
+    var webhookSecret = config["Stripe:WebhookSecret"];
+    if (string.IsNullOrWhiteSpace(webhookSecret))
+        throw new InvalidOperationException("Stripe:WebhookSecret is not configured.");
     return new StripeClient(secretKey);
 });
 builder.Services.AddSingleton<IStripeService, StripeService>();
@@ -128,27 +145,30 @@ app.MapGet("/health", async (AppDbContext db) =>
             statusCode: StatusCodes.Status503ServiceUnavailable);
 });
 
-app.MapGet("/health/migrations", async (AppDbContext db) =>
+if (app.Environment.IsDevelopment())
 {
-    if (!await db.Database.CanConnectAsync())
+    app.MapGet("/health/migrations", async (AppDbContext db) =>
     {
-        return Results.Json(
-            new { status = "unhealthy", database = "disconnected" },
-            statusCode: StatusCodes.Status503ServiceUnavailable);
-    }
+        if (!await db.Database.CanConnectAsync())
+        {
+            return Results.Json(
+                new { status = "unhealthy", database = "disconnected" },
+                statusCode: StatusCodes.Status503ServiceUnavailable);
+        }
 
-    var applied = await db.Database.GetAppliedMigrationsAsync();
-    var pending = await db.Database.GetPendingMigrationsAsync();
+        var applied = await db.Database.GetAppliedMigrationsAsync();
+        var pending = await db.Database.GetPendingMigrationsAsync();
 
-    return Results.Ok(new
-    {
-        status = "healthy",
-        database = "connected",
-        applied = applied.ToArray(),
-        pending = pending.ToArray(),
-        schemaUpToDate = !pending.Any(),
+        return Results.Ok(new
+        {
+            status = "healthy",
+            database = "connected",
+            applied = applied.ToArray(),
+            pending = pending.ToArray(),
+            schemaUpToDate = !pending.Any(),
+        });
     });
-});
+}
 
 app.MapDonationEndpoints();
 app.MapContactEndpoints();
