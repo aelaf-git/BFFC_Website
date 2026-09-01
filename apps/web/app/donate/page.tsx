@@ -10,6 +10,10 @@ import {
 } from "lucide-react";
 import { CheckoutForm } from "@/components/donate/checkout-form";
 import { PageHero } from "@/components/ui/page-hero";
+import {
+  FormFeedbackModal,
+  useFormFeedbackModal,
+} from "@/components/ui/form-feedback-modal";
 import { createPaymentIntent } from "@/lib/api/donations";
 import { btnAccent, btnPrimaryLg } from "@/lib/button-styles";
 import { siteConfig } from "@/lib/site";
@@ -71,7 +75,7 @@ export default function DonatePage() {
   // Navigation
   const [step, setStep]                 = useState<Step>("form");
   const [isCreatingIntent, setCreating] = useState(false);
-  const [intentError, setIntentError]   = useState<string | null>(null);
+  const { modalProps, showError } = useFormFeedbackModal();
 
   // Stripe state (set when we move to step 2)
   const [stripePromise, setStripePromise] = useState<Promise<Stripe | null> | null>(null);
@@ -91,16 +95,21 @@ export default function DonatePage() {
 
   const handleContinue = useCallback(async () => {
     if (!email || !firstName || !lastName) {
-      setIntentError("Please fill in your name and email before continuing.");
+      showError(
+        "Missing information",
+        "Please fill in your name and email before continuing.",
+      );
       return;
     }
     if (effectiveAmount < 1) {
-      setIntentError("Please enter a valid donation amount.");
+      showError(
+        "Invalid amount",
+        "Please enter a valid donation amount.",
+      );
       return;
     }
 
     setCreating(true);
-    setIntentError(null);
 
     try {
       const response = await createPaymentIntent({
@@ -116,13 +125,14 @@ export default function DonatePage() {
       setStripePromise(loadStripe(response.publishableKey));
       setStep("payment");
     } catch (err) {
-      setIntentError(
+      showError(
+        "Unable to continue",
         err instanceof Error ? err.message : "Something went wrong. Please try again.",
       );
     } finally {
       setCreating(false);
     }
-  }, [effectiveAmount, email, firstName, lastName, mode, phone]);
+  }, [effectiveAmount, email, firstName, lastName, mode, phone, showError]);
 
   // ── Sidebar (shared between steps) ──────────────────────────────────────────
 
@@ -310,13 +320,6 @@ export default function DonatePage() {
                 </div>
               </div>
 
-              {/* Error */}
-              {intentError && (
-                <div className="mt-6 rounded-2xl border-2 border-red-200 bg-red-50 px-5 py-4 text-base text-red-700">
-                  {intentError}
-                </div>
-              )}
-
               {/* CTA */}
               <div className="mt-10">
                 <button
@@ -378,6 +381,7 @@ export default function DonatePage() {
                   amountDollars={effectiveAmount}
                   mode={mode}
                   onSuccess={() => setStep("success")}
+                  onError={(message) => showError("Payment failed", message)}
                 />
               </Elements>
             </div>
@@ -415,6 +419,8 @@ export default function DonatePage() {
           {Sidebar}
         </div>
       </div>
+
+      <FormFeedbackModal {...modalProps} onClose={modalProps.onClose} />
     </div>
   );
 }

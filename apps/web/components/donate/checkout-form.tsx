@@ -9,6 +9,7 @@ interface CheckoutFormProps {
   amountDollars: number;
   mode: "one-time" | "monthly";
   onSuccess: () => void;
+  onError: (message: string) => void;
 }
 
 /**
@@ -16,24 +17,22 @@ interface CheckoutFormProps {
  * with the clientSecret from the backend.
  * Stripe's <PaymentElement> handles card / wallet / bank — all PCI-compliant.
  */
-export function CheckoutForm({ amountDollars, mode, onSuccess }: CheckoutFormProps) {
+export function CheckoutForm({ amountDollars, mode, onSuccess, onError }: CheckoutFormProps) {
   const stripe   = useStripe();
   const elements = useElements();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!stripe || !elements) return;
 
     setIsLoading(true);
-    setErrorMessage(null);
 
     // Validate the PaymentElement before confirming.
     const { error: submitError } = await elements.submit();
     if (submitError) {
-      setErrorMessage(submitError.message ?? "Please check your payment details.");
+      onError(submitError.message ?? "Please check your payment details.");
       setIsLoading(false);
       return;
     }
@@ -52,7 +51,7 @@ export function CheckoutForm({ amountDollars, mode, onSuccess }: CheckoutFormPro
     });
 
     if (error) {
-      setErrorMessage(error.message ?? "Payment failed. Please try again.");
+      onError(error.message ?? "Payment failed. Please try again.");
       setIsLoading(false);
     } else {
       // Payment confirmed without redirect — show success inline.
@@ -70,12 +69,6 @@ export function CheckoutForm({ amountDollars, mode, onSuccess }: CheckoutFormPro
           }}
         />
       </div>
-
-      {errorMessage && (
-        <div className="rounded-2xl border-2 border-red-200 bg-red-50 px-5 py-4 text-base text-red-700">
-          {errorMessage}
-        </div>
-      )}
 
       <button
         type="submit"
