@@ -15,8 +15,18 @@ public interface IContactService
 public class ContactService : IContactService
 {
     private readonly AppDbContext _db;
+    private readonly IContactNotificationEmailService _notificationEmail;
+    private readonly ILogger<ContactService> _logger;
 
-    public ContactService(AppDbContext db) => _db = db;
+    public ContactService(
+        AppDbContext db,
+        IContactNotificationEmailService notificationEmail,
+        ILogger<ContactService> logger)
+    {
+        _db = db;
+        _notificationEmail = notificationEmail;
+        _logger = logger;
+    }
 
     public async Task<SubmitContactResponse> SubmitAsync(
         SubmitContactRequest request,
@@ -37,6 +47,18 @@ public class ContactService : IContactService
 
         _db.ContactMessages.Add(message);
         await _db.SaveChangesAsync(ct);
+
+        try
+        {
+            await _notificationEmail.SendAsync(message, ct);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Contact message {Id} was saved but the notification email could not be sent.",
+                message.Id);
+        }
 
         return new SubmitContactResponse(message.Id, "Your message has been received. We will get back to you soon.");
     }
