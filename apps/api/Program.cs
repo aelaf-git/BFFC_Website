@@ -22,9 +22,9 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 
 // ── Database ────────────────────────────────────────────────────────────────────
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException(
-        "ConnectionStrings:DefaultConnection is not configured.");
+var connectionString = PostgresConnectionString.Normalize(
+    builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? builder.Configuration["DATABASE_URL"]);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString)

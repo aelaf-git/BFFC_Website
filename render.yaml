@@ -27,6 +27,11 @@ services:
         fromDatabase:
           name: bffc-db
           property: connectionString
+      # Fallback if the linked connection string is missing in the dashboard
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bffc-db
+          property: connectionString
       - key: ALLOWED_ORIGINS
         value: https://bffcglobal.org,https://www.bffcglobal.org
       - key: Stripe__SecretKey
