@@ -33,7 +33,7 @@ services:
           name: bffc-db
           property: connectionString
       - key: ALLOWED_ORIGINS
-        value: https://bffcglobal.org,https://www.bffcglobal.org
+        value: https://bffcglobal.org,https://www.bffcglobal.org,https://bffc-web.onrender.com
       - key: Stripe__SecretKey
         sync: false
       - key: Stripe__PublishableKey
