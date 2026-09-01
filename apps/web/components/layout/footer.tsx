@@ -2,14 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site";
 import { brand } from "@/lib/brand";
+import { socialLinks } from "@/lib/social-links";
 import { NewsletterForm } from "@/components/layout/newsletter-form";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaXTwitter,
-  FaYoutube,
-} from "react-icons/fa6";
 
 const primaryLinks = [
   { href: "/#about", label: "About Us" },
@@ -27,34 +21,6 @@ const legalLinks = [
   { href: "/legal/privacy-policy", label: "Privacy Policy" },
   { href: "/legal/terms-of-use", label: "Terms of Use" },
   { href: `mailto:${siteConfig.contact.email}`, label: "Contact" },
-] as const;
-
-const socialLinks = [
-  {
-    icon: FaFacebookF,
-    href: siteConfig.social.facebook || "https://facebook.com",
-    label: "Facebook",
-  },
-  {
-    icon: FaYoutube,
-    href: "https://youtube.com",
-    label: "YouTube",
-  },
-  {
-    icon: FaXTwitter,
-    href: siteConfig.social.twitter || "https://twitter.com",
-    label: "X (formerly Twitter)",
-  },
-  {
-    icon: FaInstagram,
-    href: "https://instagram.com",
-    label: "Instagram",
-  },
-  {
-    icon: FaLinkedinIn,
-    href: siteConfig.social.linkedin || "https://linkedin.com",
-    label: "LinkedIn",
-  },
 ] as const;
 
 function FooterDivider() {

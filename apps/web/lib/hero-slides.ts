@@ -14,7 +14,6 @@ export type HeroSlide = {
 
 export const heroSlides: HeroSlide[] = [
   {
-    hidden: true,
     image: "/Bright-Future-Academy-for-Afar-Empowerment/img1.png",
     video: "/Bright-Future-Academy-for-Afar-Empowerment/video.mp4",
     title: "Bright Future Academy for Afar Empowerment",

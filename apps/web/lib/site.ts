@@ -70,8 +70,11 @@ export const siteConfig = {
       "https://maps.google.com/maps?q=1835+10+Ave+SE+Calgary+AB+T2G+5N7+Canada&output=embed&z=15",
   },
   social: {
-    twitter: "",
-    facebook: "",
+    facebook:
+      "https://web.facebook.com/people/Bright-Future-For-Children/61565839080516/",
+    youtube: "https://www.youtube.com/channel/UCdkq_kIg5KOjHkLUtz4R-sQ",
+    twitter: "https://x.com/Bright4ch",
+    instagram: "",
     linkedin: "",
   },
   routes: [

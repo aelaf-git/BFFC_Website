@@ -3,8 +3,10 @@ import { siteConfig } from "@/lib/site";
 
 export function OrganizationJsonLd() {
   const sameAs = [
-    siteConfig.social.twitter,
     siteConfig.social.facebook,
+    siteConfig.social.youtube,
+    siteConfig.social.twitter,
+    siteConfig.social.instagram,
     siteConfig.social.linkedin,
   ].filter(Boolean);
 
