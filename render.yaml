@@ -41,6 +41,8 @@ services:
         value: receipts@bffcglobal.org
       - key: Email__FromName
         value: Bright Future for Children
+      - key: Email__ContactNotifyAddress
+        value: info@bffcglobal.org
 
   - type: web
     name: bffc-web

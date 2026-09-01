@@ -87,8 +87,9 @@ builder.Services.AddSingleton(sp =>
 });
 builder.Services.AddSingleton<IStripeService, StripeService>();
 
-// ── Email (tax receipts via Resend) ───────────────────────────────────────────
+// ── Email (tax receipts + contact notifications via Resend) ───────────────────
 builder.Services.AddHttpClient<IEmailService, TaxReceiptEmailService>();
+builder.Services.AddHttpClient<IContactNotificationEmailService, ContactNotificationEmailService>();
 
 var inContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
 
