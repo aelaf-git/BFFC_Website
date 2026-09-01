@@ -7,7 +7,7 @@
 
 databases:
   - name: bffc-db
-    plan: starter
+    plan: 0.5c-1g
     databaseName: bffc
     user: bffc
 
@@ -16,7 +16,7 @@ services:
     name: bffc-api
     runtime: docker
     rootDir: apps/api
-    plan: starter
+    plan: 0.5c-512mb
     healthCheckPath: /health
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
@@ -46,7 +46,7 @@ services:
     name: bffc-web
     runtime: node
     rootDir: apps/web
-    plan: starter
+    plan: 0.5c-512mb
     buildCommand: npm ci && npm run build && npm run build:standalone
     startCommand: node .next/standalone/server.js
     envVars:
